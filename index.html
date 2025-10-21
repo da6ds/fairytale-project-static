@@ -3,311 +3,592 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Fairytale Project</title>
+    <title>童话项目 | Fairytale Project | Fairytale-Projekt</title>
     <style>
+        /* EXACT ORIGINAL CSS FROM public.css */
+        
+        /* RESET */
+        html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,
+        img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,
+        caption,tbody,tfoot,thead,tr,th,td,article,aside,canvas,details,embed,figure,figcaption,footer,header,hgroup,menu,nav,output,
+        ruby,section,summary,time,mark,audio,video {
+            margin:0;
+            padding:0;
+            border:0;
+            font-size:100%;
+            -webkit-text-size-adjust:100%;
+            -ms-text-size-adjust:100%;
+            font:inherit;
+            vertical-align:baseline;
+            font-family:Helvetica, Arial, Verdana, sans-serif;
+            color: black;
+        }
+
+        img {
+            border:0;
+            -ms-interpolation-mode:bicubic;
+        }
+
+        article,aside,details,figcaption,figure,footer,header,hgroup,menu,nav,section {
+            display:block;
+        }
+
         body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 20px;
-            background-color: #f5f5f5;
+            line-height:1;
+            font-size:62.5%;
+        }
+
+        ol,ul {
+            list-style:none;
+        }
+
+        blockquote,q {
+            quotes:none;
+        }
+
+        blockquote:before,blockquote:after,q:before,q:after {
+            content:'';
+            content:none;
+        }
+
+        table {
+            border-collapse:collapse;
+            border-spacing:0;
+        }
+
+        /* BODY STYLES */
+        html {
+            height:100%;
+            width:100%;
+            overflow-x:hidden;
+        }
+
+        body {
+            width:100%;
+            height:100%;
+            margin:0;
+            padding:0;
+            border:0;
+            background:#fff;
+            font-size:12px;
+            line-height:16px;
+        }
+
+        img {
+            border:none;
+        }
+
+        form {
+            margin-bottom:0;
+            margin-top:5px;
+            margin-bottom:6px;
+        }
+
+        a {
+            text-decoration:none;
+            color:#000;
+            font-weight:bold;
+        }
+
+        a:hover {
+            color:red;
+        }
+
+        h2 {
+            font-size:20px;
+            font-weight:700;
+            margin:5px;
+            padding-bottom:8px;
+            border-bottom:1px dashed #000;
+            display:block;
+            margin-bottom:10px;
+        }
+
+        i {
+            font-style:italic;
+        }
+
+        b {
+            font-weight:700;
+        }
+
+        #container {
+            width:100%;
+            height:auto;
+            border:0;
+            padding:0;
+            margin:0;
+        }
+
+        /* NAVIGATION BOX */
+        #headercontainer {
+            position:absolute;
+            position:fixed;
+            top:20px;
+            left:20px;
+            width:250px;
+            z-index:1000;
+            margin:0;
+            padding:0;
+        }
+
+        #navbox {
+            font-size:11px;
+            position:relative;
+            width:270px;
+            background:#fff;
+            padding:5px 10px 10px;
+            border:#000 2px solid;
+            z-index:1000;
+        }
+
+        #navbox h3 {
+            font-weight:700;
+            font-size:12px;
+            line-height:8px;
+            margin-bottom:0px;
+        }
+
+        #navbox a{
+            font-weight:normal;
+        }
+
+        #header {
+            width:270px;
+            height:145px;
+            background-image:url('fairytale_header.png');
+            background-position:center top;
+            background-repeat:no-repeat;
+            border-bottom:#000 1px dashed;
+            margin-top:5px;
+        }
+
+        #header h1 {
+            visibility:hidden;
+            color:#ed1c24;
+            font-size:25px;
+        }
+
+        #view {
+            padding:8px 0 14px 0;
+            font-weight:700;
+            border-bottom:#000 1px dashed;
+            margin-bottom:5px;
+            width:100%;
+        }
+
+        #filters {
+            padding:8px 0;
+            border-bottom:#000 1px dashed;
+            width:100%;
+            font-size:11px;
+        }
+
+        .filter {
+            width:100%;
+            margin-top:10px;
+        }
+
+        #language {
+            margin-top:10px;
         }
         
-        .header {
-            text-align: center;
-            margin-bottom: 30px;
+        #gender {
+            margin-top:11px;
+        }
+
+        #region {
+            margin-top:11px;
+        }
+
+        #generation {
+            margin-top:11px;
+        }
+
+        #themes {
+            margin-top:11px;
+        }
+
+        .header_links {
+            width:100%;
+            margin-top:8px;
+            font-size:11px;
+        }
+
+        .header_links a {
+            display:block;
+            margin-bottom:0px;
+        }
+
+        #filters > p {
+            margin-top:6px;
+        }
+
+        #social {
+            margin:0px;
+            padding:0px;
+            text-align:center;
         }
         
-        .filters {
-            background: white;
-            padding: 20px;
-            margin-bottom: 30px;
-            border-radius: 5px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        #social a{
+            background-image:url('Fairytale_Social.png');
+            text-indent: -6000px;
+            display:inline-block;
+            height:35px;
+            width:35px;
+            margin:0px;
+            padding:0px 2px;
         }
-        
-        .filter-row {
-            display: flex;
-            gap: 20px;
-            margin-bottom: 15px;
-            flex-wrap: wrap;
+
+        #social a.facebook {background-position:0px 0px}
+        #social a.twitter {background-position:-43px 0px}
+        #social a.googleplus {background-position:-86px 0px}
+        #social a.tumblr {background-position:-129px 0px}
+        #social a.renren {background-position:-172px 0px}
+        #social a.weibo {background-position:-215px 0px}
+
+        /* GRID */
+        #participants {
+            position:relative;
+            width:100%;
+            height:auto;
+            font-size:12px;
+            margin-top:3px;
+            padding:0;
+            text-align:center;
         }
-        
-        .filter-group {
-            flex: 1;
-            min-width: 200px;
+
+        .outer {
+            display:inline-block;
+            position:relative;
+            width:7.3%;
+            text-align:center;
+            padding:0.05% 0.18% 0.02%;
+            height:auto;
+            min-width: 45px;
         }
-        
-        .filter-group label {
-            display: block;
-            margin-bottom: 5px;
-            font-weight: bold;
+
+        .outer img {
+            position:relative;
+            top:0;
+            left:0;
+            width:100%;
+            height:auto;
         }
-        
-        .filter-group select {
-            width: 100%;
-            padding: 8px;
-            border: 1px solid #ddd;
-            border-radius: 3px;
+
+        .outer p {
+            font-size:14px;
+            padding-top:40%;
         }
-        
-        .grid-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
-            gap: 20px;
-            padding: 20px;
+
+        .id {
+            position:absolute;
+            top:0;
+            width:100%;
+            height:100%;
+            text-align:center;
+            opacity:1;
+            font-weight:700;
+            color:#4d4d4d;
+            z-index:0;
         }
-        
-        .participant-card {
-            background: white;
-            border-radius: 5px;
-            overflow: hidden;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-            transition: transform 0.2s;
-            cursor: pointer;
+
+        a.fancybox:hover img {
+            z-index:-2;
         }
-        
-        .participant-card:hover {
-            transform: translateY(-2px);
+
+        a.fancybox:hover .inactive {
+            opacity:1;
         }
-        
-        .participant-card.inactive {
-            opacity: 0.3;
-            pointer-events: none;
+
+        a.fancybox:hover .id {
+            color:#fff;
+            text-shadow:0 0 .4em #555;
         }
-        
-        .participant-image {
-            width: 100%;
-            height: 120px;
-            background-color: #ddd;
-            background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="35" r="15" fill="%23999"/><path d="M20 85 Q50 65 80 85" fill="%23999"/></svg>');
-            background-size: cover;
-            background-position: center;
+
+        .active {
+            opacity:1;
         }
-        
-        .participant-number {
-            padding: 10px;
-            text-align: center;
-            font-weight: bold;
-            background-color: #f8f8f8;
+
+        a.fancybox:hover .active1 {
+            visibility:visible;
+            font-weight:700;
+            color:#fff;
         }
-        
+
+        .inactive {
+            opacity:0.4;
+        }
+
+        .inactive:hover {
+            opacity:1.0;
+        }
+
+        .active1 {
+            visibility:hidden;
+        }
+
+        /* STATS */
         .stats {
-            background: white;
-            padding: 15px;
-            margin-top: 20px;
-            border-radius: 5px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-            text-align: center;
-        }
-        
-        .loading {
-            text-align: center;
-            padding: 50px;
-            color: #666;
+            position:fixed;
+            bottom: 0px;
+            background: rgba(255, 255, 255, 0.71);
+            display: block;
+            width: 100%;
+            padding: 3px;
+            text-align:center;
+            font-size: 11px;
         }
     </style>
 </head>
 <body>
-    <div class="header">
-        <h1>Fairytale Project</h1>
-        <p>Exploring stories across cultures and generations</p>
-    </div>
+    <div id="container">
+        <div id="headercontainer">
+            <div id="navbox">
+                <div id="header">
+                    <h1>童话项目 / Fairytale Project / Fairytale-Projekt</h1>
+                </div>
 
-    <div class="filters">
-        <div class="filter-row">
-            <div class="filter-group">
-                <label for="gender-filter">Gender:</label>
-                <select id="gender-filter">
-                    <option value="">All Genders</option>
-                    <option value="Female">Female</option>
-                    <option value="Male">Male</option>
-                </select>
+                <div id="view">
+                    <h3>1. 选择视图 / Select View / Ansicht auswählen:<br /></h3>
+                    <select class="filter" disabled>
+                        <option>肖像 / Grid / Raster</option>
+                    </select>
+                </div>
+
+                <div id="filters">
+                    <h3>2. 选择过滤器 / Select Filters / Filter auswählen:<br /></h3>
+                    
+                    <select id="language" class="filter">
+                        <option value="">语言 / Languages / Sprachen</option>
+                        <option value="Chinese">中文</option>
+                        <option value="English">English</option>
+                        <option value="German">Deutsch</option>
+                    </select>
+
+                    <select id="gender" class="filter">
+                        <option value="">性别 / Gender / Geschlecht</option>
+                        <option value="Male">男 / Male / Männlich</option>
+                        <option value="Female">女 / Female / Weiblich</option>
+                    </select>
+
+                    <select id="region" class="filter">
+                        <option value="">地区 / Region / Region</option>
+                        <option value="East Asia">East Asia</option>
+                        <option value="North America">North America</option>
+                        <option value="Europe">Europe</option>
+                        <option value="Southeast Asia">Southeast Asia</option>
+                    </select>
+
+                    <select id="generation" class="filter">
+                        <option value="">出生年代 / Generation / Generation</option>
+                        <option value="2000s">2000-2009</option>
+                        <option value="1990s">1990-1999</option>
+                        <option value="1980s">1980-1989</option>
+                        <option value="1970s">1970-1979</option>
+                        <option value="1960s">1960-1969</option>
+                        <option value="1950s">1950-1959</option>
+                    </select>
+
+                    <select id="themes" class="filter">
+                        <option value="">主题 / Themes / Themen</option>
+                        <option value="Family">Family</option>
+                        <option value="Migration">Migration</option>
+                        <option value="Love">Love</option>
+                        <option value="Dreams">Dreams</option>
+                    </select>
+
+                    <p><a href="#" id="resetFilters">重设过滤器 / Reset Filters / Filter zurücksetzen</a></p>
+                </div>
+
+                <div class="header_links">
+                    <a href="#">项目简介 / Project Overview / Projekt-Überblick</a>
+                    <a href="#">博客 / Blog / Blog</a>
+                    <a href="#">参与者召唤 / Call to Participants / An die Teilnehmenden</a>
+                    <div id="social">
+                        <a href="http://www.facebook.com/sharer/sharer.php?u=http://www.fairytaleproject.net" target="_blank" class="facebook">Facebook</a>
+                        <a href="http://clicktotweet.com/0RVj3" target="_blank" class="twitter">Twitter</a>
+                        <a href="https://plusone.google.com/_/+1/confirm?hl=en&url=http://www.fairytaleproject.net" target="_blank" class="googleplus">Google Plus</a>
+                        <a href="http://www.tumblr.com/share/link?url=http://www.fairytaleproject.net&name=The%20Fairytale%20Project" target="_blank" class="tumblr">Tumblr</a>
+                        <a href="http://share.renren.com/share/buttonshare.do?link=http://www.fairytaleproject.net&title=The%20Fairytale%20Project" target="_blank" class="renren">RenRen</a>
+                        <a href="http://service.weibo.com/share/share.php?url=http://www.fairytaleproject.net&appkey=&title=The%20Fairytale%20Project&pic=&ralateUid=&language=zh_cn" class="weibo" target="_blank">Weibo</a>
+                    </div>
+                </div>
             </div>
-            
-            <div class="filter-group">
-                <label for="region-filter">Region:</label>
-                <select id="region-filter">
-                    <option value="">All Regions</option>
-                    <!-- Options populated by JavaScript -->
-                </select>
-            </div>
-            
-            <div class="filter-group">
-                <label for="year-filter">Generation:</label>
-                <select id="year-filter">
-                    <option value="">All Generations</option>
-                    <option value="1980">1980s</option>
-                    <option value="1990">1990s</option>
-                    <option value="2000">2000s</option>
-                </select>
-            </div>
-            
-            <div class="filter-group">
-                <label for="language-filter">Language:</label>
-                <select id="language-filter">
-                    <option value="">All Languages</option>
-                    <option value="Chinese">Chinese</option>
-                    <option value="English">English</option>
-                    <option value="German">German</option>
-                    <option value="Chinese + English">Chinese + English</option>
-                    <option value="Chinese + German">Chinese + German</option>
-                    <option value="Chinese + English + German">Chinese + English + German</option>
-                </select>
-            </div>
-            
-            <div class="filter-group">
-                <label for="theme-filter">Theme:</label>
-                <select id="theme-filter">
-                    <option value="">All Themes</option>
-                    <!-- Options populated by JavaScript -->
-                </select>
-            </div>
+        </div>
+
+        <div id="participants"></div>
+
+        <div class="stats">
+            <span id="visibleCount">0</span> of <span id="totalCount">0</span> participants visible
         </div>
     </div>
 
-    <div class="loading" id="loading">Loading fairytale entries...</div>
-    
-    <div class="grid-container" id="grid-container" style="display: none;"></div>
-    
-    <div class="stats" id="stats" style="display: none;">
-        <span id="visible-count">0</span> of <span id="total-count">0</span> stories visible
-    </div>
-
     <script>
-        let fairytaleData = null;
-        
-        // Load the JSON data
-        async function loadData() {
-            try {
-                const response = await fetch('fairytale-data.json');
-                fairytaleData = await response.json();
-                populateFilters();
-                renderGrid();
-                document.getElementById('loading').style.display = 'none';
-                document.getElementById('grid-container').style.display = 'grid';
-                document.getElementById('stats').style.display = 'block';
-            } catch (error) {
-                console.error('Error loading data:', error);
-                document.getElementById('loading').innerHTML = 'Error loading data. Please check that fairytale-data.json exists.';
+        const participants = [
+            {
+                id: "0001",
+                gender: "Female",
+                year: 1985,
+                generation: "1980s",
+                region: "East Asia",
+                language: ["Chinese", "English"],
+                themes: ["Family", "Migration"]
+            },
+            {
+                id: "0002",
+                gender: "Male",
+                year: 1992,
+                generation: "1990s",
+                region: "North America",
+                language: ["English"],
+                themes: ["Love", "Dreams"]
+            },
+            {
+                id: "0003",
+                gender: "Female",
+                year: 1978,
+                generation: "1970s",
+                region: "Europe",
+                language: ["German"],
+                themes: ["Family"]
+            },
+            {
+                id: "0004",
+                gender: "Male",
+                year: 1988,
+                generation: "1980s",
+                region: "East Asia",
+                language: ["Chinese"],
+                themes: ["Migration", "Dreams"]
+            },
+            {
+                id: "0005",
+                gender: "Female",
+                year: 1995,
+                generation: "1990s",
+                region: "Southeast Asia",
+                language: ["English", "Chinese"],
+                themes: ["Love", "Family"]
+            },
+            {
+                id: "0006",
+                gender: "Male",
+                year: 1982,
+                generation: "1980s",
+                region: "North America",
+                language: ["English"],
+                themes: ["Dreams"]
+            },
+            {
+                id: "0007",
+                gender: "Female",
+                year: 1970,
+                generation: "1970s",
+                region: "Europe",
+                language: ["German", "English"],
+                themes: ["Migration"]
+            },
+            {
+                id: "0008",
+                gender: "Male",
+                year: 1998,
+                generation: "1990s",
+                region: "East Asia",
+                language: ["Chinese"],
+                themes: ["Family", "Love"]
+            },
+            {
+                id: "0009",
+                gender: "Female",
+                year: 1987,
+                generation: "1980s",
+                region: "Southeast Asia",
+                language: ["English"],
+                themes: ["Dreams", "Migration"]
+            },
+            {
+                id: "0010",
+                gender: "Male",
+                year: 1975,
+                generation: "1970s",
+                region: "North America",
+                language: ["English"],
+                themes: ["Family"]
             }
+        ];
+
+        function renderParticipants() {
+            const grid = document.getElementById('participants');
+            grid.innerHTML = participants.map(p => `
+                <div class="outer active" data-id="${p.id}" data-gender="${p.gender}" data-generation="${p.generation}" data-region="${p.region}" data-language="${p.language.join(',')}" data-themes="${p.themes.join(',')}">
+                    <div class="id">${p.id}</div>
+                </div>
+            `).join('');
+            updateStats();
         }
-        
-        // Populate filter dropdowns
-        function populateFilters() {
-            // Populate regions
-            const regionSelect = document.getElementById('region-filter');
-            fairytaleData.regions.forEach(region => {
-                const option = document.createElement('option');
-                option.value = region.id;
-                option.textContent = `${region.name_chinese} / ${region.name_english} / ${region.name_german}`;
-                regionSelect.appendChild(option);
-            });
+
+        function filterParticipants() {
+            const genderFilter = document.getElementById('gender').value;
+            const regionFilter = document.getElementById('region').value;
+            const generationFilter = document.getElementById('generation').value;
+            const languageFilter = document.getElementById('language').value;
+            const themesFilter = document.getElementById('themes').value;
+
+            const cards = document.querySelectorAll('.outer');
             
-            // Populate themes
-            const themeSelect = document.getElementById('theme-filter');
-            fairytaleData.themes.forEach(theme => {
-                const option = document.createElement('option');
-                option.value = theme.id;
-                option.textContent = `${theme.name_chinese} / ${theme.name_english} / ${theme.name_german}`;
-                themeSelect.appendChild(option);
-            });
-        }
-        
-        // Render the grid
-        function renderGrid() {
-            const container = document.getElementById('grid-container');
-            container.innerHTML = '';
-            
-            const filteredEntries = filterEntries();
-            
-            filteredEntries.forEach(entry => {
-                const card = document.createElement('div');
-                card.className = 'participant-card';
-                card.id = `card-${entry.id}`;
-                
-                card.innerHTML = `
-                    <div class="participant-image"></div>
-                    <div class="participant-number">${entry.participant_number}</div>
-                `;
-                
-                card.addEventListener('click', () => {
-                    alert(`Clicked on participant ${entry.participant_number}`);
-                    // Here you would open the detailed view
-                });
-                
-                container.appendChild(card);
-            });
-            
-            updateStats(filteredEntries.length);
-        }
-        
-        // Filter entries based on current filter values
-        function filterEntries() {
-            if (!fairytaleData) return [];
-            
-            const genderFilter = document.getElementById('gender-filter').value;
-            const regionFilter = document.getElementById('region-filter').value;
-            const yearFilter = document.getElementById('year-filter').value;
-            const languageFilter = document.getElementById('language-filter').value;
-            const themeFilter = document.getElementById('theme-filter').value;
-            
-            return fairytaleData.entries.filter(entry => {
-                // Gender filter
-                if (genderFilter && entry.participant_gender !== genderFilter) return false;
-                
-                // Region filter
-                if (regionFilter && entry.participant_region !== parseInt(regionFilter)) return false;
-                
-                // Year filter (proper decade ranges)
-                if (yearFilter) {
-                    const filterYear = parseInt(yearFilter);
-                    const decadeStart = filterYear;
-                    const decadeEnd = filterYear + 9;
-                    if (entry.participant_year < decadeStart || entry.participant_year > decadeEnd) return false;
+            cards.forEach(card => {
+                const gender = card.dataset.gender;
+                const region = card.dataset.region;
+                const generation = card.dataset.generation;
+                const languages = card.dataset.language.split(',');
+                const themes = card.dataset.themes.split(',');
+
+                const matchesGender = !genderFilter || gender === genderFilter;
+                const matchesRegion = !regionFilter || region === regionFilter;
+                const matchesGeneration = !generationFilter || generation === generationFilter;
+                const matchesLanguage = !languageFilter || languages.includes(languageFilter);
+                const matchesThemes = !themesFilter || themes.includes(themesFilter);
+
+                if (matchesGender && matchesRegion && matchesGeneration && matchesLanguage && matchesThemes) {
+                    card.classList.remove('inactive');
+                    card.classList.add('active');
+                } else {
+                    card.classList.remove('active');
+                    card.classList.add('inactive');
                 }
-                
-                // Language filter
-                if (languageFilter) {
-                    if (languageFilter === 'Chinese') {
-                        if (!(entry.languages.chinese.application_active === 'yes' || 
-                              entry.languages.chinese.interview_active === 'yes' || 
-                              entry.languages.chinese.interview_2_active === 'yes')) return false;
-                    }
-                    else if (languageFilter === 'English') {
-                        if (!(entry.languages.english.application_active === 'yes' || 
-                              entry.languages.english.interview_active === 'yes' || 
-                              entry.languages.english.interview_2_active === 'yes')) return false;
-                    }
-                    else if (languageFilter === 'German') {
-                        if (!(entry.languages.german.application_active === 'yes' || 
-                              entry.languages.german.interview_active === 'yes' || 
-                              entry.languages.german.interview_2_active === 'yes')) return false;
-                    }
-                    // Add logic for combined languages if needed
-                }
-                
-                // Theme filter
-                if (themeFilter && !entry.themes.includes(parseInt(themeFilter))) return false;
-                
-                return true;
             });
+
+            updateStats();
         }
-        
-        // Update statistics
-        function updateStats(visibleCount) {
-            document.getElementById('visible-count').textContent = visibleCount;
-            document.getElementById('total-count').textContent = fairytaleData.entries.length;
+
+        function updateStats() {
+            const total = document.querySelectorAll('.outer').length;
+            const visible = document.querySelectorAll('.outer.active').length;
+            document.getElementById('totalCount').textContent = total;
+            document.getElementById('visibleCount').textContent = visible;
         }
-        
-        // Add event listeners to filters
-        document.addEventListener('DOMContentLoaded', () => {
-            const filters = ['gender-filter', 'region-filter', 'year-filter', 'language-filter', 'theme-filter'];
-            filters.forEach(filterId => {
-                document.getElementById(filterId).addEventListener('change', renderGrid);
-            });
-            
-            loadData();
+
+        function resetFilters() {
+            document.getElementById('gender').value = '';
+            document.getElementById('region').value = '';
+            document.getElementById('generation').value = '';
+            document.getElementById('language').value = '';
+            document.getElementById('themes').value = '';
+            filterParticipants();
+        }
+
+        document.getElementById('gender').addEventListener('change', filterParticipants);
+        document.getElementById('region').addEventListener('change', filterParticipants);
+        document.getElementById('generation').addEventListener('change', filterParticipants);
+        document.getElementById('language').addEventListener('change', filterParticipants);
+        document.getElementById('themes').addEventListener('change', filterParticipants);
+        document.getElementById('resetFilters').addEventListener('click', (e) => {
+            e.preventDefault();
+            resetFilters();
         });
+
+        renderParticipants();
     </script>
 </body>
 </html>
