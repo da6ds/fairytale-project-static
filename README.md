@@ -1,0 +1,1 @@
+# Fairytale Project - Static Website
