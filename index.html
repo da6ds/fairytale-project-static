@@ -425,98 +425,18 @@
     </div>
 
     <script>
-        const participants = [
-            {
-                id: "0001",
-                gender: "Female",
-                year: 1985,
-                generation: "1980s",
-                region: "East Asia",
-                language: ["Chinese", "English"],
-                themes: ["Family", "Migration"]
-            },
-            {
-                id: "0002",
-                gender: "Male",
-                year: 1992,
-                generation: "1990s",
-                region: "North America",
-                language: ["English"],
-                themes: ["Love", "Dreams"]
-            },
-            {
-                id: "0003",
-                gender: "Female",
-                year: 1978,
-                generation: "1970s",
-                region: "Europe",
-                language: ["German"],
-                themes: ["Family"]
-            },
-            {
-                id: "0004",
-                gender: "Male",
-                year: 1988,
-                generation: "1980s",
-                region: "East Asia",
-                language: ["Chinese"],
-                themes: ["Migration", "Dreams"]
-            },
-            {
-                id: "0005",
-                gender: "Female",
-                year: 1995,
-                generation: "1990s",
-                region: "Southeast Asia",
-                language: ["English", "Chinese"],
-                themes: ["Love", "Family"]
-            },
-            {
-                id: "0006",
-                gender: "Male",
-                year: 1982,
-                generation: "1980s",
-                region: "North America",
-                language: ["English"],
-                themes: ["Dreams"]
-            },
-            {
-                id: "0007",
-                gender: "Female",
-                year: 1970,
-                generation: "1970s",
-                region: "Europe",
-                language: ["German", "English"],
-                themes: ["Migration"]
-            },
-            {
-                id: "0008",
-                gender: "Male",
-                year: 1998,
-                generation: "1990s",
-                region: "East Asia",
-                language: ["Chinese"],
-                themes: ["Family", "Love"]
-            },
-            {
-                id: "0009",
-                gender: "Female",
-                year: 1987,
-                generation: "1980s",
-                region: "Southeast Asia",
-                language: ["English"],
-                themes: ["Dreams", "Migration"]
-            },
-            {
-                id: "0010",
-                gender: "Male",
-                year: 1975,
-                generation: "1970s",
-                region: "North America",
-                language: ["English"],
-                themes: ["Family"]
-            }
-        ];
+        let participants = [];
+
+// Load participants from JSON file
+    fetch('fairytale-data.json')
+        .then(response => response.json())
+        .then(data => {
+        participants = data;
+        renderParticipants();
+        })
+    .catch(error => {
+        console.error('Error loading participant data:', error);
+        });
 
         function renderParticipants() {
             const grid = document.getElementById('participants');
