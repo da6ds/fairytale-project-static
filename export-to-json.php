@@ -12,6 +12,9 @@ try {
     
     echo "Connected to database successfully!\n";
     
+    // Define images directory path
+    $imagesDir = __DIR__ . '/images/';
+    
     // Fetch all participants with their region names
     $query = "
         SELECT 
@@ -65,21 +68,42 @@ try {
         // For now, set language as Chinese (we can refine this later if needed)
         $language = ["Chinese"];
         
+        // Find photo for this participant
+        $participantId = str_pad($row['participant_number'], 4, '0', STR_PAD_LEFT);
+        $photo = null;
+        
+        // Check for main portrait photo
+        $mainPhoto = $participantId . '_2007_portrait.jpg';
+        if (file_exists($imagesDir . $mainPhoto)) {
+            $photo = $mainPhoto;
+        } else {
+            // Check for variant photos (e.g., -1.jpg, -2.jpg)
+            $variantPhoto = $participantId . '_2007_portrait-1.jpg';
+            if (file_exists($imagesDir . $variantPhoto)) {
+                $photo = $variantPhoto;
+            }
+        }
+        
         // Build participant object matching your current format
         $participant = [
-            "id" => str_pad($row['participant_number'], 4, '0', STR_PAD_LEFT),
+            "id" => $participantId,
             "gender" => $gender,
             "year" => $year,
             "generation" => $generation,
             "region" => $region,
             "language" => $language,
-            "themes" => $themeNames
+            "themes" => $themeNames,
+            "photo" => $photo  // Add photo filename or null
         ];
         
         $participants[] = $participant;
     }
     
     echo "Processed " . count($participants) . " participants.\n";
+    
+    // Count how many have photos
+    $withPhotos = count(array_filter($participants, function($p) { return $p['photo'] !== null; }));
+    echo "Participants with photos: $withPhotos\n";
     
     // Write to JSON file
     $jsonFile = 'fairytale-data.json';

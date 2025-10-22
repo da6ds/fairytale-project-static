@@ -339,6 +339,106 @@
             text-align:center;
             font-size: 11px;
         }
+
+        /* Modal styles */
+        .modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8);
+        }
+
+        .modal-content {
+            background-color: white;
+            margin: 5% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%;
+            max-width: 800px;
+            border-radius: 8px;
+            position: relative;
+        }
+
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: #000;
+        }
+
+        .modal-body {
+            display: flex;
+            gap: 20px;
+            align-items: flex-start;
+        }
+
+        .modal-photo {
+            width: 300px;
+            height: auto;
+            border-radius: 4px;
+        }
+
+        .modal-info {
+            flex: 1;
+        }
+
+        .modal-info h2 {
+            margin-top: 0;
+            color: #c41e3a;
+        }
+
+        .modal-info p {
+            margin: 10px 0;
+        }
+
+        .participant-photo {
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        .participant-photo:hover {
+            transform: scale(1.05);
+        }
+
+    /* MODAL STYLES */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 10000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+        }
+
+        .modal-content {
+            background-color: white;
+            margin: 5% auto;
+            padding: 30px;
+            border: 3px solid #000;
+            width: 80%;
+            max-width: 700px;
+            position: relative;
+        }
+
+        .close {
+            color: #000;
+            position: absolute;
+            right: 15px;
+            top: 10px;
+            f
+    
     </style>
 </head>
 <body>
@@ -425,27 +525,85 @@
     </div>
 
     <script>
-        let participants = [];
+    let participants = [];
 
-// Load participants from JSON file
-    fetch('fairytale-data.json')
-        .then(response => response.json())
-        .then(data => {
-        participants = data;
-        renderParticipants();
-        })
-    .catch(error => {
-        console.error('Error loading participant data:', error);
-        });
+        // Load participants from JSON file
+        fetch('fairytale-data.json')
+            .then(response => response.json())
+            .then(data => {
+                participants = data;
+                renderParticipants();
+                setupModalHandlers();
+            })
+            .catch(error => {
+                console.error('Error loading participant data:', error);
+            });
 
         function renderParticipants() {
             const grid = document.getElementById('participants');
             grid.innerHTML = participants.map(p => `
                 <div class="outer active" data-id="${p.id}" data-gender="${p.gender}" data-generation="${p.generation}" data-region="${p.region}" data-language="${p.language.join(',')}" data-themes="${p.themes.join(',')}">
+                    ${p.photo ? `<img src="images/${p.photo}" alt="Participant ${p.id}" class="participant-photo">` : `<div class="no-photo">${p.id}</div>`}
                     <div class="id">${p.id}</div>
                 </div>
             `).join('');
             updateStats();
+        }
+            const modal = document.getElementById('participantModal');
+
+        function setupModalHandlers() {
+                console.log('Setting up modal handlers...');
+        console.log('Participants array:', participants.length);
+        console.log('Grid element:', document.getElementById('participants'));
+        console.log('Modal element:', document.getElementById('participantModal'));
+        const closeBtn = document.querySelector('.close');
+        const grid = document.getElementById('participants');
+    
+        console.log('Close button found:', closeBtn);
+
+        const modal = document.getElementById('participantModal');
+        
+        // Click on photos to open modal
+        grid.addEventListener('click', function(e) {
+            console.log('Clicked on:', e.target, 'Classes:', e.target.classList);
+            if  (e.target.classList.contains('participant-photo') || 
+                e.target.classList.contains('id') || 
+                e.target.classList.contains('outer')) {
+                    const card = e.target.closest('.outer');
+                    const participantId = card.dataset.id;
+                    const participant = participants.find(p => p.id === participantId);
+                
+                if (participant) {
+                    showModal(participant);
+                }
+            }
+        });
+        
+        // Close button
+        closeBtn.onclick = function() {
+            modal.style.display = 'none';
+        }
+        
+        // Click outside modal to close
+        window.onclick = function(event) {
+            if (event.target === modal) {
+                modal.style.display = 'none';
+            }
+        }
+    }
+
+        function showModal(participant) {
+            const modal = document.getElementById('participantModal');  // Add this line
+            document.getElementById('modalPhoto').src = participant.photo ? `images/${participant.photo}` : '';
+            document.getElementById('modalPhoto').alt = `Participant ${participant.id}`;
+            document.getElementById('modalId').textContent = `Participant ${participant.id}`;
+            document.getElementById('modalGender').textContent = participant.gender;
+            document.getElementById('modalYear').textContent = participant.year;
+            document.getElementById('modalGeneration').textContent = participant.generation;
+            document.getElementById('modalRegion').textContent = participant.region;
+            document.getElementById('modalThemes').textContent = participant.themes.join(', ');
+        
+            modal.style.display = 'block';
         }
 
         function filterParticipants() {
@@ -456,7 +614,7 @@
             const themesFilter = document.getElementById('themes').value;
 
             const cards = document.querySelectorAll('.outer');
-            
+        
             cards.forEach(card => {
                 const gender = card.dataset.gender;
                 const region = card.dataset.region;
@@ -507,8 +665,25 @@
             e.preventDefault();
             resetFilters();
         });
+</script>
 
-        renderParticipants();
-    </script>
+    <!-- Participant Detail Modal -->
+<div id="participantModal" class="modal">
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <div class="modal-body">
+            <img id="modalPhoto" src="" alt="" class="modal-photo">
+            <div class="modal-info">
+                <h2 id="modalId"></h2>
+                <p><strong>Gender:</strong> <span id="modalGender"></span></p>
+                <p><strong>Year:</strong> <span id="modalYear"></span></p>
+                <p><strong>Generation:</strong> <span id="modalGeneration"></span></p>
+                <p><strong>Region:</strong> <span id="modalRegion"></span></p>
+                <p><strong>Themes:</strong> <span id="modalThemes"></span></p>
+            </div>
+        </div>
+    </div>
+</div>
+
 </body>
 </html>
