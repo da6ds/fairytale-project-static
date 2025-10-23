@@ -249,23 +249,26 @@
 
         /* GRID */
         #participants {
-            position:relative;
-            width:100%;
-            height:auto;
-            font-size:12px;
-            margin-top:3px;
-            padding:0;
-            text-align:center;
+            position: absolute;
+            left: 0px;
+            right: 0px;
+            top: 0;
+            height: auto;
+            font-size: 12px;
+            margin-top: 0;
+            padding: 0;
+            text-align: center;
         }
 
         .outer {
             display:inline-block;
             position:relative;
-            width:7.3%;
+            width:7.4%;
             text-align:center;
-            padding:0.05% 0.18% 0.02%;
+            margin:1px 1px 1px 1px;
             height:auto;
-            min-width: 45px;
+            min-width: 0;
+            cursor: pointer;
         }
 
         .outer img {
@@ -274,6 +277,12 @@
             left:0;
             width:100%;
             height:auto;
+            opacity: 0.4;  /* Put the opacity BACK on the image */
+            transition: opacity 0.3s ease;
+        }
+
+        .outer:hover img {
+            opacity: 1;  /* Full opacity on hover */
         }
 
         .outer p {
@@ -284,48 +293,24 @@
         .id {
             position:absolute;
             top:0;
+            left: 0;
             width:100%;
             height:100%;
             text-align:center;
-            opacity:1;
             font-weight:700;
             color:#4d4d4d;
-            z-index:0;
+            z-index:0;  /* CHANGE THIS - was 2, now 0 */
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            pointer-events: none;
+            opacity: 1;  /* Force opacity to 1 */
         }
 
-        a.fancybox:hover img {
-            z-index:-2;
-        }
-
-        a.fancybox:hover .inactive {
-            opacity:1;
-        }
-
-        a.fancybox:hover .id {
-            color:#fff;
-            text-shadow:0 0 .4em #555;
-        }
-
-        .active {
-            opacity:1;
-        }
-
-        a.fancybox:hover .active1 {
-            visibility:visible;
-            font-weight:700;
-            color:#fff;
-        }
-
-        .inactive {
-            opacity:0.4;
-        }
-
-        .inactive:hover {
-            opacity:1.0;
-        }
-
-        .active1 {
-            visibility:hidden;
+        .outer:hover .id {
+            color: white;
+            text-shadow: 0 0 4px rgba(0,0,0,0.8), 0 0 8px rgba(0,0,0,0.6);
         }
 
         /* STATS */
@@ -401,13 +386,17 @@
             margin: 10px 0;
         }
 
-        .participant-photo {
+       .participant-photo {
             cursor: pointer;
-            transition: transform 0.2s;
         }
 
-        .participant-photo:hover {
-            transform: scale(1.05);
+        .outer {
+            /*opacity: 0.4;*/
+            transition: opacity 0.3s ease;
+        }
+
+        .outer:hover {
+            opacity: 1;
         }
 
     /* MODAL STYLES */
@@ -552,45 +541,45 @@
             const modal = document.getElementById('participantModal');
 
         function setupModalHandlers() {
-                console.log('Setting up modal handlers...');
-        console.log('Participants array:', participants.length);
-        console.log('Grid element:', document.getElementById('participants'));
-        console.log('Modal element:', document.getElementById('participantModal'));
-        const closeBtn = document.querySelector('.close');
-        const grid = document.getElementById('participants');
+            console.log('Setting up modal handlers...');
+            console.log('Participants array:', participants.length);
+            console.log('Grid element:', document.getElementById('participants'));
+            console.log('Modal element:', document.getElementById('participantModal'));
+            const closeBtn = document.querySelector('.close');
+            const grid = document.getElementById('participants');
     
-        console.log('Close button found:', closeBtn);
+            console.log('Close button found:', closeBtn);
 
-        const modal = document.getElementById('participantModal');
+            const modal = document.getElementById('participantModal');
         
-        // Click on photos to open modal
-        grid.addEventListener('click', function(e) {
-            console.log('Clicked on:', e.target, 'Classes:', e.target.classList);
-            if  (e.target.classList.contains('participant-photo') || 
-                e.target.classList.contains('id') || 
-                e.target.classList.contains('outer')) {
-                    const card = e.target.closest('.outer');
-                    const participantId = card.dataset.id;
-                    const participant = participants.find(p => p.id === participantId);
+            // Click on photos to open modal
+            grid.addEventListener('click', function(e) {
+                console.log('Clicked on:', e.target, 'Classes:', e.target.classList);
+                if  (e.target.classList.contains('participant-photo') || 
+                    e.target.classList.contains('id') || 
+                    e.target.classList.contains('outer')) {
+                        const card = e.target.closest('.outer');
+                        const participantId = card.dataset.id;
+                        const participant = participants.find(p => p.id === participantId);
                 
                 if (participant) {
                     showModal(participant);
+                    }
                 }
-            }
-        });
+            });
         
-        // Close button
-        closeBtn.onclick = function() {
-            modal.style.display = 'none';
-        }
-        
-        // Click outside modal to close
-        window.onclick = function(event) {
-            if (event.target === modal) {
+            // Close button
+            closeBtn.onclick = function() {
                 modal.style.display = 'none';
             }
+        
+            // Click outside modal to close
+            window.onclick = function(event) {
+                if (event.target === modal) {
+                    modal.style.display = 'none';
+                }
+            }
         }
-    }
 
         function showModal(participant) {
             const modal = document.getElementById('participantModal');  // Add this line
