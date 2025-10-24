@@ -49,9 +49,9 @@ try {
         $decade = floor($year / 10) * 10;
         $generation = $decade . "s";
         
-        // Map region - all Chinese regions become "East Asia"
-        $region = "East Asia";
-        
+	// Keep the actual province/region name from the database
+	$region = $row['region_name']; // or whatever the actual column is called
+
         // Process themes - convert comma-separated IDs to theme names
         $themeIds = array_filter(explode(',', $row['themes']));
         $themeNames = [];

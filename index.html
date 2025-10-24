@@ -122,7 +122,7 @@
         }
 
         /* ========================================
-           NAVIGATION BOX
+           NAVIGATION BOX (DRAGGABLE)
            ======================================== */
         #headercontainer {
             position: fixed;
@@ -132,6 +132,12 @@
             z-index: 1000;
             margin: 0;
             padding: 0;
+            cursor: move;
+            user-select: none;
+        }
+
+        #headercontainer.dragging {
+            cursor: grabbing;
         }
 
         #navbox {
@@ -273,6 +279,53 @@
         }
 
         /* ========================================
+           ZOOM CONTROLS (ATTACHED TO NAV BOX)
+           ======================================== */
+        #zoom-controls {
+            position: absolute;
+            bottom: -71px;
+            left: -2px;
+            display: flex;
+            flex-direction: column;
+            gap: 0px;
+        }
+
+      .zoom-btn {
+            width: 29px;
+            height: 27px;
+            border: 2px solid #000;
+            background: white;
+            font-size: 27px;
+            font-weight: 700;
+            cursor: pointer;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            line-height: 1;
+            transition: background-color 0.2s;
+            font-family: Helvetica, Arial, Verdana, sans-serif;
+        }
+
+        #zoom-in {
+            border-bottom: none;
+        }
+
+        .zoom-btn:hover {
+            background-color: #f0f0f0;
+        }
+
+        .zoom-btn:active {
+            background-color: #e0e0e0;
+        }
+
+        .zoom-btn:disabled {
+            opacity: 0.3;
+            cursor: not-allowed;
+        }
+
+        /* ========================================
            PARTICIPANT GRID
            ======================================== */
         #participants {
@@ -286,15 +339,26 @@
             text-align: center;
         }
 
+        /* Zoom level classes - control .outer width */
+        .zoom-level-0 .outer { width: 2.7%; }   /* 36 per row */
+        .zoom-level-1 .outer { width: 3.4%; }   /* 29 per row */
+        .zoom-level-2 .outer { width: 4.1%; }   /* 24 per row */
+        .zoom-level-3 .outer { width: 4.9%; }   /* 20 per row */
+        .zoom-level-4 .outer { width: 6.1%; }   /* 16 per row */
+        .zoom-level-5 .outer { width: 7.3%; }   /* 13 per row - DEFAULT */
+        .zoom-level-6 .outer { width: 9.8%; }   /* 10 per row */
+        .zoom-level-7 .outer { width: 12.3%; }  /* 8 per row */
+
         .outer {
             display: inline-block;
             position: relative;
-            width: 7.3%;
+            /* width: 7.3%; */
             text-align: center;
             padding: 0.05% 0.18% 0.02%;
             height: auto;
             vertical-align: top;
             min-width: 45px;
+            cursor:pointer;
         }
 
         .outer img {
@@ -347,6 +411,46 @@
 
         .participant-photo {
             cursor: pointer;
+        }
+
+        /* ========================================
+           MAP VIEW
+           ======================================== */
+        #map-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 999;
+            background: #fff;
+        }
+
+        #map {
+            width: 100%;
+            height: 100%;
+        }
+
+        /* Leaflet popup styling to match original */
+        .leaflet-popup-content-wrapper {
+            padding: 0;
+            border-radius: 0;
+        }
+
+        .leaflet-popup-content {
+            margin: 0;
+            width: auto !important;
+        }
+
+        .map-popup-photo {
+            width: 150px;
+            height: auto;
+            display: block;
+            cursor: pointer;
+        }
+
+        .map-popup-photo:hover {
+            opacity: 0.8;
         }
 
         /* ========================================
@@ -426,6 +530,14 @@
             margin: 10px 0;
         }
     </style>
+    
+    <!-- Leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    
+    <!-- Leaflet JS -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+</head>
 </head>
 <body>
     <div id="container">
@@ -502,11 +614,21 @@
                         <a href="http://service.weibo.com/share/share.php?url=http://www.fairytaleproject.net&appkey=&title=The%20Fairytale%20Project&pic=&ralateUid=&language=zh_cn" class="weibo" target="_blank">Weibo</a>
                     </div>
                 </div>
+                 <!-- Zoom Controls -->
+                <div id="zoom-controls">
+                    <button id="zoom-in" class="zoom-btn" title="Zoom In">&#43;</button>
+                    <button id="zoom-out" class="zoom-btn" title="Zoom Out">&#8722;</button>
+                </div>
             </div>
         </div>
 
         <!-- Participant Grid -->
-        <div id="participants"></div>
+        <div id="participants" class="zoom-level-5"></div>
+
+        <!-- Map View -->
+        <div id="map-container" style="display: none;">
+            <div id="map"></div>
+        </div>
 
         <!-- Stats Bar -->
         <div class="stats">
@@ -535,6 +657,114 @@
     <script>
         let participants = [];
 
+        // ==========================================
+        // ZOOM FUNCTIONALITY
+        // ==========================================
+        const ZOOM_LEVELS = [36, 29, 24, 20, 16, 13, 10, 8];
+        const DEFAULT_ZOOM = 5; // Index for 13 per row (100%)
+        let currentZoom = DEFAULT_ZOOM;
+
+        function initZoom() {
+            setZoomLevel(DEFAULT_ZOOM);
+            
+            document.getElementById('zoom-in').addEventListener('click', () => {
+                if (currentZoom < ZOOM_LEVELS.length - 1) {
+                    setZoomLevel(currentZoom + 1);
+                }
+            });
+            
+            document.getElementById('zoom-out').addEventListener('click', () => {
+                if (currentZoom > 0) {
+                    setZoomLevel(currentZoom - 1);
+                }
+            });
+            
+            updateZoomButtons();
+        }
+
+        function setZoomLevel(level) {
+            const container = document.getElementById('participants');
+            
+            // Remove all zoom classes
+            for (let i = 0; i < ZOOM_LEVELS.length; i++) {
+                container.classList.remove(`zoom-level-${i}`);
+            }
+            
+            // Add new zoom class
+            container.classList.add(`zoom-level-${level}`);
+            currentZoom = level;
+            
+            updateZoomButtons();
+        }
+
+        function updateZoomButtons() {
+            const zoomIn = document.getElementById('zoom-in');
+            const zoomOut = document.getElementById('zoom-out');
+            
+            zoomIn.disabled = (currentZoom === ZOOM_LEVELS.length - 1);
+            zoomOut.disabled = (currentZoom === 0);
+        }
+
+        // ==========================================
+        // DRAGGABLE NAV BOX
+        // ==========================================
+        function initDraggableNav() {
+            const navContainer = document.getElementById('headercontainer');
+            let isDragging = false;
+            let currentX;
+            let currentY;
+            let initialX;
+            let initialY;
+            let xOffset = 20;
+            let yOffset = 20;
+
+            navContainer.addEventListener('mousedown', dragStart);
+            document.addEventListener('mousemove', drag);
+            document.addEventListener('mouseup', dragEnd);
+
+            function dragStart(e) {
+                // Don't drag if clicking on links, buttons, or selects
+                if (e.target.tagName === 'A' || e.target.tagName === 'SELECT' || e.target.tagName === 'BUTTON') {
+                    return;
+                }
+
+                initialX = e.clientX - xOffset;
+                initialY = e.clientY - yOffset;
+
+                if (e.target === navContainer || navContainer.contains(e.target)) {
+                    isDragging = true;
+                    navContainer.classList.add('dragging');
+                }
+            }
+
+            function drag(e) {
+                if (isDragging) {
+                    e.preventDefault();
+                    
+                    currentX = e.clientX - initialX;
+                    currentY = e.clientY - initialY;
+
+                    xOffset = currentX;
+                    yOffset = currentY;
+
+                    setTranslate(currentX, currentY, navContainer);
+                }
+            }
+
+            function dragEnd(e) {
+                initialX = currentX;
+                initialY = currentY;
+
+                isDragging = false;
+                navContainer.classList.remove('dragging');
+            }
+
+            function setTranslate(xPos, yPos, el) {
+                el.style.left = `${xPos}px`;
+                el.style.top = `${yPos}px`;
+            }
+        }
+
         // Load participants from JSON file
         fetch('fairytale-data.json')
             .then(response => response.json())
@@ -542,6 +772,9 @@
                 participants = data;
                 renderParticipants();
                 setupModalHandlers();
+                initZoom();  
+                initDraggableNav();
+                setupEventListeners();
             })
             .catch(error => {
                 console.error('Error loading participant data:', error);
@@ -632,6 +865,11 @@
             });
 
             updateStats();
+
+        // Update map if visible
+            if (map && document.getElementById('map-container').style.display === 'block') {
+                updateMapMarkers();
+            }
         }
 
         function updateStats() {
@@ -650,16 +888,148 @@
             filterParticipants();
         }
 
-        // Event listeners
-        document.getElementById('gender').addEventListener('change', filterParticipants);
-        document.getElementById('region').addEventListener('change', filterParticipants);
-        document.getElementById('generation').addEventListener('change', filterParticipants);
-        document.getElementById('language').addEventListener('change', filterParticipants);
-        document.getElementById('themes').addEventListener('change', filterParticipants);
-        document.getElementById('resetFilters').addEventListener('click', (e) => {
+        function setupEventListeners() {
+            // View selector
+            document.getElementById('viewSelect').addEventListener('change', function(e) {
+                if (e.target.value === 'map') {
+                    showMapView();
+                } else {
+                    showGridView();
+                }
+            });
+    
+            // Filter dropdowns
+            document.getElementById('language').addEventListener('change', filterParticipants);
+            document.getElementById('gender').addEventListener('change', filterParticipants);
+            document.getElementById('region').addEventListener('change', filterParticipants);
+            document.getElementById('generation').addEventListener('change', filterParticipants);
+            document.getElementById('themes').addEventListener('change', filterParticipants);
+    
+            // Reset button
+            document.getElementById('resetFilters').addEventListener('click', function(e) {
             e.preventDefault();
-            resetFilters();
-        });
+                resetFilters();
+            });
+        }
+
+        // ==========================================
+        // MAP FUNCTIONALITY
+        // ==========================================
+        let map = null;
+        let markers = [];
+
+        // Chinese provinces coordinates lookup
+        const provinceCoordinates = {
+            'Anhui': [31.8612, 117.2840],
+            'Beijing': [39.9042, 116.4074],
+            'Chongqing': [29.4316, 106.9123],
+            'Fujian': [26.0745, 119.2965],
+            'Gansu': [36.0611, 103.8343],
+            'Guangdong': [23.1291, 113.2644],
+            'Guangxi': [22.8170, 108.3665],
+            'Guizhou': [26.5783, 106.7135],
+            'Hainan': [20.0174, 110.3493],
+            'Hebei': [38.0373, 114.4686],
+            'Heilongjiang': [45.7570, 126.6420],
+            'Henan': [34.7466, 113.6254],
+            'Hong Kong': [22.3193, 114.1694],
+            'Hubei': [30.5928, 114.3055],
+            'Hunan': [28.1987, 112.9830],
+            'Inner Mongolia': [40.8174, 111.7656],
+            'Jiangsu': [32.0603, 118.7969],
+            'Jiangxi': [28.6764, 115.8923],
+            'Jilin': [43.8378, 125.3245],
+            'Liaoning': [41.8057, 123.4328],
+            'Ningxia': [38.4681, 106.2588],
+            'Qinghai': [36.6171, 101.7782],
+            'Shaanxi': [34.2658, 108.9541],
+            'Shandong': [36.6758, 117.0006],
+            'Shanghai': [31.2304, 121.4737],
+            'Shanxi': [37.8706, 112.5489],
+            'Sichuan': [30.5728, 104.0668],
+            'Tianjin': [39.3434, 117.3616],
+            'Tibet': [29.6520, 91.1722],
+            'Xinjiang': [43.7928, 87.6278],
+            'Yunnan': [25.0406, 102.7103],
+            'Zhejiang': [30.2875, 120.1534],
+            'Macau': [22.1987, 113.5439]
+        };
+
+        function showMapView() {
+            document.getElementById('participants').style.display = 'none';
+            document.getElementById('map-container').style.display = 'block';
+            
+            if (!map) {
+                initMap();
+            }
+            
+            updateMapMarkers();
+        }
+
+        function showGridView() {
+            document.getElementById('participants').style.display = 'block';
+            document.getElementById('map-container').style.display = 'none';
+        }
+
+        function initMap() {
+            map = L.map('map').setView([35.0, 105.0], 5);
+            
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: '© OpenStreetMap contributors',
+                maxZoom: 18
+            }).addTo(map);
+        }
+
+        function updateMapMarkers() {
+            markers.forEach(marker => map.removeLayer(marker));
+            markers = [];
+            
+            const activeCards = document.querySelectorAll('.outer.active');
+            
+            activeCards.forEach(card => {
+                const participantId = card.dataset.id;
+                const participant = participants.find(p => p.id === participantId);
+                
+                if (participant && participant.region && provinceCoordinates[participant.region]) {
+                    const coords = provinceCoordinates[participant.region];
+                    
+                    const lat = coords[0] + (Math.random() - 0.5) * 0.5;
+                    const lng = coords[1] + (Math.random() - 0.5) * 0.5;
+                    
+                    const marker = L.circleMarker([lat, lng], {
+                        radius: 8,
+                        fillColor: '#000',
+                        color: '#fff',
+                        weight: 2,
+                        opacity: 1,
+                        fillOpacity: 1
+                    }).addTo(map);
+                    
+                    const popupContent = `
+                        <img src="${participant.photo ? 'images/' + participant.photo : 'data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22%3E%3Crect fill=%22%23ddd%22 width=%22100%22 height=%22100%22/%3E%3Ctext x=%2250%22 y=%2255%22 text-anchor=%22middle%22 font-size=%2220%22 fill=%22%23666%22%3E${participant.id}%3C/text%3E%3C/svg%3E'}" 
+                             class="map-popup-photo" 
+                             data-id="${participant.id}"
+                             alt="Participant ${participant.id}">
+                    `;
+                    
+                    marker.bindPopup(popupContent);
+                    
+                    marker.on('popupopen', function() {
+                        const img = document.querySelector('.map-popup-photo');
+                        if (img) {
+                            img.addEventListener('click', function() {
+                                const id = this.getAttribute('data-id');
+                                const p = participants.find(x => x.id === id);
+                                if (p) showModal(p);
+                            });
+                        }
+                    });
+                    
+                    markers.push(marker);
+                }
+            });
+        }
+
     </script>
 </body>
 </html>
