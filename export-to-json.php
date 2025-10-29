@@ -10,12 +10,25 @@ try {
     $pdo = new PDO("mysql:host=$host;port=$port;dbname=$dbname", $username, $password);
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     
-    echo "Connected to database successfully!\n";
+    echo "Connected to database successfully!\n\n";
     
     // Define images directory path
     $imagesDir = __DIR__ . '/images/';
     
-    // Fetch all participants with their region names
+    // Fetch all media files for photo lookup
+    echo "Loading media files from directus_media...\n";
+    $mediaQuery = "SELECT id, file_name, type FROM directus_media";
+    $mediaStmt = $pdo->query($mediaQuery);
+    $mediaMap = [];
+    while ($media = $mediaStmt->fetch(PDO::FETCH_ASSOC)) {
+        $mediaMap[$media['id']] = [
+            'file_name' => $media['file_name'],
+            'type' => $media['type']
+        ];
+    }
+    echo "Loaded " . count($mediaMap) . " media files\n\n";
+    
+    // Fetch all participants with ALL photo columns
     $query = "
         SELECT 
             fm.id,
@@ -23,6 +36,9 @@ try {
             fm.participant_gender,
             fm.participant_year,
             fm.themes,
+            fm.participant_photo,
+            fm.participant_pictures,
+            fm.participant_media,
             r.Participant_Region as region_name
         FROM fairytale_main fm
         LEFT JOIN regions r ON fm.participant_region = r.id
@@ -43,16 +59,28 @@ try {
     
     echo "Processing " . $stmt->rowCount() . " participants...\n";
     
+    $multiPhotoCount = 0;
+    $maxPhotos = 0;
+    $multiPhotoExamples = [];
+    $invalidYearCount = 0;
+    
     while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-        // Calculate generation from year
+     	
+        // Calculate generation from year - HANDLE INVALID YEARS GRACEFULLY
         $year = intval($row['participant_year']);
-        $decade = floor($year / 10) * 10;
-        $generation = $decade . "s";
         
-	// Keep the actual province/region name from the database
-	$region = $row['region_name']; // or whatever the actual column is called
+        $generation = "";
+        if ($year >= 1900 && $year <= 2100) {
+            $decade = floor($year / 10) * 10;
+            $generation = $decade . "s";
+        } else {
+            $invalidYearCount++;
+        }
+        
+        // Keep the actual province/region name from the database (or empty if null)
+        $region = $row['region_name'] ?: "";
 
-        // Process themes - convert comma-separated IDs to theme names
+        // Process themes
         $themeIds = array_filter(explode(',', $row['themes']));
         $themeNames = [];
         foreach ($themeIds as $themeId) {
@@ -65,26 +93,94 @@ try {
         // Determine gender
         $gender = ucfirst(strtolower($row['participant_gender']));
         
-        // For now, set language as Chinese (we can refine this later if needed)
+        // For now, set language as Chinese
         $language = ["Chinese"];
         
-        // Find photo for this participant
+        // ===== COLLECT ALL PHOTOS FROM THREE COLUMNS =====
         $participantId = str_pad($row['participant_number'], 4, '0', STR_PAD_LEFT);
-        $photo = null;
+        $allPhotos = [];
         
-        // Check for main portrait photo
-        $mainPhoto = $participantId . '_2007_portrait.jpg';
-        if (file_exists($imagesDir . $mainPhoto)) {
-            $photo = $mainPhoto;
-        } else {
-            // Check for variant photos (e.g., -1.jpg, -2.jpg)
-            $variantPhoto = $participantId . '_2007_portrait-1.jpg';
-            if (file_exists($imagesDir . $variantPhoto)) {
-                $photo = $variantPhoto;
+        // 1. Main portrait (participant_photo)
+        $photoIdsRaw = trim($row['participant_photo'], ',');
+        $photoIds = array_filter(explode(',', $photoIdsRaw));
+        foreach ($photoIds as $photoId) {
+            $photoId = trim($photoId);
+            if (isset($mediaMap[$photoId]) && $mediaMap[$photoId]['type'] == 'image') {
+                $filename = $mediaMap[$photoId]['file_name'];
+                // Try with .jpg extension if base filename doesn't exist
+                if (file_exists($imagesDir . $filename)) {
+                    $allPhotos[] = $filename;
+                } elseif (file_exists($imagesDir . $filename . '.jpg')) {
+                    $allPhotos[] = $filename . '.jpg';
+                }
             }
         }
         
-        // Build participant object matching your current format
+        // 2. Additional pictures (participant_pictures)
+        $picturesIdsRaw = trim($row['participant_pictures'], ',');
+        $picturesIds = array_filter(explode(',', $picturesIdsRaw));
+        foreach ($picturesIds as $pictureId) {
+            $pictureId = trim($pictureId);
+            if (isset($mediaMap[$pictureId]) && $mediaMap[$pictureId]['type'] == 'image') {
+                $filename = $mediaMap[$pictureId]['file_name'];
+                // Try with .jpg extension if base filename doesn't exist
+                if (file_exists($imagesDir . $filename)) {
+                    $allPhotos[] = $filename;
+                } elseif (file_exists($imagesDir . $filename . '.jpg')) {
+                    $allPhotos[] = $filename . '.jpg';
+                }
+            }
+        }
+        
+        // 3. Media files (participant_media) - only images
+        $mediaIdsRaw = trim($row['participant_media'], ',');
+        $mediaIds = array_filter(explode(',', $mediaIdsRaw));
+        foreach ($mediaIds as $mediaId) {
+            $mediaId = trim($mediaId);
+            if (isset($mediaMap[$mediaId]) && $mediaMap[$mediaId]['type'] == 'image') {
+                $filename = $mediaMap[$mediaId]['file_name'];
+                // Try with .jpg extension if base filename doesn't exist
+                if (file_exists($imagesDir . $filename)) {
+                    $allPhotos[] = $filename;
+                } elseif (file_exists($imagesDir . $filename . '.jpg')) {
+                    $allPhotos[] = $filename . '.jpg';
+                }
+            }
+        }
+        
+        // Remove duplicates
+        $allPhotos = array_unique($allPhotos);
+        $allPhotos = array_values($allPhotos); // Re-index array
+        
+        // If no photos found, try filesystem fallback
+        if (empty($allPhotos)) {
+            $mainPhoto = $participantId . '_2007_portrait.jpg';
+            if (file_exists($imagesDir . $mainPhoto)) {
+                $allPhotos[] = $mainPhoto;
+            } else {
+                $variantPhoto = $participantId . '_2007_portrait-1.jpg';
+                if (file_exists($imagesDir . $variantPhoto)) {
+                    $allPhotos[] = $variantPhoto;
+                }
+            }
+        }
+        
+        // Track statistics
+        if (count($allPhotos) > 1) {
+            $multiPhotoCount++;
+            if (count($multiPhotoExamples) < 10) {
+                $multiPhotoExamples[] = [
+                    'id' => $participantId,
+                    'count' => count($allPhotos),
+                    'photos' => $allPhotos
+                ];
+            }
+        }
+        if (count($allPhotos) > $maxPhotos) {
+            $maxPhotos = count($allPhotos);
+        }
+        
+        // Build participant object - INCLUDE EVERYONE
         $participant = [
             "id" => $participantId,
             "gender" => $gender,
@@ -93,17 +189,31 @@ try {
             "region" => $region,
             "language" => $language,
             "themes" => $themeNames,
-            "photo" => $photo  // Add photo filename or null
+            "photos" => $allPhotos,  // ALL photos from all three columns!
+            "photo_count" => count($allPhotos)
         ];
         
         $participants[] = $participant;
     }
     
-    echo "Processed " . count($participants) . " participants.\n";
+    echo "\n=== EXPORT SUMMARY ===\n";
+    echo "Total participants: " . count($participants) . "\n";
+    echo "Participants with photos: " . count(array_filter($participants, function($p) { return count($p['photos']) > 0; })) . "\n";
+    echo "Participants with MULTIPLE photos: $multiPhotoCount\n";
+    echo "Maximum photos for one participant: $maxPhotos\n";
+    echo "Participants with invalid years (included anyway): $invalidYearCount\n\n";
     
-    // Count how many have photos
-    $withPhotos = count(array_filter($participants, function($p) { return $p['photo'] !== null; }));
-    echo "Participants with photos: $withPhotos\n";
+    // Show examples
+    if (!empty($multiPhotoExamples)) {
+        echo "=== EXAMPLES OF PARTICIPANTS WITH MULTIPLE PHOTOS ===\n";
+        foreach ($multiPhotoExamples as $example) {
+            echo "ID {$example['id']}: {$example['count']} photos\n";
+            foreach ($example['photos'] as $photo) {
+                echo "  - $photo\n";
+            }
+        }
+        echo "\n";
+    }
     
     // Write to JSON file
     $jsonFile = 'fairytale-data.json';
