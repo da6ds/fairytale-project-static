@@ -28,6 +28,20 @@ try {
     }
     echo "Loaded " . count($mediaMap) . " media files\n\n";
     
+    // NEW: Fetch all themes with translations
+    echo "Loading themes with translations...\n";
+    $themeQuery = "SELECT id, theme_english, theme_chinese, theme_german FROM themes";
+    $themeStmt = $pdo->query($themeQuery);
+    $themeMap = [];
+    while ($theme = $themeStmt->fetch(PDO::FETCH_ASSOC)) {
+        $themeMap[$theme['id']] = [
+            'en' => $theme['theme_english'],
+            'zh' => $theme['theme_chinese'],
+            'de' => $theme['theme_german']
+        ];
+    }
+    echo "Loaded " . count($themeMap) . " themes\n\n";
+    
     // Fetch all participants with ALL photo columns
     $query = "
         SELECT 
@@ -39,7 +53,9 @@ try {
             fm.participant_photo,
             fm.participant_pictures,
             fm.participant_media,
-            r.Participant_Region as region_name
+            r.Participant_Region as region_en,
+            r.Participant_Region_Chinese as region_zh,
+            r.Participant_Region_German as region_de
         FROM fairytale_main fm
         LEFT JOIN regions r ON fm.participant_region = r.id
         WHERE fm.active = 1
@@ -49,14 +65,6 @@ try {
     $stmt = $pdo->query($query);
     $participants = [];
     
-    // Fetch all themes for mapping
-    $themeQuery = "SELECT id, theme_english FROM themes";
-    $themeStmt = $pdo->query($themeQuery);
-    $themeMap = [];
-    while ($theme = $themeStmt->fetch(PDO::FETCH_ASSOC)) {
-        $themeMap[$theme['id']] = $theme['theme_english'];
-    }
-    
     echo "Processing " . $stmt->rowCount() . " participants...\n";
     
     $multiPhotoCount = 0;
@@ -65,7 +73,7 @@ try {
     $invalidYearCount = 0;
     
     while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-     	
+        
         // Calculate generation from year - HANDLE INVALID YEARS GRACEFULLY
         $year = intval($row['participant_year']);
         
@@ -77,16 +85,26 @@ try {
             $invalidYearCount++;
         }
         
-        // Keep the actual province/region name from the database (or empty if null)
-        $region = $row['region_name'] ?: "";
+        // NEW: Region with translations
+        $region = [
+            'en' => $row['region_en'] ?: 'East Asia',
+            'zh' => $row['region_zh'] ?: '东亚',
+            'de' => $row['region_de'] ?: 'Ostasien'
+        ];
 
-        // Process themes
+        // NEW: Process themes with translations
         $themeIds = array_filter(explode(',', $row['themes']));
-        $themeNames = [];
+        $themes = [
+            'en' => [],
+            'zh' => [],
+            'de' => []
+        ];
         foreach ($themeIds as $themeId) {
             $themeId = trim($themeId);
             if (isset($themeMap[$themeId])) {
-                $themeNames[] = $themeMap[$themeId];
+                $themes['en'][] = $themeMap[$themeId]['en'];
+                $themes['zh'][] = $themeMap[$themeId]['zh'];
+                $themes['de'][] = $themeMap[$themeId]['de'];
             }
         }
         
@@ -94,7 +112,7 @@ try {
         $gender = ucfirst(strtolower($row['participant_gender']));
         
         // For now, set language as Chinese
-        $language = ["Chinese"];
+        $language = ["Chinese", "English", "German"];
         
         // ===== COLLECT ALL PHOTOS FROM THREE COLUMNS =====
         $participantId = str_pad($row['participant_number'], 4, '0', STR_PAD_LEFT);
@@ -151,6 +169,18 @@ try {
         // Remove duplicates
         $allPhotos = array_unique($allPhotos);
         $allPhotos = array_values($allPhotos); // Re-index array
+
+	// SPECIAL FIX: Prepend portrait file if it exists and isn't already first
+        $portraitFile = $participantId . '_2007_portrait.jpg';
+        if (file_exists($imagesDir . $portraitFile)) {
+            // Remove portrait if it's anywhere in the array
+            $allPhotos = array_filter($allPhotos, function($p) use ($portraitFile) {
+                return $p !== $portraitFile;
+            });
+            $allPhotos = array_values($allPhotos); // Re-index
+            // Add portrait at the beginning
+            array_unshift($allPhotos, $portraitFile);
+        }
         
         // If no photos found, try filesystem fallback
         if (empty($allPhotos)) {
@@ -180,16 +210,16 @@ try {
             $maxPhotos = count($allPhotos);
         }
         
-        // Build participant object - INCLUDE EVERYONE
+        // Build participant object - INCLUDE EVERYONE - WITH TRANSLATIONS
         $participant = [
             "id" => $participantId,
             "gender" => $gender,
             "year" => $year,
             "generation" => $generation,
-            "region" => $region,
+            "region" => $region,  // Now an object with en/zh/de
             "language" => $language,
-            "themes" => $themeNames,
-            "photos" => $allPhotos,  // ALL photos from all three columns!
+            "themes" => $themes,  // Now an object with en/zh/de arrays
+            "photos" => $allPhotos,
             "photo_count" => count($allPhotos)
         ];
         
