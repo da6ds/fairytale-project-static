@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>童话项目 | Fairytale Project | Fairytale-Projekt</title>
+    <link rel="icon" type="image/png" href="favicon.png">
     <style>
         /* ========================================
            CSS RESET
@@ -897,6 +898,29 @@
             margin: 0;
         }
 
+        .stats-separator {
+            margin: 0 8px;
+        }
+
+        .stats-text {
+            font-size: 11px;
+        }
+
+        .stats a {
+            color: #000;
+            text-decoration: none;
+            font-weight: normal;
+        }
+
+        .stats a:hover,
+        .stats a strong:hover {
+            color: rgb(255, 0, 0) !important;
+        }
+
+        .stats strong {
+            font-weight: bold;
+        }
+
         @media (max-width: 900px) {
             .modal-body {
                 flex-direction: column;
@@ -996,295 +1020,301 @@
 
         <!-- Stats Bar -->
         <div class="stats">
-            <span id="visibleCount">0</span> of <span id="totalCount">0</span> participants visible
+            <a href="#" id="supportLink"><strong>支持童话计划 / Support Fairytale Project / Unterstützen Sie das
+                    Fairytale-Projekt</strong></a>
+            <span class="stats-text">. An initiative of <a href="http://slought.org"
+                    target="_blank"><strong>Slought</strong></a>. Courtesy of Ai Weiwei; Leister Foundation,
+                Switzerland; Erlenmeyer Stiftung, Switzerland; and Galerie Urs Meile, Beijing-Lucerne.</span>
         </div>
-    </div>
 
-    <!-- Participant Detail Modal -->
-    <div id="participantModal" class="modal">
-        <div class="modal-content">
-            <span class="close">&times;</span>
-            <div class="modal-body">
+        <!-- Participant Detail Modal -->
+        <div id="participantModal" class="modal">
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <div class="modal-body">
 
-                <!-- Left Column: Photo and Dropdowns -->
-                <div class="modal-left">
-                    <!-- 1. PHOTO + TEXT SECTION (side-by-side) -->
+                    <!-- Left Column: Photo and Dropdowns -->
+                    <div class="modal-left">
+                        <!-- 1. PHOTO + TEXT SECTION (side-by-side) -->
 
-                    <div class="modal-photo-section">
-                        <!-- Photo on LEFT -->
-                        <div class="modal-photo-wrapper">
-                            <img id="modalPhoto" src="" alt="" class="modal-photo">
+                        <div class="modal-photo-section">
+                            <!-- Photo on LEFT -->
+                            <div class="modal-photo-wrapper">
+                                <img id="modalPhoto" src="" alt="" class="modal-photo">
+                            </div>
+
+                            <!-- Text on RIGHT -->
+                            <div class="modal-photo-info">
+                                <p id="modalId" class="modal-participant-id"></p>
+                                <p class="modal-privacy-notice">已删除名字以保护参与者。<br>Name removed to protect
+                                    participant.<br>Name
+                                    zum Schutz des Teilnehmers gelöscht.</p>
+                            </div>
                         </div>
 
-                        <!-- Text on RIGHT -->
-                        <div class="modal-photo-info">
-                            <p id="modalId" class="modal-participant-id"></p>
-                            <p class="modal-privacy-notice">已删除名字以保护参与者。<br>Name removed to protect participant.<br>Name
-                                zum Schutz des Teilnehmers gelöscht.</p>
+                        <!-- 2. DROPDOWNS -->
+                        <div class="modal-selectors">
+                            <h3>1. 选择语言 / Select language / Sprach auswählen:</h3>
+                            <select id="modalLanguage" class="modal-select">
+                                <option value="chinese">中文</option>
+                                <option value="english">English</option>
+                                <option value="german">Deutsch</option>
+                            </select>
+
+                            <h3>2. 选择内容 / Select content / Inhalt auswählen:</h3>
+                            <select id="modalContent" class="modal-select">
+                                <option value="biography">简介 / Biography / Biografie</option>
+                                <option value="application">申请问卷 / Application / Application</option>
+                                <option value="interview">访谈 / Interview / Gespräch</option>
+                                <option value="followup">后续访谈 / Follow-up Interview / Nach gespräch</option>
+                            </select>
+                        </div>
+
+                        <!-- 3. GALLERY (thumbnails at bottom) -->
+                        <div id="photoGallery" class="photo-gallery">
+                            <!-- Thumbnails inserted by JavaScript -->
                         </div>
                     </div>
 
-                    <!-- 2. DROPDOWNS -->
-                    <div class="modal-selectors">
-                        <h3>1. 选择语言 / Select language / Sprach auswählen:</h3>
-                        <select id="modalLanguage" class="modal-select">
-                            <option value="chinese">中文</option>
-                            <option value="english">English</option>
-                            <option value="german">Deutsch</option>
-                        </select>
+                    <!-- Right Column: Metadata and Content -->
+                    <div class="modal-right">
 
-                        <h3>2. 选择内容 / Select content / Inhalt auswählen:</h3>
-                        <select id="modalContent" class="modal-select">
-                            <option value="biography">简介 / Biography / Biografie</option>
-                            <option value="application">申请问卷 / Application / Application</option>
-                            <option value="interview">访谈 / Interview / Gespräch</option>
-                            <option value="followup">后续访谈 / Follow-up Interview / Nach gespräch</option>
-                        </select>
+                        <div id="photoOverlay" class="photo-overlay" style="display: none;">
+                            <img id="overlayPhoto" src="" alt="" class="overlay-photo">
+                        </div>
+
+                        <div class="modal-metadata">
+                            <p>
+                                <strong class="label-gender">性别 / Gender / Geschlecht:</strong> <span
+                                    id="modalGender"></span><br>
+                                <strong class="label-region">地区:</strong> <span id="modalRegion"></span><br>
+                                <strong class="label-generation">出生年代:</strong> <span id="modalGeneration"></span><br>
+                                <strong class="label-themes">主题 / Themes / Themen:</strong> <span
+                                    id="modalThemes"></span>
+                            </p>
+                        </div>
+
+                        <div class="modal-content-area">
+                            <h2 id="modalContentTitle" class="modal-content-title">Biography</h2>
+                            <p class="modal-placeholder">Content not yet available. Biographies and interview materials
+                                are
+                                currently being migrated.
+                            </p>
+                        </div>
                     </div>
-
-                    <!-- 3. GALLERY (thumbnails at bottom) -->
-                    <div id="photoGallery" class="photo-gallery">
-                        <!-- Thumbnails inserted by JavaScript -->
-                    </div>
-                </div>
-
-                <!-- Right Column: Metadata and Content -->
-                <div class="modal-right">
-
-                    <div id="photoOverlay" class="photo-overlay" style="display: none;">
-                        <img id="overlayPhoto" src="" alt="" class="overlay-photo">
-                    </div>
-
-                    <div class="modal-metadata">
-                        <p>
-                            <strong class="label-gender">性别 / Gender / Geschlecht:</strong> <span
-                                id="modalGender"></span><br>
-                            <strong class="label-region">地区:</strong> <span id="modalRegion"></span><br>
-                            <strong class="label-generation">出生年代:</strong> <span id="modalGeneration"></span><br>
-                            <strong class="label-themes">主题 / Themes / Themen:</strong> <span id="modalThemes"></span>
-                        </p>
-                    </div>
-
-<div class="modal-content-area">
-    <h2 id="modalContentTitle" class="modal-content-title">Biography</h2>
-    <p class="modal-placeholder">Content not yet available. Biographies and interview materials are
-        currently being migrated.
-    </p>
-</div>
                 </div>
             </div>
         </div>
-    </div>
 
-    <script>
-        let participants = [];
+        <script>
+            let participants = [];
 
-        // ==========================================
-        // ZOOM FUNCTIONALITY
-        // ==========================================
-        const ZOOM_LEVELS = [36, 29, 24, 20, 16, 13, 10, 8];
-        const DEFAULT_ZOOM = 5; // Index for 13 per row (100%)
-        let currentZoom = DEFAULT_ZOOM;
+            // ==========================================
+            // ZOOM FUNCTIONALITY
+            // ==========================================
+            const ZOOM_LEVELS = [36, 29, 24, 20, 16, 13, 10, 8];
+            const DEFAULT_ZOOM = 5; // Index for 13 per row (100%)
+            let currentZoom = DEFAULT_ZOOM;
 
-        function initZoom() {
-            setZoomLevel(DEFAULT_ZOOM);
+            function initZoom() {
+                setZoomLevel(DEFAULT_ZOOM);
 
-            // Zoom in button
-            document.getElementById('zoom-in').addEventListener('click', () => {
-                // Check if map view is active
-                if (document.getElementById('map-container').style.display === 'block') {
-                    // Zoom in on map
-                    if (map) {
-                        map.zoomIn();
-                    }
-                } else {
-                    // Zoom in on grid
-                    if (currentZoom < ZOOM_LEVELS.length - 1) {
-                        currentZoom++;
-                        applyZoom();
-                        updateZoomButtons();
-                    }
-                }
-            });
-
-            // Zoom out button
-            document.getElementById('zoom-out').addEventListener('click', () => {
-                // Check if map view is active
-                if (document.getElementById('map-container').style.display === 'block') {
-                    // Zoom out on map
-                    if (map) {
-                        map.zoomOut();
-                    }
-                } else {
-                    // Zoom out on grid
-                    if (currentZoom > 0) {
-                        currentZoom--;
-                        applyZoom();
-                        updateZoomButtons();
-                    }
-                }
-            });
-
-            updateZoomButtons();
-        }
-
-        function applyZoom() {
-            setZoomLevel(currentZoom);
-        }
-
-        function setZoomLevel(level) {
-            const container = document.getElementById('participants');
-
-            // Remove all zoom classes
-            for (let i = 0; i < ZOOM_LEVELS.length; i++) {
-                container.classList.remove(`zoom-level-${i}`);
-            }
-
-            // Add new zoom class
-            container.classList.add(`zoom-level-${level}`);
-            currentZoom = level;
-
-            updateZoomButtons();
-        }
-
-        function updateZoomButtons() {
-            const zoomIn = document.getElementById('zoom-in');
-            const zoomOut = document.getElementById('zoom-out');
-
-            zoomIn.disabled = (currentZoom === ZOOM_LEVELS.length - 1);
-            zoomOut.disabled = (currentZoom === 0);
-        }
-
-        // ==========================================
-        // DRAGGABLE NAV BOX
-        // ==========================================
-        function initDraggableNav() {
-            const navContainer = document.getElementById('headercontainer');
-            let isDragging = false;
-            let currentX;
-            let currentY;
-            let initialX;
-            let initialY;
-            let xOffset = 20;
-            let yOffset = 20;
-
-            navContainer.addEventListener('mousedown', dragStart);
-            document.addEventListener('mousemove', drag);
-            document.addEventListener('mouseup', dragEnd);
-
-            function dragStart(e) {
-                // Don't drag if clicking on links, buttons, or selects
-                if (e.target.tagName === 'A' || e.target.tagName === 'SELECT' || e.target.tagName === 'BUTTON') {
-                    return;
-                }
-
-                initialX = e.clientX - xOffset;
-                initialY = e.clientY - yOffset;
-
-                if (e.target === navContainer || navContainer.contains(e.target)) {
-                    isDragging = true;
-                    navContainer.classList.add('dragging');
-                }
-            }
-
-            function drag(e) {
-                if (isDragging) {
-                    e.preventDefault();
-
-                    currentX = e.clientX - initialX;
-                    currentY = e.clientY - initialY;
-
-                    xOffset = currentX;
-                    yOffset = currentY;
-
-                    setTranslate(currentX, currentY, navContainer);
-                }
-            }
-
-            function dragEnd(e) {
-                initialX = currentX;
-                initialY = currentY;
-
-                isDragging = false;
-                navContainer.classList.remove('dragging');
-            }
-
-            function setTranslate(xPos, yPos, el) {
-                el.style.left = `${xPos}px`;
-                el.style.top = `${yPos}px`;
-            }
-        }
-
-        function setupModalHandlers() {
-            const modal = document.getElementById('participantModal');
-            const closeBtn = document.querySelector('.close');
-            const grid = document.getElementById('participants');
-
-            // Click on photos to open modal
-            grid.addEventListener('click', function (e) {
-                if (e.target.classList.contains('participant-photo') ||
-                    e.target.classList.contains('id') ||
-                    e.target.classList.contains('outer')) {
-                    const card = e.target.closest('.outer');
-                    if (card) {
-                        const participantId = card.dataset.id;
-                        const participant = participants.find(p => p.id === participantId);
-                        if (participant) {
-                            showModal(participant);
+                // Zoom in button
+                document.getElementById('zoom-in').addEventListener('click', () => {
+                    // Check if map view is active
+                    if (document.getElementById('map-container').style.display === 'block') {
+                        // Zoom in on map
+                        if (map) {
+                            map.zoomIn();
+                        }
+                    } else {
+                        // Zoom in on grid
+                        if (currentZoom < ZOOM_LEVELS.length - 1) {
+                            currentZoom++;
+                            applyZoom();
+                            updateZoomButtons();
                         }
                     }
-                }
-            });
-            // Close button
-            closeBtn.onclick = function () {
-                modal.style.display = 'none';
+                });
+
+                // Zoom out button
+                document.getElementById('zoom-out').addEventListener('click', () => {
+                    // Check if map view is active
+                    if (document.getElementById('map-container').style.display === 'block') {
+                        // Zoom out on map
+                        if (map) {
+                            map.zoomOut();
+                        }
+                    } else {
+                        // Zoom out on grid
+                        if (currentZoom > 0) {
+                            currentZoom--;
+                            applyZoom();
+                            updateZoomButtons();
+                        }
+                    }
+                });
+
+                updateZoomButtons();
             }
 
-            // Click outside modal to close
-            window.onclick = function (event) {
-                if (event.target === modal) {
+            function applyZoom() {
+                setZoomLevel(currentZoom);
+            }
+
+            function setZoomLevel(level) {
+                const container = document.getElementById('participants');
+
+                // Remove all zoom classes
+                for (let i = 0; i < ZOOM_LEVELS.length; i++) {
+                    container.classList.remove(`zoom-level-${i}`);
+                }
+
+                // Add new zoom class
+                container.classList.add(`zoom-level-${level}`);
+                currentZoom = level;
+
+                updateZoomButtons();
+            }
+
+            function updateZoomButtons() {
+                const zoomIn = document.getElementById('zoom-in');
+                const zoomOut = document.getElementById('zoom-out');
+
+                zoomIn.disabled = (currentZoom === ZOOM_LEVELS.length - 1);
+                zoomOut.disabled = (currentZoom === 0);
+            }
+
+            // ==========================================
+            // DRAGGABLE NAV BOX
+            // ==========================================
+            function initDraggableNav() {
+                const navContainer = document.getElementById('headercontainer');
+                let isDragging = false;
+                let currentX;
+                let currentY;
+                let initialX;
+                let initialY;
+                let xOffset = 20;
+                let yOffset = 20;
+
+                navContainer.addEventListener('mousedown', dragStart);
+                document.addEventListener('mousemove', drag);
+                document.addEventListener('mouseup', dragEnd);
+
+                function dragStart(e) {
+                    // Don't drag if clicking on links, buttons, or selects
+                    if (e.target.tagName === 'A' || e.target.tagName === 'SELECT' || e.target.tagName === 'BUTTON') {
+                        return;
+                    }
+
+                    initialX = e.clientX - xOffset;
+                    initialY = e.clientY - yOffset;
+
+                    if (e.target === navContainer || navContainer.contains(e.target)) {
+                        isDragging = true;
+                        navContainer.classList.add('dragging');
+                    }
+                }
+
+                function drag(e) {
+                    if (isDragging) {
+                        e.preventDefault();
+
+                        currentX = e.clientX - initialX;
+                        currentY = e.clientY - initialY;
+
+                        xOffset = currentX;
+                        yOffset = currentY;
+
+                        setTranslate(currentX, currentY, navContainer);
+                    }
+                }
+
+                function dragEnd(e) {
+                    initialX = currentX;
+                    initialY = currentY;
+
+                    isDragging = false;
+                    navContainer.classList.remove('dragging');
+                }
+
+                function setTranslate(xPos, yPos, el) {
+                    el.style.left = `${xPos}px`;
+                    el.style.top = `${yPos}px`;
+                }
+            }
+
+            function setupModalHandlers() {
+                const modal = document.getElementById('participantModal');
+                const closeBtn = document.querySelector('.close');
+                const grid = document.getElementById('participants');
+
+                // Click on photos to open modal
+                grid.addEventListener('click', function (e) {
+                    if (e.target.classList.contains('participant-photo') ||
+                        e.target.classList.contains('id') ||
+                        e.target.classList.contains('outer')) {
+                        const card = e.target.closest('.outer');
+                        if (card) {
+                            const participantId = card.dataset.id;
+                            const participant = participants.find(p => p.id === participantId);
+                            if (participant) {
+                                showModal(participant);
+                            }
+                        }
+                    }
+                });
+                // Close button
+                closeBtn.onclick = function () {
                     modal.style.display = 'none';
                 }
-            }
-        }
 
-        // Load participants from JSON file
-        fetch('fairytale-data.json')
-            .then(response => response.json())
-            .then(data => {
-                participants = data;
-                initZoom();
-                initDraggableNav();
-                setupModalHandlers();
-                setupModalDropdowns()
-                setupEventListeners();
-                populateFilterDropdowns();
-                renderParticipants();
-            })
-            .catch(error => {
-                console.error('Error loading participant data:', error);
-            });
-
-        function renderParticipants() {
-            const grid = document.getElementById('participants');
-            grid.innerHTML = participants.map(p => {
-                // Get region name - handle both string and object formats
-                let regionName = p.region;
-                if (typeof p.region === 'object' && p.region.en) {
-                    regionName = p.region.en;
-                }
-
-                // Get themes in trilingual format
-                let themesString = '';
-                if (p.themes && p.themes.zh && p.themes.en && p.themes.de) {
-                    const trilingualThemes = [];
-                    for (let i = 0; i < p.themes.en.length; i++) {
-                        trilingualThemes.push(`${p.themes.zh[i]} / ${p.themes.en[i]} / ${p.themes.de[i]}`);
+                // Click outside modal to close
+                window.onclick = function (event) {
+                    if (event.target === modal) {
+                        modal.style.display = 'none';
                     }
-                    themesString = trilingualThemes.join('|||'); // Use ||| as separator to avoid conflicts with /
                 }
+            }
 
-                return `<div class="outer active" 
+            // Load participants from JSON file
+            fetch('fairytale-data.json')
+                .then(response => response.json())
+                .then(data => {
+                    participants = data;
+                    initZoom();
+                    initDraggableNav();
+                    setupModalHandlers();
+                    setupModalDropdowns()
+                    setupEventListeners();
+                    populateFilterDropdowns();
+                    renderParticipants();
+                })
+                .catch(error => {
+                    console.error('Error loading participant data:', error);
+                });
+
+            function renderParticipants() {
+                const grid = document.getElementById('participants');
+                grid.innerHTML = participants.map(p => {
+                    // Get region name - handle both string and object formats
+                    let regionName = p.region;
+                    if (typeof p.region === 'object' && p.region.en) {
+                        regionName = p.region.en;
+                    }
+
+                    // Get themes in trilingual format
+                    let themesString = '';
+                    if (p.themes && p.themes.zh && p.themes.en && p.themes.de) {
+                        const trilingualThemes = [];
+                        for (let i = 0; i < p.themes.en.length; i++) {
+                            trilingualThemes.push(`${p.themes.zh[i]} / ${p.themes.en[i]} / ${p.themes.de[i]}`);
+                        }
+                        themesString = trilingualThemes.join('|||'); // Use ||| as separator to avoid conflicts with /
+                    }
+
+                    return `<div class="outer active" 
             data-id="${p.id}" 
             data-gender="${p.gender}" 
             data-generation="${p.generation}" 
@@ -1292,582 +1322,653 @@
             data-language="${p.language.join(',')}" 
             data-themes="${themesString}">
             ${p.photos[0] ?
-                        `<img src="images/${p.photos[0]}" alt="Participant ${p.id}" class="participant-photo">` :
-                        `<div class="no-photo">${p.id}</div>`
-                    }
+                            `<img src="images/${p.photos[0]}" alt="Participant ${p.id}" class="participant-photo">` :
+                            `<div class="no-photo">${p.id}</div>`
+                        }
             <p class="id">${p.id}</p>
         </div>`;
-            }).join('');
+                }).join('');
 
-            updateStats();
-        }
+                updateStats();
+            }
 
 
-        function showModal(participant) {
-            const modal = document.getElementById('participantModal');
-            const photoOverlay = document.getElementById('photoOverlay');
-            const overlayPhoto = document.getElementById('overlayPhoto');
+            function showModal(participant) {
+                const modal = document.getElementById('participantModal');
+                const photoOverlay = document.getElementById('photoOverlay');
+                const overlayPhoto = document.getElementById('overlayPhoto');
 
-            // Hide overlay initially
-            photoOverlay.style.display = 'none';
+                // Hide overlay initially
+                photoOverlay.style.display = 'none';
 
-            // Set main photo - USE FIRST PHOTO FROM ARRAY
-            const photoElement = document.getElementById('modalPhoto');
+                // Set main photo - USE FIRST PHOTO FROM ARRAY
+                const photoElement = document.getElementById('modalPhoto');
 
-            if (participant.photos && participant.photos.length > 0) {
-                photoElement.src = `images/${participant.photos[0]}`;
-                photoElement.alt = `Participant ${participant.id}`;
-                photoElement.style.display = 'block';
+                if (participant.photos && participant.photos.length > 0) {
+                    photoElement.src = `images/${participant.photos[0]}`;
+                    photoElement.alt = `Participant ${participant.id}`;
+                    photoElement.style.display = 'block';
 
-                // Make main photo clickable to show large version
-                photoElement.onclick = function () {
-                    overlayPhoto.src = photoElement.src;
-                    photoOverlay.style.display = 'flex';
+                    // Make main photo clickable to show large version
+                    photoElement.onclick = function () {
+                        overlayPhoto.src = photoElement.src;
+                        photoOverlay.style.display = 'flex';
+                    };
+
+                    // Render photo gallery thumbnails
+                    const gallery = document.getElementById('photoGallery');
+                    gallery.innerHTML = '';
+                    gallery.style.display = 'flex';
+
+                    if (participant.photos.length > 0) {
+                        participant.photos.forEach((photo, index) => {
+                            const thumb = document.createElement('img');
+                            thumb.src = `images/${photo}`;
+                            thumb.alt = `Photo ${index + 1}`;
+                            thumb.className = 'photo-thumbnail' + (index === 0 ? ' active' : '');
+                            thumb.onclick = function () {
+                                // Update active thumbnail
+                                gallery.querySelectorAll('.photo-thumbnail').forEach(t => t.classList.remove('active'));
+                                thumb.classList.add('active');
+
+                                // Show large photo on right side
+                                overlayPhoto.src = `images/${photo}`;
+                                photoOverlay.style.display = 'flex';
+                            };
+                            gallery.appendChild(thumb);
+                        });
+                    }
+                } else {
+                    photoElement.style.display = 'none';
+                    document.getElementById('photoGallery').style.display = 'none';
+                }
+
+                // Click overlay background to close
+                photoOverlay.onclick = function (e) {
+                    if (e.target === photoOverlay) {
+                        photoOverlay.style.display = 'none';
+                    }
                 };
 
-                // Render photo gallery thumbnails
-                const gallery = document.getElementById('photoGallery');
-                gallery.innerHTML = '';
-                gallery.style.display = 'flex';
+                // Set participant ID
+                document.getElementById('modalId').textContent = participant.id;
 
-                if (participant.photos.length > 0) {
-                    participant.photos.forEach((photo, index) => {
-                        const thumb = document.createElement('img');
-                        thumb.src = `images/${photo}`;
-                        thumb.alt = `Photo ${index + 1}`;
-                        thumb.className = 'photo-thumbnail' + (index === 0 ? ' active' : '');
-                        thumb.onclick = function () {
-                            // Update active thumbnail
-                            gallery.querySelectorAll('.photo-thumbnail').forEach(t => t.classList.remove('active'));
-                            thumb.classList.add('active');
+                // Reset dropdowns to default (Chinese) - MOVED UP so we can read the value
+                document.getElementById('modalLanguage').value = 'chinese';
+                document.getElementById('modalContent').value = 'biography';
 
-                            // Show large photo on right side
-                            overlayPhoto.src = `images/${photo}`;
-                            photoOverlay.style.display = 'flex';
-                        };
-                        gallery.appendChild(thumb);
-                    });
+                // Get current selected language from dropdown
+                const currentLang = document.getElementById('modalLanguage').value;
+                const langMap = { 'chinese': 'zh', 'english': 'en', 'german': 'de' };
+                const langCode = langMap[currentLang];
+
+                // Set region with current language
+                const regionText = participant.region?.[langCode] || participant.region?.en || participant.region || 'Not specified';
+                document.getElementById('modalRegion').textContent = regionText;
+
+                // Format generation as range (e.g., "1980s" → "1980-1989")
+                let generationDisplay = participant.generation;
+                if (participant.generation && participant.generation.endsWith('s')) {
+                    const startYear = participant.generation.replace('s', '');
+                    const endYear = parseInt(startYear) + 9;
+                    generationDisplay = `${startYear}-${endYear}`;
                 }
-            } else {
-                photoElement.style.display = 'none';
-                document.getElementById('photoGallery').style.display = 'none';
-            }
+                document.getElementById('modalGeneration').textContent = generationDisplay;
 
-            // Click overlay background to close
-            photoOverlay.onclick = function (e) {
-                if (e.target === photoOverlay) {
-                    photoOverlay.style.display = 'none';
+                // Set themes with current language
+                const themesText = participant.themes?.[langCode]?.join(langCode === 'zh' ? '、' : ', ') || participant.themes?.en?.join(', ') || '';
+                document.getElementById('modalThemes').textContent = themesText;
+
+                // Set current participant for language switching
+                if (window.setCurrentModalParticipant) {
+                    window.setCurrentModalParticipant(participant);
                 }
-            };
 
-            // Set participant ID
-            document.getElementById('modalId').textContent = participant.id;
+                // Initialize with Chinese language
+                updateModalLanguage('chinese', participant);
 
-            // Reset dropdowns to default (Chinese) - MOVED UP so we can read the value
-            document.getElementById('modalLanguage').value = 'chinese';
-            document.getElementById('modalContent').value = 'biography';
-
-            // Get current selected language from dropdown
-            const currentLang = document.getElementById('modalLanguage').value;
-            const langMap = { 'chinese': 'zh', 'english': 'en', 'german': 'de' };
-            const langCode = langMap[currentLang];
-
-            // Set region with current language
-            const regionText = participant.region?.[langCode] || participant.region?.en || participant.region || 'Not specified';
-            document.getElementById('modalRegion').textContent = regionText;
-
-            // Format generation as range (e.g., "1980s" → "1980-1989")
-            let generationDisplay = participant.generation;
-            if (participant.generation && participant.generation.endsWith('s')) {
-                const startYear = participant.generation.replace('s', '');
-                const endYear = parseInt(startYear) + 9;
-                generationDisplay = `${startYear}-${endYear}`;
-            }
-            document.getElementById('modalGeneration').textContent = generationDisplay;
-
-            // Set themes with current language
-            const themesText = participant.themes?.[langCode]?.join(langCode === 'zh' ? '、' : ', ') || participant.themes?.en?.join(', ') || '';
-            document.getElementById('modalThemes').textContent = themesText;
-
-            // Set current participant for language switching
-            if (window.setCurrentModalParticipant) {
-                window.setCurrentModalParticipant(participant);
+                // Show modal
+                modal.style.display = 'block';
             }
 
-            // Initialize with Chinese language
-            updateModalLanguage('chinese', participant);
+            // ============================================
+            // DROPDOWN FUNCTIONALITY FIX
+            // ============================================
 
-            // Show modal
-            modal.style.display = 'block';
-        }
+            function updateModalLanguage(lang, participant) {
+                // Language translations for labels
+                const labels = {
+                    chinese: {
+                        gender: '性别:',
+                        region: '地区:',
+                        generation: '出生年代:',
+                        themes: '主题:'
+                    },
+                    english: {
+                        gender: 'Gender:',
+                        region: 'Region:',
+                        generation: 'Generation:',
+                        themes: 'Themes:'
+                    },
+                    german: {
+                        gender: 'Geschlecht:',
+                        region: 'Region:',
+                        generation: 'Generation:',
+                        themes: 'Themen:'
+                    }
+                };
 
-        // ============================================
-        // DROPDOWN FUNCTIONALITY FIX
-        // ============================================
+                // Gender translations
+                const genderTranslations = {
+                    chinese: {
+                        'Male': '男',
+                        'Female': '女'
+                    },
+                    english: {
+                        'Male': 'Male',
+                        'Female': 'Female'
+                    },
+                    german: {
+                        'Male': 'Männlich',
+                        'Female': 'Weiblich'
+                    }
+                };
 
-        function updateModalLanguage(lang, participant) {
-            // Language translations for labels
-            const labels = {
-                chinese: {
-                    gender: '性别:',
-                    region: '地区:',
-                    generation: '出生年代:',
-                    themes: '主题:'
-                },
-                english: {
-                    gender: 'Gender:',
-                    region: 'Region:',
-                    generation: 'Generation:',
-                    themes: 'Themes:'
-                },
-                german: {
-                    gender: 'Geschlecht:',
-                    region: 'Region:',
-                    generation: 'Generation:',
-                    themes: 'Themen:'
-                }
-            };
+                // Map language codes
+                const langMap = {
+                    'chinese': 'zh',
+                    'english': 'en',
+                    'german': 'de'
+                };
+                const langCode = langMap[lang];
 
-            // Gender translations
-            const genderTranslations = {
-                chinese: {
-                    'Male': '男',
-                    'Female': '女'
-                },
-                english: {
-                    'Male': 'Male',
-                    'Female': 'Female'
-                },
-                german: {
-                    'Male': 'Männlich',
-                    'Female': 'Weiblich'
-                }
-            };
+                // Update labels
+                document.querySelector('.label-gender').textContent = labels[lang].gender;
+                document.querySelector('.label-region').textContent = labels[lang].region;
+                document.querySelector('.label-generation').textContent = labels[lang].generation;
+                document.querySelector('.label-themes').textContent = labels[lang].themes;
 
-            // Map language codes
-            const langMap = {
-                'chinese': 'zh',
-                'english': 'en',
-                'german': 'de'
-            };
-            const langCode = langMap[lang];
+                // Update gender value
+                const genderValue = genderTranslations[lang][participant.gender] || participant.gender;
+                document.getElementById('modalGender').textContent = genderValue;
 
-            // Update labels
-            document.querySelector('.label-gender').textContent = labels[lang].gender;
-            document.querySelector('.label-region').textContent = labels[lang].region;
-            document.querySelector('.label-generation').textContent = labels[lang].generation;
-            document.querySelector('.label-themes').textContent = labels[lang].themes;
+                // Update region value - use translated region
+                const regionValue = participant.region?.[langCode] || participant.region?.en || participant.region || 'Not specified';
+                document.getElementById('modalRegion').textContent = regionValue;
 
-            // Update gender value
-            const genderValue = genderTranslations[lang][participant.gender] || participant.gender;
-            document.getElementById('modalGender').textContent = genderValue;
-
-            // Update region value - use translated region
-            const regionValue = participant.region?.[langCode] || participant.region?.en || participant.region || 'Not specified';
-            document.getElementById('modalRegion').textContent = regionValue;
-
-            // Update themes values - use translated themes
-            let themesText = '';
-            if (participant.themes?.[langCode]) {
-                themesText = participant.themes[langCode].join(langCode === 'zh' ? '、' : ', ');
-            } else if (participant.themes?.en) {
-                themesText = participant.themes.en.join(', ');
-            } else if (Array.isArray(participant.themes)) {
-                themesText = participant.themes.join(', ');
-            } else {
-                themesText = 'Not specified';
-            }
-            document.getElementById('modalThemes').textContent = themesText;
-
-            // Generation stays as year range (no translation needed)
-        }
-
-        function filterParticipants() {
-            const genderFilter = document.getElementById('gender').value;
-            const regionFilter = document.getElementById('region').value;
-            const generationFilter = document.getElementById('generation').value;
-            const languageFilter = document.getElementById('language').value;
-            const themesFilter = document.getElementById('themes').value;
-
-            // NEW: Check if any filter is active
-            const hasActiveFilters = genderFilter || regionFilter || generationFilter || languageFilter || themesFilter;
-            const grid = document.getElementById('participants');
-
-            // NEW: Add or remove 'filtered' class based on whether filters are active
-            if (hasActiveFilters) {
-                grid.classList.add('filtered');
-            } else {
-                grid.classList.remove('filtered');
-            }
-
-            const cards = document.querySelectorAll('.outer');
-
-            cards.forEach(card => {
-                const gender = card.dataset.gender;
-                const region = card.dataset.region;
-                const generation = card.dataset.generation;
-                const languages = card.dataset.language.split(',');
-                const themes = card.dataset.themes.split('|||');
-
-                const matchesGender = !genderFilter || gender === genderFilter;
-                const matchesRegion = !regionFilter || region === regionFilter;
-                const matchesGeneration = !generationFilter || generation === generationFilter;
-                const matchesLanguage = !languageFilter || languages.includes(languageFilter);
-                const matchesThemes = !themesFilter || themes.includes(themesFilter);
-
-                if (matchesGender && matchesRegion && matchesGeneration && matchesLanguage && matchesThemes) {
-                    card.classList.remove('inactive');
-                    card.classList.add('active');
+                // Update themes values - use translated themes
+                let themesText = '';
+                if (participant.themes?.[langCode]) {
+                    themesText = participant.themes[langCode].join(langCode === 'zh' ? '、' : ', ');
+                } else if (participant.themes?.en) {
+                    themesText = participant.themes.en.join(', ');
+                } else if (Array.isArray(participant.themes)) {
+                    themesText = participant.themes.join(', ');
                 } else {
-                    card.classList.remove('active');
-                    card.classList.add('inactive');
+                    themesText = 'Not specified';
                 }
-            });
+                document.getElementById('modalThemes').textContent = themesText;
 
-            updateStats();
+                // Generation stays as year range (no translation needed)
+            }
 
-            // Update map if visible
-            if (map && document.getElementById('map-container').style.display === 'block') {
+            function filterParticipants() {
+                const genderFilter = document.getElementById('gender').value;
+                const regionFilter = document.getElementById('region').value;
+                const generationFilter = document.getElementById('generation').value;
+                const languageFilter = document.getElementById('language').value;
+                const themesFilter = document.getElementById('themes').value;
+
+                // NEW: Check if any filter is active
+                const hasActiveFilters = genderFilter || regionFilter || generationFilter || languageFilter || themesFilter;
+                const grid = document.getElementById('participants');
+
+                // NEW: Add or remove 'filtered' class based on whether filters are active
+                if (hasActiveFilters) {
+                    grid.classList.add('filtered');
+                } else {
+                    grid.classList.remove('filtered');
+                }
+
+                const cards = document.querySelectorAll('.outer');
+
+                cards.forEach(card => {
+                    const gender = card.dataset.gender;
+                    const region = card.dataset.region;
+                    const generation = card.dataset.generation;
+                    const languages = card.dataset.language.split(',');
+                    const themes = card.dataset.themes.split('|||');
+
+                    const matchesGender = !genderFilter || gender === genderFilter;
+                    const matchesRegion = !regionFilter || region === regionFilter;
+                    const matchesGeneration = !generationFilter || generation === generationFilter;
+                    const matchesLanguage = !languageFilter || languages.includes(languageFilter);
+                    const matchesThemes = !themesFilter || themes.includes(themesFilter);
+
+                    if (matchesGender && matchesRegion && matchesGeneration && matchesLanguage && matchesThemes) {
+                        card.classList.remove('inactive');
+                        card.classList.add('active');
+                    } else {
+                        card.classList.remove('active');
+                        card.classList.add('inactive');
+                    }
+                });
+
+                updateStats();
+
+                // Update map if visible
+                if (map && document.getElementById('map-container').style.display === 'block') {
+                    updateMapMarkers();
+                }
+            }
+
+            function updateStats() {
+                const total = document.querySelectorAll('.outer').length;
+                const visible = document.querySelectorAll('.outer.active').length;
+                document.getElementById('totalCount').textContent = total;
+                document.getElementById('visibleCount').textContent = visible;
+            }
+
+            function resetFilters() {
+                document.getElementById('gender').value = '';
+                document.getElementById('region').value = '';
+                document.getElementById('generation').value = '';
+                document.getElementById('language').value = '';
+                document.getElementById('themes').value = '';
+                filterParticipants();
+            }
+
+            function setupEventListeners() {
+                // View selector
+                document.getElementById('viewSelect').addEventListener('change', function (e) {
+                    if (e.target.value === 'map') {
+                        showMapView();
+                    } else {
+                        showGridView();
+                    }
+                });
+
+            }
+
+            function setupModalDropdowns() {
+                const languageSelect = document.getElementById('modalLanguage');
+                const contentSelect = document.getElementById('modalContent');
+                const photoOverlay = document.getElementById('photoOverlay');
+                const contentTitle = document.getElementById('modalContentTitle');
+                const metadata = document.querySelector('.modal-metadata'); // Add this line
+
+                // Store current participant for language updates
+                let currentParticipant = null;
+
+                // Content type titles in all three languages
+                const contentTitles = {
+                    biography: {
+                        chinese: '简介',
+                        english: 'Biography',
+                        german: 'Biografie'
+                    },
+                    application: {
+                        chinese: '申请问卷',
+                        english: 'Application',
+                        german: 'Application'
+                    },
+                    interview: {
+                        chinese: '访谈',
+                        english: 'Interview',
+                        german: 'Gespräch'
+                    },
+                    followup: {
+                        chinese: '后续访谈',
+                        english: 'Follow-up Interview',
+                        german: 'Nach gespräch'
+                    }
+                };
+
+                function updateContent() {
+                    const lang = languageSelect.value;
+                    const content = contentSelect.value;
+
+                    // Update the title based on selected language and content type
+                    if (contentTitle && contentTitles[content]) {
+                        contentTitle.textContent = contentTitles[content][lang];
+                    }
+
+                    // Show/hide metadata based on content type
+                    if (metadata) {
+                        if (content === 'biography') {
+                            metadata.style.display = 'block';
+                        } else {
+                            metadata.style.display = 'none';
+                        }
+                    }
+
+                    // Update language for metadata if we have a participant
+                    if (currentParticipant) {
+                        updateModalLanguage(lang, currentParticipant);
+                    }
+
+                    // Hide photo overlay when changing content
+                    if (photoOverlay) {
+                        photoOverlay.style.display = 'none';
+                    }
+                }
+
+                languageSelect.addEventListener('change', updateContent);
+                contentSelect.addEventListener('change', updateContent);
+
+                // Expose function to update current participant
+                window.setCurrentModalParticipant = function (participant) {
+                    currentParticipant = participant;
+                };
+            }
+
+            function populateFilterDropdowns() {
+                // Get unique regions in trilingual format (skip East Asia)
+                const regionSet = new Set();
+                participants.forEach(p => {
+                    if (p.region && p.region.zh && p.region.en && p.region.de && p.region.en !== 'East Asia') {
+                        regionSet.add(`${p.region.zh} / ${p.region.en} / ${p.region.de}`);
+                    }
+                });
+
+                const regions = [...regionSet].sort((a, b) => {
+                    // Sort by Chinese characters (first part before /)
+                    const aZh = a.split(' / ')[0];
+                    const bZh = b.split(' / ')[0];
+                    return aZh.localeCompare(bZh, 'zh-CN');
+                });
+
+                // Get unique themes - flatten all theme arrays and get unique values
+                const themeSet = new Set();
+                participants.forEach(p => {
+                    if (p.themes && p.themes.zh && p.themes.en && p.themes.de) {
+                        // Iterate through all three language arrays together
+                        for (let i = 0; i < p.themes.en.length; i++) {
+                            const themeTrilingual = `${p.themes.zh[i]} / ${p.themes.en[i]} / ${p.themes.de[i]}`;
+                            themeSet.add(themeTrilingual);
+                        }
+                    }
+                });
+                const themes = [...themeSet].sort((a, b) => {
+                    // Sort by English (middle part)
+                    const aEn = a.split(' / ')[1];
+                    const bEn = b.split(' / ')[1];
+                    return aEn.localeCompare(bEn, 'en');
+                });
+
+                // Get unique generations
+                const generations = [...new Set(participants.map(p => p.generation))]
+                    .filter(g => g && g !== 's' && !isNaN(parseInt(g.replace('s', ''))))
+                    .sort()
+                    .reverse();
+
+                const regionSelect = document.getElementById('region');
+                const currentRegionValue = regionSelect.value;
+                regionSelect.innerHTML = '<option value="">地区 / Region / Region</option>';
+                regions.forEach(region => {
+                    const option = document.createElement('option');
+                    option.value = region;
+                    option.textContent = region;
+                    regionSelect.appendChild(option);
+                });
+                regionSelect.value = currentRegionValue;
+
+                // Populate generation dropdown
+                const generationSelect = document.getElementById('generation');
+                const currentGenerationValue = generationSelect.value;
+                generationSelect.innerHTML = '<option value="">出生年代 / Generation / Generation</option>';
+                generations.forEach(generation => {
+                    const option = document.createElement('option');
+                    option.value = generation;
+                    const startYear = parseInt(generation.replace('s', ''));
+                    if (!isNaN(startYear)) {
+                        const endYear = startYear + 9;
+                        option.textContent = `${startYear}-${endYear}`;
+                        generationSelect.appendChild(option);
+                    }
+                });
+                generationSelect.value = currentGenerationValue;
+
+                // Populate themes dropdown
+                const themesSelect = document.getElementById('themes');
+                const currentThemesValue = themesSelect.value;
+                themesSelect.innerHTML = '<option value="">主题 / Themes / Themen</option>';
+                themes.forEach(theme => {
+                    const option = document.createElement('option');
+                    option.value = theme;
+                    option.textContent = theme;
+                    themesSelect.appendChild(option);
+                });
+                themesSelect.value = currentThemesValue;
+
+                // Event listeners
+                document.getElementById('language').addEventListener('change', filterParticipants);
+                document.getElementById('gender').addEventListener('change', filterParticipants);
+                document.getElementById('region').addEventListener('change', filterParticipants);
+                document.getElementById('generation').addEventListener('change', filterParticipants);
+                document.getElementById('themes').addEventListener('change', filterParticipants);
+
+                document.getElementById('resetFilters').addEventListener('click', function (e) {
+                    e.preventDefault();
+                    resetFilters();
+                });
+            }
+
+            // ==========================================
+            // MAP FUNCTIONALITY
+            // ==========================================
+            let map = null;
+            let markers = [];
+
+            // Chinese provinces coordinates lookup
+            const provinceCoordinates = {
+                'Anhui': [31.8612, 117.2840],
+                'Beijing': [39.9042, 116.4074],
+                'Chongqing': [29.4316, 106.9123],
+                'Fujian': [26.0745, 119.2965],
+                'Gansu': [36.0611, 103.8343],
+                'Guangdong': [23.1291, 113.2644],
+                'Guangxi': [22.8170, 108.3665],
+                'Guizhou': [26.5783, 106.7135],
+                'Hainan': [20.0174, 110.3493],
+                'Hebei': [38.0373, 114.4686],
+                'Heilongjiang': [45.7570, 126.6420],
+                'Henan': [34.7466, 113.6254],
+                'Hong Kong': [22.3193, 114.1694],
+                'Hubei': [30.5928, 114.3055],
+                'Hunan': [28.1987, 112.9830],
+                'Inner Mongolia': [40.8174, 111.7656],
+                'Jiangsu': [32.0603, 118.7969],
+                'Jiangxi': [28.6764, 115.8923],
+                'Jilin': [43.8378, 125.3245],
+                'Liaoning': [41.8057, 123.4328],
+                'Ningxia': [38.4681, 106.2588],
+                'Qinghai': [36.6171, 101.7782],
+                'Shaanxi': [34.2658, 108.9541],
+                'Shandong': [36.6758, 117.0006],
+                'Shanghai': [31.2304, 121.4737],
+                'Shanxi': [37.8706, 112.5489],
+                'Sichuan': [30.5728, 104.0668],
+                'Tianjin': [39.3434, 117.3616],
+                'Tibet': [29.6520, 91.1722],
+                'Xinjiang': [43.7928, 87.6278],
+                'Yunnan': [25.0406, 102.7103],
+                'Zhejiang': [30.2875, 120.1534],
+                'Macau': [22.1987, 113.5439]
+            };
+
+            function showMapView() {
+                document.getElementById('participants').style.display = 'none';
+                document.getElementById('map-container').style.display = 'block';
+
+                if (!map) {
+                    initMap();
+                }
+
                 updateMapMarkers();
             }
-        }
 
-        function updateStats() {
-            const total = document.querySelectorAll('.outer').length;
-            const visible = document.querySelectorAll('.outer.active').length;
-            document.getElementById('totalCount').textContent = total;
-            document.getElementById('visibleCount').textContent = visible;
-        }
-
-        function resetFilters() {
-            document.getElementById('gender').value = '';
-            document.getElementById('region').value = '';
-            document.getElementById('generation').value = '';
-            document.getElementById('language').value = '';
-            document.getElementById('themes').value = '';
-            filterParticipants();
-        }
-
-        function setupEventListeners() {
-            // View selector
-            document.getElementById('viewSelect').addEventListener('change', function (e) {
-                if (e.target.value === 'map') {
-                    showMapView();
-                } else {
-                    showGridView();
-                }
-            });
-
-        }
-
-function setupModalDropdowns() {
-    const languageSelect = document.getElementById('modalLanguage');
-    const contentSelect = document.getElementById('modalContent');
-    const photoOverlay = document.getElementById('photoOverlay');
-    const contentTitle = document.getElementById('modalContentTitle');
-    const metadata = document.querySelector('.modal-metadata'); // Add this line
-
-    // Store current participant for language updates
-    let currentParticipant = null;
-
-    // Content type titles in all three languages
-    const contentTitles = {
-        biography: {
-            chinese: '简介',
-            english: 'Biography',
-            german: 'Biografie'
-        },
-        application: {
-            chinese: '申请问卷',
-            english: 'Application',
-            german: 'Application'
-        },
-        interview: {
-            chinese: '访谈',
-            english: 'Interview',
-            german: 'Gespräch'
-        },
-        followup: {
-            chinese: '后续访谈',
-            english: 'Follow-up Interview',
-            german: 'Nach gespräch'
-        }
-    };
-
-    function updateContent() {
-        const lang = languageSelect.value;
-        const content = contentSelect.value;
-
-        // Update the title based on selected language and content type
-        if (contentTitle && contentTitles[content]) {
-            contentTitle.textContent = contentTitles[content][lang];
-        }
-
-        // Show/hide metadata based on content type
-        if (metadata) {
-            if (content === 'biography') {
-                metadata.style.display = 'block';
-            } else {
-                metadata.style.display = 'none';
-            }
-        }
-
-        // Update language for metadata if we have a participant
-        if (currentParticipant) {
-            updateModalLanguage(lang, currentParticipant);
-        }
-
-        // Hide photo overlay when changing content
-        if (photoOverlay) {
-            photoOverlay.style.display = 'none';
-        }
-    }
-
-    languageSelect.addEventListener('change', updateContent);
-    contentSelect.addEventListener('change', updateContent);
-
-    // Expose function to update current participant
-    window.setCurrentModalParticipant = function (participant) {
-        currentParticipant = participant;
-    };
-}
-
-        function populateFilterDropdowns() {
-            // Get unique regions in trilingual format (skip East Asia)
-            const regionSet = new Set();
-            participants.forEach(p => {
-                if (p.region && p.region.zh && p.region.en && p.region.de && p.region.en !== 'East Asia') {
-                    regionSet.add(`${p.region.zh} / ${p.region.en} / ${p.region.de}`);
-                }
-            });
-
-            const regions = [...regionSet].sort((a, b) => {
-                // Sort by Chinese characters (first part before /)
-                const aZh = a.split(' / ')[0];
-                const bZh = b.split(' / ')[0];
-                return aZh.localeCompare(bZh, 'zh-CN');
-            });
-
-            // Get unique themes - flatten all theme arrays and get unique values
-            const themeSet = new Set();
-            participants.forEach(p => {
-                if (p.themes && p.themes.zh && p.themes.en && p.themes.de) {
-                    // Iterate through all three language arrays together
-                    for (let i = 0; i < p.themes.en.length; i++) {
-                        const themeTrilingual = `${p.themes.zh[i]} / ${p.themes.en[i]} / ${p.themes.de[i]}`;
-                        themeSet.add(themeTrilingual);
-                    }
-                }
-            });
-            const themes = [...themeSet].sort((a, b) => {
-                // Sort by English (middle part)
-                const aEn = a.split(' / ')[1];
-                const bEn = b.split(' / ')[1];
-                return aEn.localeCompare(bEn, 'en');
-            });
-
-            // Get unique generations
-            const generations = [...new Set(participants.map(p => p.generation))]
-                .filter(g => g && g !== 's' && !isNaN(parseInt(g.replace('s', ''))))
-                .sort()
-                .reverse();
-
-            const regionSelect = document.getElementById('region');
-            const currentRegionValue = regionSelect.value;
-            regionSelect.innerHTML = '<option value="">地区 / Region / Region</option>';
-            regions.forEach(region => {
-                const option = document.createElement('option');
-                option.value = region;
-                option.textContent = region;
-                regionSelect.appendChild(option);
-            });
-            regionSelect.value = currentRegionValue;
-
-            // Populate generation dropdown
-            const generationSelect = document.getElementById('generation');
-            const currentGenerationValue = generationSelect.value;
-            generationSelect.innerHTML = '<option value="">出生年代 / Generation / Generation</option>';
-            generations.forEach(generation => {
-                const option = document.createElement('option');
-                option.value = generation;
-                const startYear = parseInt(generation.replace('s', ''));
-                if (!isNaN(startYear)) {
-                    const endYear = startYear + 9;
-                    option.textContent = `${startYear}-${endYear}`;
-                    generationSelect.appendChild(option);
-                }
-            });
-            generationSelect.value = currentGenerationValue;
-
-            // Populate themes dropdown
-            const themesSelect = document.getElementById('themes');
-            const currentThemesValue = themesSelect.value;
-            themesSelect.innerHTML = '<option value="">主题 / Themes / Themen</option>';
-            themes.forEach(theme => {
-                const option = document.createElement('option');
-                option.value = theme;
-                option.textContent = theme;
-                themesSelect.appendChild(option);
-            });
-            themesSelect.value = currentThemesValue;
-
-            // Event listeners
-            document.getElementById('language').addEventListener('change', filterParticipants);
-            document.getElementById('gender').addEventListener('change', filterParticipants);
-            document.getElementById('region').addEventListener('change', filterParticipants);
-            document.getElementById('generation').addEventListener('change', filterParticipants);
-            document.getElementById('themes').addEventListener('change', filterParticipants);
-
-            document.getElementById('resetFilters').addEventListener('click', function (e) {
-                e.preventDefault();
-                resetFilters();
-            });
-        }
-
-        // ==========================================
-        // MAP FUNCTIONALITY
-        // ==========================================
-        let map = null;
-        let markers = [];
-
-        // Chinese provinces coordinates lookup
-        const provinceCoordinates = {
-            'Anhui': [31.8612, 117.2840],
-            'Beijing': [39.9042, 116.4074],
-            'Chongqing': [29.4316, 106.9123],
-            'Fujian': [26.0745, 119.2965],
-            'Gansu': [36.0611, 103.8343],
-            'Guangdong': [23.1291, 113.2644],
-            'Guangxi': [22.8170, 108.3665],
-            'Guizhou': [26.5783, 106.7135],
-            'Hainan': [20.0174, 110.3493],
-            'Hebei': [38.0373, 114.4686],
-            'Heilongjiang': [45.7570, 126.6420],
-            'Henan': [34.7466, 113.6254],
-            'Hong Kong': [22.3193, 114.1694],
-            'Hubei': [30.5928, 114.3055],
-            'Hunan': [28.1987, 112.9830],
-            'Inner Mongolia': [40.8174, 111.7656],
-            'Jiangsu': [32.0603, 118.7969],
-            'Jiangxi': [28.6764, 115.8923],
-            'Jilin': [43.8378, 125.3245],
-            'Liaoning': [41.8057, 123.4328],
-            'Ningxia': [38.4681, 106.2588],
-            'Qinghai': [36.6171, 101.7782],
-            'Shaanxi': [34.2658, 108.9541],
-            'Shandong': [36.6758, 117.0006],
-            'Shanghai': [31.2304, 121.4737],
-            'Shanxi': [37.8706, 112.5489],
-            'Sichuan': [30.5728, 104.0668],
-            'Tianjin': [39.3434, 117.3616],
-            'Tibet': [29.6520, 91.1722],
-            'Xinjiang': [43.7928, 87.6278],
-            'Yunnan': [25.0406, 102.7103],
-            'Zhejiang': [30.2875, 120.1534],
-            'Macau': [22.1987, 113.5439]
-        };
-
-        function showMapView() {
-            document.getElementById('participants').style.display = 'none';
-            document.getElementById('map-container').style.display = 'block';
-
-            if (!map) {
-                initMap();
+            function showGridView() {
+                document.getElementById('participants').style.display = 'block';
+                document.getElementById('map-container').style.display = 'none';
             }
 
-            updateMapMarkers();
-        }
+            function initMap() {
+                map = L.map('map', {
+                    zoomControl: false  // Disable Leaflet's default zoom controls
+                }).setView([35.0, 105.0], 5);
 
-        function showGridView() {
-            document.getElementById('participants').style.display = 'block';
-            document.getElementById('map-container').style.display = 'none';
-        }
+                L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                    attribution: '© OpenStreetMap contributors',
+                    maxZoom: 18
+                }).addTo(map);
+            }
 
-        function initMap() {
-            map = L.map('map', {
-                zoomControl: false  // Disable Leaflet's default zoom controls
-            }).setView([35.0, 105.0], 5);
+            function updateMapMarkers() {
+                // Clear existing markers
+                markers.forEach(marker => map.removeLayer(marker));
+                markers = [];
 
-            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-                attribution: '© OpenStreetMap contributors',
-                maxZoom: 18
-            }).addTo(map);
-        }
+                // Configuration: scatter radius in degrees
+                const SCATTER_RADIUS = 0.3;
 
-        function updateMapMarkers() {
-            // Clear existing markers
-            markers.forEach(marker => map.removeLayer(marker));
-            markers = [];
+                // Get all active (visible) participants from the grid
+                const activeCards = document.querySelectorAll('.outer.active');
 
-            // Configuration: scatter radius in degrees
-            const SCATTER_RADIUS = 0.3;
+                activeCards.forEach(card => {
+                    const participantId = card.dataset.id;
+                    const participant = participants.find(p => p.id === participantId);
 
-            // Get all active (visible) participants from the grid
-            const activeCards = document.querySelectorAll('.outer.active');
+                    if (participant) {
+                        // Get region name - handle both string and object formats
+                        let regionName = participant.region;
+                        if (typeof participant.region === 'object' && participant.region.en) {
+                            regionName = participant.region.en;
+                        }
 
-            activeCards.forEach(card => {
-                const participantId = card.dataset.id;
-                const participant = participants.find(p => p.id === participantId);
+                        // Check if we have coordinates for this region
+                        if (regionName && provinceCoordinates[regionName]) {
+                            const coords = provinceCoordinates[regionName];
 
-                if (participant) {
-                    // Get region name - handle both string and object formats
-                    let regionName = participant.region;
-                    if (typeof participant.region === 'object' && participant.region.en) {
-                        regionName = participant.region.en;
-                    }
+                            // Random scatter with even distribution
+                            const angle = Math.random() * 2 * Math.PI;
+                            const distance = Math.sqrt(Math.random()) * SCATTER_RADIUS;
+                            const latOffset = distance * Math.cos(angle);
+                            const lngOffset = distance * Math.sin(angle);
 
-                    // Check if we have coordinates for this region
-                    if (regionName && provinceCoordinates[regionName]) {
-                        const coords = provinceCoordinates[regionName];
+                            const lat = coords[0] + latOffset;
+                            const lng = coords[1] + lngOffset;
 
-                        // Random scatter with even distribution
-                        const angle = Math.random() * 2 * Math.PI;
-                        const distance = Math.sqrt(Math.random()) * SCATTER_RADIUS;
-                        const latOffset = distance * Math.cos(angle);
-                        const lngOffset = distance * Math.sin(angle);
+                            // Create marker
+                            const marker = L.circleMarker([lat, lng], {
+                                radius: 8,
+                                fillColor: '#000',
+                                color: '#fff',
+                                weight: 2,
+                                opacity: 1,
+                                fillOpacity: 1
+                            }).addTo(map);
 
-                        const lat = coords[0] + latOffset;
-                        const lng = coords[1] + lngOffset;
-
-                        // Create marker
-                        const marker = L.circleMarker([lat, lng], {
-                            radius: 8,
-                            fillColor: '#000',
-                            color: '#fff',
-                            weight: 2,
-                            opacity: 1,
-                            fillOpacity: 1
-                        }).addTo(map);
-
-                        // Create popup
-                        const popupContent = `
+                            // Create popup
+                            const popupContent = `
                     <img src="${participant.photos && participant.photos.length > 0 ? 'images/' + participant.photos[0] : 'data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22%3E%3Crect fill=%22%23ddd%22 width=%22100%22 height=%22100%22/%3E%3Ctext x=%2250%22 y=%2255%22 text-anchor=%22middle%22 font-size=%2220%22 fill=%22%23666%22%3E${participant.id}%3C/text%3E%3C/svg%3E'}" 
                     class="map-popup-photo" 
                     data-id="${participant.id}"
                     alt="Participant ${participant.id}">
                 `;
 
-                        marker.bindPopup(popupContent);
+                            marker.bindPopup(popupContent);
 
-                        // Click handler
-                        marker.on('popupopen', function () {
-                            const img = document.querySelector('.map-popup-photo');
-                            if (img) {
-                                img.addEventListener('click', function () {
-                                    const id = this.getAttribute('data-id');
-                                    const p = participants.find(x => x.id === id);
-                                    if (p) showModal(p);
-                                });
-                            }
-                        });
+                            // Click handler
+                            marker.on('popupopen', function () {
+                                const img = document.querySelector('.map-popup-photo');
+                                if (img) {
+                                    img.addEventListener('click', function () {
+                                        const id = this.getAttribute('data-id');
+                                        const p = participants.find(x => x.id === id);
+                                        if (p) showModal(p);
+                                    });
+                                }
+                            });
 
-                        markers.push(marker);
+                            markers.push(marker);
+                        }
                     }
+                });
+            }
+
+
+
+            // Support modal functionality
+            document.getElementById('supportLink').addEventListener('click', function (e) {
+                e.preventDefault();
+                showSupportModal();
+            });
+
+            function showSupportModal() {
+                // Create modal HTML
+                const modalHTML = `
+        <div id="supportModal" class="modal" style="display: block;">
+            <div class="modal-content">
+                <span class="close" onclick="closeSupportModal()">&times;</span>
+                <div style="padding: 30px 40px;">
+                    <h2 style="border-bottom: 2px dotted #ccc; padding-bottom: 10px; margin-bottom: 20px;">支持童话计划 / Support Fairytale Project / Unterstützen Sie das Fairytale-Projekt</h2>
+                    
+                    <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 30px; font-size: 12px; line-height: 1.6;">
+                        <div>
+                            <p><strong>认为能够帮我们?</strong></p>
+                            <p>童话计划正寻找会英语或德语或者两者兼通,且能够志愿者帮助我们:无偿使用许中文翻译成英语及/或德语。请参见下方邮件与我们联系或者获得更多信息。</p>
+                            <p>如果您了解使馆与他们、慈善事业或者其他能为计项目提供可能资金或者赞助的人士,我们很希望能够与您取得联系。</p>
+                            <p>正如这个翻译项目不需特技,童话计划只能够依赖其热心投身项目的人士。</p>
+                            <p>不是一个翻译但想替补助我们?现时又请点击红色"捐赠"钮。我们诚挚地欢迎任何名目的捐资。如有疑问或疑虑,请点击此处并发送一封邮件至网站管理员。谢谢你。</p>
+                            <p>请点击按钮,通过Slought Foundation,来选定对童话计划进行扣税捐赠,或发送电子邮件至<strong>melissa@fairytaleproject.net</strong>获取更多信息。</p>
+                        </div>
+                        
+                        <div>
+                            <p><strong>Think you can help? Is Fairytale Project is searching for the following volunteers that can translate:</strong></p>
+                            <p>-Mandarin to English<br>-English to German<br>-Mandarin to German</p>
+                            <p>Fairytale Project is an entirely volunteer-based effort, and we recognize that we can only succeed by working with us to realize the project. Whether you are a beginner Mandarin student, attended a Chinese or German evening language class, a professional translator, or a bilingual/multilingual speaker, we need you!</p>
+                            <p>Please contact <strong>melissa@fairytaleproject.net</strong> for more information. Translators may also choose to remain anonymous or be named as preferred.</p>
+                            <p>As the translation process continues, so the fairytale unfolds for most of us.</p>
+                            <p><strong>Not a translator but interested in participating?</strong> As a volunteer-driven project, we welcome donations of any amount. Your contribution will support and sustain the digital infrastructure required to present the archive online.</p>
+                            <p>Please click on the button to make a tax-deductible donation to Fairytale Project today via Slought Foundation, or email <strong>melissa@fairytaleproject.net</strong> for further details.</p>
+                            <a href="https://slought.org/engage/donate" target="_blank" style="display: inline-block; background: #c00; color: white; padding: 10px 20px; text-decoration: none; font-weight: bold; margin-top: 10px;">DONATE</a>
+                        </div>
+                        
+                        <div>
+                            <p><strong>Vielleicht können Sie uns helfen? Fairytale Project sucht freiwillige Übersetzer für die folgenden Sprachen:</strong></p>
+                            <p>- aus Mandarin-Chinesisch ins Englische<br>- aus dem Englischen ins Deutsche<br>- aus Mandarin-Chinesisch ins Deutsche</p>
+                            <p>Fairytale Project ist ein ausschließlich auf Freiwilligen-Basis beruhendes Projekt, und wir freuen uns über Personen, die Interesse haben, mit uns zusammen zu arbeiten um dieses Projekt möglich zu machen. Egal, ob Sie ein Anfänger in Mandarin-Chinesisch sind, einen Chinesisch- oder Deutschkurs am Abendgymnasium nehmen, ein professioneller und akkreditierter Übersetzer sind oder zwei- oder dreisprachiger Freiwilliger, wir brauchen Ihre Hilfe.</p>
+                            <p>Bitte wenden Sie sich an <strong>melissa@fairytaleproject.net</strong> für nähere Informationen. Übersetzer können, ja nach Präferenz, anonym bleiben oder namentlich genannt werden.</p>
+                            <p>Im Laufe der Übersetzung des Projekts entfaltet sich das "Märchen" für immer mehr von uns.</p>
+                            <p><strong>Sie sind zwar kein Übersetzer aber interessiert daran, am Projekt teilzunehmen?</strong> Als ein Project, das von Freiwilligen getragen wird, heißen wir jede Art von Spende willkommen. Ihr Beitrag unterstützt und erhält die digitale Infrastruktur, die für die Präsentation des Archivs im Internet erforderlich ist.</p>
+                            <p>Bitte klicken Sie auf den Button um eine steuerlich absetzbare Spende an Fairytale Project via Slought Foundation zu leisten, oder senden Sie eine E-Mail an <strong>melissa@fairytaleproject.net</strong> für weitere Informationen.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    `;
+
+                // Add modal to body
+                document.body.insertAdjacentHTML('beforeend', modalHTML);
+            }
+
+            function closeSupportModal() {
+                const modal = document.getElementById('supportModal');
+                if (modal) {
+                    modal.remove();
+                }
+            }
+
+            // Close modal when clicking outside
+            document.addEventListener('click', function (e) {
+                const modal = document.getElementById('supportModal');
+                if (modal && e.target === modal) {
+                    closeSupportModal();
                 }
             });
-        }
-
-    </script>
+        </script>
 </body>
 
 </html>
