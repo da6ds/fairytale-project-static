@@ -94,9 +94,9 @@ try {
 
         // NEW: Process themes with translations
         $themeIds = array_filter(explode(',', $row['themes']));
-        $themeIds = array_map('trim', $themeIds);      // ← ADD THIS LINE (trims whitespace)
-        $themeIds = array_unique($themeIds);           // ← ADD THIS LINE (removes duplicates)
-        $themeIds = array_values($themeIds);           // ← ADD THIS LINE (re-indexes array)
+        $themeIds = array_map('trim', $themeIds);
+        $themeIds = array_unique($themeIds);
+        $themeIds = array_values($themeIds);
 
         $themes = [
             'en' => [],
@@ -115,8 +115,56 @@ try {
         // Determine gender
         $gender = ucfirst(strtolower($row['participant_gender']));
         
-        // For now, set language as Chinese
-        $language = ["Chinese", "English", "German"];
+        // Check which languages have actual content for this participant
+        $language = [];
+        $participantNum = $row['participant_number'];
+
+        // Check Chinese content
+        $chineseStmt = $pdo->prepare("
+            SELECT 1 FROM fairytale_chinese 
+            WHERE participant_number = ? AND active = 1 
+            AND (bio IS NOT NULL AND bio != '' 
+                 OR application IS NOT NULL AND application != '' 
+                 OR interview IS NOT NULL AND interview != '')
+            LIMIT 1
+        ");
+        $chineseStmt->execute([$participantNum]);
+        if ($chineseStmt->fetch()) {
+            $language[] = 'Chinese';
+        }
+
+        // Check English content
+        $englishStmt = $pdo->prepare("
+            SELECT 1 FROM fairytale_english 
+            WHERE participant_number = ? AND active = 1 
+            AND (bio IS NOT NULL AND bio != '' 
+                 OR application IS NOT NULL AND application != '' 
+                 OR interview IS NOT NULL AND interview != '')
+            LIMIT 1
+        ");
+        $englishStmt->execute([$participantNum]);
+        if ($englishStmt->fetch()) {
+            $language[] = 'English';
+        }
+
+        // Check German content
+        $germanStmt = $pdo->prepare("
+            SELECT 1 FROM fairytale_german 
+            WHERE participant_number = ? AND active = 1 
+            AND (bio IS NOT NULL AND bio != '' 
+                 OR application IS NOT NULL AND application != '' 
+                 OR interview IS NOT NULL AND interview != '')
+            LIMIT 1
+        ");
+        $germanStmt->execute([$participantNum]);
+        if ($germanStmt->fetch()) {
+            $language[] = 'German';
+        }
+
+        // If no language content found, default to Chinese
+        if (empty($language)) {
+            $language[] = 'Chinese';
+        }
         
         // ===== COLLECT ALL PHOTOS FROM THREE COLUMNS =====
         $participantId = str_pad($row['participant_number'], 4, '0', STR_PAD_LEFT);
@@ -174,7 +222,7 @@ try {
         $allPhotos = array_unique($allPhotos);
         $allPhotos = array_values($allPhotos); // Re-index array
 
-	// SPECIAL FIX: Prepend portrait file if it exists and isn't already first
+        // SPECIAL FIX: Prepend portrait file if it exists and isn't already first
         $portraitFile = $participantId . '_2007_portrait.jpg';
         if (file_exists($imagesDir . $portraitFile)) {
             // Remove portrait if it's anywhere in the array
@@ -221,7 +269,7 @@ try {
             "year" => $year,
             "generation" => $generation,
             "region" => $region,  // Now an object with en/zh/de
-            "language" => $language,
+            "language" => $language,  // Now dynamic based on actual content
             "themes" => $themes,  // Now an object with en/zh/de arrays
             "photos" => $allPhotos,
             "photo_count" => count($allPhotos)

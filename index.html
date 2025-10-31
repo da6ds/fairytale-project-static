@@ -959,8 +959,9 @@
                     <select id="language" class="filter">
                         <option value="">语言 / Languages / Sprachen</option>
                         <option value="Chinese">中文</option>
-                        <option value="English">English</option>
-                        <option value="German">Deutsch</option>
+                        <option value="Chinese,English">中文 + English</option>
+                        <option value="Chinese,German">中文 + Deutsch</option>
+                        <option value="Chinese,English,German">中文 + English + Deutsch</option>
                     </select>
 
                     <select id="gender" class="filter">
@@ -989,12 +990,12 @@
                     <a href="#">博客 / Blog / Blog</a>
                     <a href="#">参与者召唤 / Call to Participants / An die Teilnehmenden</a>
                     <div id="social">
-                        <a href="http://www.facebook.com/sharer/sharer.php?u=http://www.fairytaleproject.net"
+                        <a href="https://www.facebook.com/sharer/sharer.php?u=http://www.fairytaleproject.net"
                             target="_blank" class="facebook">Facebook</a>
                         <a href="http://clicktotweet.com/0RVj3" target="_blank" class="twitter">Twitter</a>
                         <a href="https://plusone.google.com/_/+1/confirm?hl=en&url=http://www.fairytaleproject.net"
                             target="_blank" class="googleplus">Google Plus</a>
-                        <a href="http://www.tumblr.com/share/link?url=http://www.fairytaleproject.net&name=The%20Fairytale%20Project"
+                        <a href="https://www.tumblr.com/share/link?url=http://www.fairytaleproject.net&name=The%20Fairytale%20Project"
                             target="_blank" class="tumblr">Tumblr</a>
                         <a href="http://share.renren.com/share/buttonshare.do?link=http://www.fairytaleproject.net&title=The%20Fairytale%20Project"
                             target="_blank" class="renren">RenRen</a>
@@ -1542,7 +1543,12 @@
                     const matchesGender = !genderFilter || gender === genderFilter;
                     const matchesRegion = !regionFilter || region === regionFilter;
                     const matchesGeneration = !generationFilter || generation === generationFilter;
-                    const matchesLanguage = !languageFilter || languages.includes(languageFilter);
+                    // Handle language combinations (comma-separated values)
+                    let matchesLanguage = true;
+                    if (languageFilter) {
+                        const requiredLanguages = languageFilter.split(',');
+                        matchesLanguage = requiredLanguages.every(lang => languages.includes(lang));
+                    }
                     const matchesThemes = !themesFilter || themes.includes(themesFilter);
 
                     if (matchesGender && matchesRegion && matchesGeneration && matchesLanguage && matchesThemes) {
