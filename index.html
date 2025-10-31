@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,10 +9,87 @@
         /* ========================================
            CSS RESET
            ======================================== */
-        html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,
-        img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,
-        caption,tbody,tfoot,thead,tr,th,td,article,aside,canvas,details,embed,figure,figcaption,footer,header,hgroup,menu,nav,output,
-        ruby,section,summary,time,mark,audio,video {
+        html,
+        body,
+        div,
+        span,
+        applet,
+        object,
+        iframe,
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6,
+        p,
+        blockquote,
+        pre,
+        a,
+        abbr,
+        acronym,
+        address,
+        big,
+        cite,
+        code,
+        del,
+        dfn,
+        em,
+        img,
+        ins,
+        kbd,
+        q,
+        s,
+        samp,
+        small,
+        strike,
+        strong,
+        sub,
+        sup,
+        tt,
+        var,
+        b,
+        u,
+        i,
+        center,
+        dl,
+        dt,
+        dd,
+        ol,
+        ul,
+        li,
+        fieldset,
+        form,
+        label,
+        legend,
+        table,
+        caption,
+        tbody,
+        tfoot,
+        thead,
+        tr,
+        th,
+        td,
+        article,
+        aside,
+        canvas,
+        details,
+        embed,
+        figure,
+        figcaption,
+        footer,
+        header,
+        hgroup,
+        menu,
+        nav,
+        output,
+        ruby,
+        section,
+        summary,
+        time,
+        mark,
+        audio,
+        video {
             margin: 0;
             padding: 0;
             border: 0;
@@ -29,7 +107,17 @@
             -ms-interpolation-mode: bicubic;
         }
 
-        article,aside,details,figcaption,figure,footer,header,hgroup,menu,nav,section {
+        article,
+        aside,
+        details,
+        figcaption,
+        figure,
+        footer,
+        header,
+        hgroup,
+        menu,
+        nav,
+        section {
             display: block;
         }
 
@@ -38,15 +126,20 @@
             font-size: 62.5%;
         }
 
-        ol,ul {
+        ol,
+        ul {
             list-style: none;
         }
 
-        blockquote,q {
+        blockquote,
+        q {
             quotes: none;
         }
 
-        blockquote:before,blockquote:after,q:before,q:after {
+        blockquote:before,
+        blockquote:after,
+        q:before,
+        q:after {
             content: '';
             content: none;
         }
@@ -234,7 +327,7 @@
             margin-bottom: 0;
         }
 
-        #filters > p {
+        #filters>p {
             margin-top: 6px;
         }
 
@@ -290,7 +383,7 @@
             gap: 0px;
         }
 
-      .zoom-btn {
+        .zoom-btn {
             width: 29px;
             height: 27px;
             border: 2px solid #000;
@@ -340,25 +433,59 @@
         }
 
         /* Zoom level classes - control .outer width */
-        .zoom-level-0 .outer { width: 2.7%; }   /* 36 per row */
-        .zoom-level-1 .outer { width: 3.4%; }   /* 29 per row */
-        .zoom-level-2 .outer { width: 4.1%; }   /* 24 per row */
-        .zoom-level-3 .outer { width: 4.9%; }   /* 20 per row */
-        .zoom-level-4 .outer { width: 6.1%; }   /* 16 per row */
-        .zoom-level-5 .outer { width: 7.3%; }   /* 13 per row - DEFAULT */
-        .zoom-level-6 .outer { width: 9.8%; }   /* 10 per row */
-        .zoom-level-7 .outer { width: 12.3%; }  /* 8 per row */
+        .zoom-level-0 .outer {
+            width: 2.7%;
+        }
+
+        /* 36 per row */
+        .zoom-level-1 .outer {
+            width: 3.4%;
+        }
+
+        /* 29 per row */
+        .zoom-level-2 .outer {
+            width: 4.1%;
+        }
+
+        /* 24 per row */
+        .zoom-level-3 .outer {
+            width: 4.9%;
+        }
+
+        /* 20 per row */
+        .zoom-level-4 .outer {
+            width: 6.1%;
+        }
+
+        /* 16 per row */
+        .zoom-level-5 .outer {
+            width: 7.3%;
+        }
+
+        /* 13 per row - DEFAULT */
+        .zoom-level-6 .outer {
+            width: 9.8%;
+        }
+
+        /* 10 per row */
+        .zoom-level-7 .outer {
+            width: 12.3%;
+        }
+
+        /* 8 per row */
+        .zoom-level-8 .outer {
+            width: 15%;
+        }
 
         .outer {
             display: inline-block;
             position: relative;
-            /* width: 7.3%; */
             text-align: center;
             padding: 0.05% 0.18% 0.02%;
             height: auto;
             vertical-align: top;
             min-width: 45px;
-            cursor:pointer;
+            cursor: pointer;
         }
 
         .outer img {
@@ -394,19 +521,42 @@
 
         .outer:hover .id {
             color: white;
-            text-shadow: 0 0 4px rgba(0,0,0,0.8), 0 0 8px rgba(0,0,0,0.6);
+            text-shadow: 0 0 4px rgba(0, 0, 0, 0.8), 0 0 8px rgba(0, 0, 0, 0.6);
         }
 
-        .active {
+        .filtered .active img {
             opacity: 1;
         }
 
-        .inactive {
+        .filtered .inactive img {
             opacity: 0.4;
+            /* Apply to image only */
         }
 
-        .inactive:hover {
+        .filtered .active .id {
+            opacity: 0;
+        }
+
+        .filtered .inactive:hover img {
             opacity: 1;
+        }
+
+        .filtered .active:hover .id {
+            opacity: 1;
+            /* Show the ID */
+            color: white;
+            text-shadow: 0 0 4px rgba(0, 0, 0, 0.8), 0 0 8px rgba(0, 0, 0, 0.6);
+        }
+
+        .filtered .inactive .id {
+            opacity: .6;
+            color: black;
+        }
+
+        .filtered .inactive:hover .id {
+            opacity: 1;
+            color: white;
+            text-shadow: 0 0 4px rgba(0, 0, 0, 0.8), 0 0 8px rgba(0, 0, 0, 0.6);
         }
 
         .participant-photo {
@@ -480,12 +630,15 @@
             height: 100%;
             background-color: rgba(0, 0, 0, 0.8);
             overflow-y: auto;
-            align-items: center;  /* ADDED - centers vertically */
-            justify-content: center;  /* ADDED - centers horizontally */
+            align-items: center;
+            /* ADDED - centers vertically */
+            justify-content: center;
+            /* ADDED - centers horizontally */
         }
 
         .modal[style*="display: block"] {
-            display: flex !important;  /* Keep flex when shown */
+            display: flex !important;
+            /* Keep flex when shown */
         }
 
         .modal-content {
@@ -532,7 +685,7 @@
         /* Left Column - Photo and Dropdowns */
         .modal-left {
             flex: 0 0 310px;
-            border-right: none;  /* CHANGED from 3px solid #000 */
+            border-right: none;
             display: flex;
             flex-direction: column;
             padding: 0;
@@ -547,7 +700,7 @@
         }
 
         .modal-photo-section {
-         display: flex;
+            display: flex;
             gap: 10px;
             padding-bottom: 12px;
             padding-left: 10px;
@@ -559,16 +712,16 @@
             display: flex;
             flex-wrap: wrap;
             gap: 4px;
-            padding: 0 0 0 10px;  /* Changed from 10px */
-            background: transparent;  /* Changed from #f5f5f5 */
-            border-bottom: none;  /* REMOVED */
-            max-height: none;  /* REMOVED constraint */
-            overflow-y: visible;  /* REMOVED scroll */
+            padding: 0 0 0 10px;
+            background: transparent;
+            border-bottom: none;
+            max-height: none;
+            overflow-y: visible;
         }
 
         .photo-thumbnail {
-            width: 35px;  /* Changed from 60px - SMALLER */
-            height: 35px;  /* Changed from 60px - SMALLER */
+            width: 35px;
+            height: 35px;
             object-fit: cover;
             cursor: pointer;
             border: 2px solid transparent;
@@ -585,7 +738,6 @@
             opacity: 1;
         }
 
-        /* Photo Overlay - Large view on right side */
         .photo-overlay {
             position: absolute;
             top: 0;
@@ -604,11 +756,12 @@
         .photo-overlay.hidden {
             display: none !important;
         }
+
         .overlay-photo {
             max-width: 65%;
             max-height: 55vh;
             object-fit: contain;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
         }
 
         .close-overlay {
@@ -643,59 +796,58 @@
         }
 
         .modal-photo-wrapper {
-            flex-shrink: 0;  /* Prevent photo from shrinking */
+            flex-shrink: 0;
             width: 100px;
         }
 
         .modal-text-wrapper {
-            flex: 1;  /* Text takes remaining space */
+            flex: 1;
         }
 
         .modal-participant-id {
-            margin: 0 0 3px 0;  /* Reduced margin */
-            font-size: 14px;  /* Slightly smaller */
+            margin: 0 0 3px 0;
+            font-size: 14px;
             font-weight: bold;
             color: rgb(255, 0, 0);
         }
 
         .modal-privacy-notice {
             color: rgb(255, 0, 0);
-            font-size: 9px;  /* Slightly smaller */
+            font-size: 9px;
             margin: 0;
-            line-height: 1.1;  /* Tighter */
+            line-height: 1.1;
         }
 
         .modal-selectors {
-            padding: 0 0 15px 0;  /* ADDED bottom padding */
+            padding: 0 0 15px 0;
             flex: 0;
             margin-bottom: 15px;
-            border-bottom: 1px dashed #000;  /* ADDED dotted line */
+            border-bottom: 1px dashed #000;
         }
 
         .modal-selectors h3 {
-            font-size: 10px;  /* Smaller */
-            margin: 0 0 4px 0;  /* Tighter */
+            font-size: 10px;
+            margin: 0 0 4px 0;
             font-weight: bold;
             line-height: 1.2;
         }
 
         .modal-select {
             width: 100%;
-            padding: 4px;  /* Smaller */
+            padding: 4px;
             border: 1px solid #000;
             background: white;
-            font-size: 11px;  /* Smaller */
+            font-size: 11px;
             cursor: pointer;
-            margin-bottom: 10px;  /* Less space */
+            margin-bottom: 10px;
         }
 
-        /* Right Column - Content */
         .modal-right {
             flex: 1;
             padding: 0px 30px 25px 30px;
             overflow-y: auto;
             max-height: 80vh;
-            position:relative;
+            position: relative;
         }
 
         .modal-content-title {
@@ -730,22 +882,21 @@
             margin: 0;
         }
 
-        /* Responsive adjustments */
         @media (max-width: 900px) {
             .modal-body {
                 flex-direction: column;
             }
         }
     </style>
-    
+
     <!-- Leaflet CSS -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
-    
+
     <!-- Leaflet JS -->
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 
 </head>
-</head>
+
 <body>
     <div id="container">
         <!-- Navigation Box -->
@@ -799,15 +950,20 @@
                     <a href="#">博客 / Blog / Blog</a>
                     <a href="#">参与者召唤 / Call to Participants / An die Teilnehmenden</a>
                     <div id="social">
-                        <a href="http://www.facebook.com/sharer/sharer.php?u=http://www.fairytaleproject.net" target="_blank" class="facebook">Facebook</a>
+                        <a href="http://www.facebook.com/sharer/sharer.php?u=http://www.fairytaleproject.net"
+                            target="_blank" class="facebook">Facebook</a>
                         <a href="http://clicktotweet.com/0RVj3" target="_blank" class="twitter">Twitter</a>
-                        <a href="https://plusone.google.com/_/+1/confirm?hl=en&url=http://www.fairytaleproject.net" target="_blank" class="googleplus">Google Plus</a>
-                        <a href="http://www.tumblr.com/share/link?url=http://www.fairytaleproject.net&name=The%20Fairytale%20Project" target="_blank" class="tumblr">Tumblr</a>
-                        <a href="http://share.renren.com/share/buttonshare.do?link=http://www.fairytaleproject.net&title=The%20Fairytale%20Project" target="_blank" class="renren">RenRen</a>
-                        <a href="http://service.weibo.com/share/share.php?url=http://www.fairytaleproject.net&appkey=&title=The%20Fairytale%20Project&pic=&ralateUid=&language=zh_cn" class="weibo" target="_blank">Weibo</a>
+                        <a href="https://plusone.google.com/_/+1/confirm?hl=en&url=http://www.fairytaleproject.net"
+                            target="_blank" class="googleplus">Google Plus</a>
+                        <a href="http://www.tumblr.com/share/link?url=http://www.fairytaleproject.net&name=The%20Fairytale%20Project"
+                            target="_blank" class="tumblr">Tumblr</a>
+                        <a href="http://share.renren.com/share/buttonshare.do?link=http://www.fairytaleproject.net&title=The%20Fairytale%20Project"
+                            target="_blank" class="renren">RenRen</a>
+                        <a href="http://service.weibo.com/share/share.php?url=http://www.fairytaleproject.net&appkey=&title=The%20Fairytale%20Project&pic=&ralateUid=&language=zh_cn"
+                            class="weibo" target="_blank">Weibo</a>
                     </div>
                 </div>
-                 <!-- Zoom Controls -->
+                <!-- Zoom Controls -->
                 <div id="zoom-controls">
                     <button id="zoom-in" class="zoom-btn" title="Zoom In">&#43;</button>
                     <button id="zoom-out" class="zoom-btn" title="Zoom Out">&#8722;</button>
@@ -829,83 +985,85 @@
         </div>
     </div>
 
-        <!-- Participant Detail Modal -->
-        <div id="participantModal" class="modal">
-            <div class="modal-content">
-                <span class="close">&times;</span>
-                <div class="modal-body">
-            
-            <!-- Left Column: Photo and Dropdowns -->
-            <div class="modal-left">
-            <!-- 1. PHOTO + TEXT SECTION (side-by-side) -->
-            
-            <div class="modal-photo-section">
-                <!-- Photo on LEFT -->
-                <div class="modal-photo-wrapper">
-                    <img id="modalPhoto" src="" alt="" class="modal-photo">
-                </div>
-        
-                <!-- Text on RIGHT -->
-                <div class="modal-photo-info">
-                    <p id="modalId" class="modal-participant-id"></p>
-                    <p class="modal-privacy-notice">已删除名字以保护参与者。<br>Name removed to protect participant.<br>Name zum Schutz des Teilnehmers gelöscht.</p>
-                </div>
-            </div>
+    <!-- Participant Detail Modal -->
+    <div id="participantModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <div class="modal-body">
 
-            <!-- 2. DROPDOWNS -->
-            <div class="modal-selectors">
-                <h3>1. 选择语言 / Select language / Sprach auswählen:</h3>
-                <select id="modalLanguage" class="modal-select">
-                    <option value="chinese">中文</option>
-                    <option value="english">English</option>
-                    <option value="german">Deutsch</option>
-                </select>
+                <!-- Left Column: Photo and Dropdowns -->
+                <div class="modal-left">
+                    <!-- 1. PHOTO + TEXT SECTION (side-by-side) -->
 
-                <h3>2. 选择内容 / Select content / Inhalt auswählen:</h3>
-                <select id="modalContent" class="modal-select">
-                    <option value="biography">简介 / Biography / Biografie</option>
-                    <option value="application">申请问卷 / Application / Application</option>
-                    <option value="interview">访谈 / Interview / Gespräch</option>
-                    <option value="followup">后续访谈 / Follow-up Interview / Nach gespräch</option>
-                </select>
-            </div>
+                    <div class="modal-photo-section">
+                        <!-- Photo on LEFT -->
+                        <div class="modal-photo-wrapper">
+                            <img id="modalPhoto" src="" alt="" class="modal-photo">
+                        </div>
 
-            <!-- 3. GALLERY (thumbnails at bottom) -->
-            <div id="photoGallery" class="photo-gallery">
-                <!-- Thumbnails inserted by JavaScript -->
-            </div>
-        </div>
+                        <!-- Text on RIGHT -->
+                        <div class="modal-photo-info">
+                            <p id="modalId" class="modal-participant-id"></p>
+                            <p class="modal-privacy-notice">已删除名字以保护参与者。<br>Name removed to protect participant.<br>Name
+                                zum Schutz des Teilnehmers gelöscht.</p>
+                        </div>
+                    </div>
 
-            <!-- Right Column: Metadata and Content -->
-            <div class="modal-right">
+                    <!-- 2. DROPDOWNS -->
+                    <div class="modal-selectors">
+                        <h3>1. 选择语言 / Select language / Sprach auswählen:</h3>
+                        <select id="modalLanguage" class="modal-select">
+                            <option value="chinese">中文</option>
+                            <option value="english">English</option>
+                            <option value="german">Deutsch</option>
+                        </select>
 
-                <div id="photoOverlay" class="photo-overlay" style="display: none;">
-                    <img id="overlayPhoto" src="" alt="" class="overlay-photo">
-                    <button class="close-overlay">&times;</button>
-                </div>
-                
-                <div class="modal-metadata">
-                    <p>
-                        <strong class="label-gender">性别 / Gender / Geschlecht:</strong> <span id="modalGender"></span><br>
-                        <strong class="label-region">地区:</strong> <span id="modalRegion"></span><br>
-                        <strong class="label-generation">出生年代:</strong> <span id="modalGeneration"></span><br>
-                        <strong class="label-themes">主题 / Themes / Themen:</strong> <span id="modalThemes"></span>
-                    </p>
+                        <h3>2. 选择内容 / Select content / Inhalt auswählen:</h3>
+                        <select id="modalContent" class="modal-select">
+                            <option value="biography">简介 / Biography / Biografie</option>
+                            <option value="application">申请问卷 / Application / Application</option>
+                            <option value="interview">访谈 / Interview / Gespräch</option>
+                            <option value="followup">后续访谈 / Follow-up Interview / Nach gespräch</option>
+                        </select>
+                    </div>
+
+                    <!-- 3. GALLERY (thumbnails at bottom) -->
+                    <div id="photoGallery" class="photo-gallery">
+                        <!-- Thumbnails inserted by JavaScript -->
+                    </div>
                 </div>
 
-                <div class="modal-content-area">
-                    <p class="modal-placeholder">Content not yet available in static version.<br><br>
-                    In the full dynamic site, this area would display:<br>
-                    • Biography (简介)<br>
-                    • Application questionnaire (申请问卷)<br>
-                    • Interview transcripts (访谈)<br>
-                    • Follow-up interviews (后续访谈)<br><br>
-                    Content exists in database and can be integrated.</p>
+                <!-- Right Column: Metadata and Content -->
+                <div class="modal-right">
+
+                    <div id="photoOverlay" class="photo-overlay" style="display: none;">
+                        <img id="overlayPhoto" src="" alt="" class="overlay-photo">
+                        <button class="close-overlay">&times;</button>
+                    </div>
+
+                    <div class="modal-metadata">
+                        <p>
+                            <strong class="label-gender">性别 / Gender / Geschlecht:</strong> <span
+                                id="modalGender"></span><br>
+                            <strong class="label-region">地区:</strong> <span id="modalRegion"></span><br>
+                            <strong class="label-generation">出生年代:</strong> <span id="modalGeneration"></span><br>
+                            <strong class="label-themes">主题 / Themes / Themen:</strong> <span id="modalThemes"></span>
+                        </p>
+                    </div>
+
+                    <div class="modal-content-area">
+                        <p class="modal-placeholder">Content not yet available in static version.<br><br>
+                            In the full dynamic site, this area would display:<br>
+                            • Biography (简介)<br>
+                            • Application questionnaire (申请问卷)<br>
+                            • Interview transcripts (访谈)<br>
+                            • Follow-up interviews (后续访谈)<br><br>
+                            Content exists in database and can be integrated.</p>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
 
     <script>
         let participants = [];
@@ -919,7 +1077,7 @@
 
         function initZoom() {
             setZoomLevel(DEFAULT_ZOOM);
-    
+
             // Zoom in button
             document.getElementById('zoom-in').addEventListener('click', () => {
                 // Check if map view is active
@@ -955,7 +1113,7 @@
                     }
                 }
             });
-    
+
             updateZoomButtons();
         }
 
@@ -965,23 +1123,23 @@
 
         function setZoomLevel(level) {
             const container = document.getElementById('participants');
-    
+
             // Remove all zoom classes
             for (let i = 0; i < ZOOM_LEVELS.length; i++) {
                 container.classList.remove(`zoom-level-${i}`);
             }
-    
+
             // Add new zoom class
             container.classList.add(`zoom-level-${level}`);
             currentZoom = level;
-    
+
             updateZoomButtons();
         }
 
         function updateZoomButtons() {
             const zoomIn = document.getElementById('zoom-in');
             const zoomOut = document.getElementById('zoom-out');
-    
+
             zoomIn.disabled = (currentZoom === ZOOM_LEVELS.length - 1);
             zoomOut.disabled = (currentZoom === 0);
         }
@@ -1021,7 +1179,7 @@
             function drag(e) {
                 if (isDragging) {
                     e.preventDefault();
-                    
+
                     currentX = e.clientX - initialX;
                     currentY = e.clientY - initialY;
 
@@ -1046,37 +1204,15 @@
             }
         }
 
-        // Load participants from JSON file
-        fetch('fairytale-data.json')
-            .then(response => response.json())
-            .then(data => {
-                participants = data;
-                populateFilterDropdowns(); 
-                renderParticipants();
-                setupModalHandlers();
-                setupModalDropdowns()
-                initZoom();  
-                initDraggableNav();
-                setupEventListeners();
-            })
-            .catch(error => {
-                console.error('Error loading participant data:', error);
-            });
-
-        function renderParticipants() {
-            const grid = document.getElementById('participants');
-            grid.innerHTML = participants.map(p => `<div class="outer active" data-id="${p.id}" data-gender="${p.gender}" data-generation="${p.generation}" data-region="${p.region?.en || p.region}" data-language="${p.language.join(',')}" data-themes="${Array.isArray(p.themes) ? p.themes.join(',') : (p.themes?.en?.join(',') || '')}">${p.photos[0] ? `<img src="images/${p.photos[0]}" alt="Participant ${p.id}" class="participant-photo">` : `<div class="no-photo">${p.id}</div>`}<p class="id">${p.id}</p></div>`).join('');            updateStats();
-        }
-
         function setupModalHandlers() {
             const modal = document.getElementById('participantModal');
             const closeBtn = document.querySelector('.close');
             const grid = document.getElementById('participants');
 
             // Click on photos to open modal
-            grid.addEventListener('click', function(e) {
-                if (e.target.classList.contains('participant-photo') || 
-                    e.target.classList.contains('id') || 
+            grid.addEventListener('click', function (e) {
+                if (e.target.classList.contains('participant-photo') ||
+                    e.target.classList.contains('id') ||
                     e.target.classList.contains('outer')) {
                     const card = e.target.closest('.outer');
                     if (card) {
@@ -1088,228 +1224,255 @@
                     }
                 }
             });
-
             // Close button
-            closeBtn.onclick = function() {
+            closeBtn.onclick = function () {
                 modal.style.display = 'none';
             }
 
             // Click outside modal to close
-            window.onclick = function(event) {
+            window.onclick = function (event) {
                 if (event.target === modal) {
                     modal.style.display = 'none';
                 }
             }
         }
 
-function showModal(participant) {
-    const modal = document.getElementById('participantModal');
-    const photoOverlay = document.getElementById('photoOverlay');
-    const overlayPhoto = document.getElementById('overlayPhoto');
-    
-    // Hide overlay initially
-    photoOverlay.style.display = 'none';
-    
-    // Set main photo - USE FIRST PHOTO FROM ARRAY
-    const photoElement = document.getElementById('modalPhoto');
-    
-    if (participant.photos && participant.photos.length > 0) {
-        photoElement.src = `images/${participant.photos[0]}`;
-        photoElement.alt = `Participant ${participant.id}`;
-        photoElement.style.display = 'block';
-        
-        // Make main photo clickable to show large version
-        photoElement.onclick = function() {
-            overlayPhoto.src = photoElement.src;
-            photoOverlay.style.display = 'flex';
-        };
-        
-        // Render photo gallery thumbnails
-        const gallery = document.getElementById('photoGallery');
-        gallery.innerHTML = '';
-        gallery.style.display = 'flex';
-        
-        if (participant.photos.length > 0) {
-            participant.photos.forEach((photo, index) => {
-                const thumb = document.createElement('img');
-                thumb.src = `images/${photo}`;
-                thumb.alt = `Photo ${index + 1}`;
-                thumb.className = 'photo-thumbnail' + (index === 0 ? ' active' : '');
-                thumb.onclick = function() {
-                    // Update active thumbnail
-                    gallery.querySelectorAll('.photo-thumbnail').forEach(t => t.classList.remove('active'));
-                    thumb.classList.add('active');
-                    
-                    // Show large photo on right side
-                    overlayPhoto.src = `images/${photo}`;
+        // Load participants from JSON file
+        fetch('fairytale-data.json')
+            .then(response => response.json())
+            .then(data => {
+                participants = data;
+                initZoom();
+                initDraggableNav();
+                setupModalHandlers();
+                setupModalDropdowns()
+                setupEventListeners();
+                populateFilterDropdowns();
+                renderParticipants();
+            })
+            .catch(error => {
+                console.error('Error loading participant data:', error);
+            });
+
+        function renderParticipants() {
+            const grid = document.getElementById('participants');
+            grid.innerHTML = participants.map(p => {
+                // Get region name - handle both string and object formats
+                let regionName = p.region;
+                if (typeof p.region === 'object' && p.region.en) {
+                    regionName = p.region.en;
+                }
+
+                // Get themes - handle both array and object formats
+                let themesString = '';
+                if (Array.isArray(p.themes)) {
+                    themesString = p.themes.join(',');
+                } else if (p.themes && typeof p.themes === 'object' && p.themes.en) {
+                    themesString = p.themes.en.join(',');
+                }
+
+                return `<div class="outer active" 
+            data-id="${p.id}" 
+            data-gender="${p.gender}" 
+            data-generation="${p.generation}" 
+            data-region="${p.region.zh} / ${p.region.en} / ${p.region.de}" 
+            data-language="${p.language.join(',')}" 
+            data-themes="${themesString}">
+            ${p.photos[0] ?
+                        `<img src="images/${p.photos[0]}" alt="Participant ${p.id}" class="participant-photo">` :
+                        `<div class="no-photo">${p.id}</div>`
+                    }
+            <p class="id">${p.id}</p>
+        </div>`;
+            }).join('');
+
+            updateStats();
+        }
+
+
+        function showModal(participant) {
+            const modal = document.getElementById('participantModal');
+            const photoOverlay = document.getElementById('photoOverlay');
+            const overlayPhoto = document.getElementById('overlayPhoto');
+
+            // Hide overlay initially
+            photoOverlay.style.display = 'none';
+
+            // Set main photo - USE FIRST PHOTO FROM ARRAY
+            const photoElement = document.getElementById('modalPhoto');
+
+            if (participant.photos && participant.photos.length > 0) {
+                photoElement.src = `images/${participant.photos[0]}`;
+                photoElement.alt = `Participant ${participant.id}`;
+                photoElement.style.display = 'block';
+
+                // Make main photo clickable to show large version
+                photoElement.onclick = function () {
+                    overlayPhoto.src = photoElement.src;
                     photoOverlay.style.display = 'flex';
                 };
-                gallery.appendChild(thumb);
-            });
-        }
-    } else {
-        photoElement.style.display = 'none';
-        document.getElementById('photoGallery').style.display = 'none';
-    }
-    
-    // Close overlay button handler
-    document.querySelector('.close-overlay').onclick = function() {
-        photoOverlay.style.display = 'none';
-    };
-    
-    // Click overlay background to close
-    photoOverlay.onclick = function(e) {
-        if (e.target === photoOverlay) {
-            photoOverlay.style.display = 'none';
-        }
-    };
-    
-// Set participant ID
-    document.getElementById('modalId').textContent = participant.id;
-    
-    // Reset dropdowns to default (Chinese) - MOVED UP so we can read the value
-    document.getElementById('modalLanguage').value = 'chinese';
-    document.getElementById('modalContent').value = 'biography';
-    
-    // Get current selected language from dropdown
-    const currentLang = document.getElementById('modalLanguage').value;
-    const langMap = { 'chinese': 'zh', 'english': 'en', 'german': 'de' };
-    const langCode = langMap[currentLang];
-    
-    // Set region with current language
-    const regionText = participant.region?.[langCode] || participant.region?.en || participant.region || 'Not specified';
-    document.getElementById('modalRegion').textContent = regionText;
-    
-    // Format generation as range (e.g., "1980s" → "1980-1989")
-    let generationDisplay = participant.generation;
-    if (participant.generation && participant.generation.endsWith('s')) {
-        const startYear = participant.generation.replace('s', '');
-        const endYear = parseInt(startYear) + 9;
-        generationDisplay = `${startYear}-${endYear}`;
-    }
-    document.getElementById('modalGeneration').textContent = generationDisplay;
-    
-    // Set themes with current language
-    const themesText = participant.themes?.[langCode]?.join(langCode === 'zh' ? '、' : ', ') || participant.themes?.en?.join(', ') || '';
-    document.getElementById('modalThemes').textContent = themesText;
-    
-    // Set current participant for language switching
-    if (window.setCurrentModalParticipant) {
-        window.setCurrentModalParticipant(participant);
-    }
-    
-    // Initialize with Chinese language
-    updateModalLanguage('chinese', participant);
-    
-    // Show modal
-    modal.style.display = 'block';
-}
 
-// ============================================
-// DROPDOWN FUNCTIONALITY FIX
-// ============================================
-// Add this NEW function after your showModal() function
-    
-    function updateContent() {
-        const lang = languageSelect.value;
-        const content = contentSelect.value;
-        
-        // Update language for metadata if we have a participant
-        if (currentParticipant) {
-            updateModalLanguage(lang, currentParticipant);
-        }
-        
-        // Hide photo overlay when changing content
-        if (photoOverlay) {
-            photoOverlay.style.display = 'none';
-        }
-        
-        // Future: Load content based on language and content type
-        // This is where you'll load biography/interview/application in the selected language
-    }
-    
-    // Expose function to update current participant
-    window.setCurrentModalParticipant = function(participant) {
-        currentParticipant = participant;
-    };
+                // Render photo gallery thumbnails
+                const gallery = document.getElementById('photoGallery');
+                gallery.innerHTML = '';
+                gallery.style.display = 'flex';
 
+                if (participant.photos.length > 0) {
+                    participant.photos.forEach((photo, index) => {
+                        const thumb = document.createElement('img');
+                        thumb.src = `images/${photo}`;
+                        thumb.alt = `Photo ${index + 1}`;
+                        thumb.className = 'photo-thumbnail' + (index === 0 ? ' active' : '');
+                        thumb.onclick = function () {
+                            // Update active thumbnail
+                            gallery.querySelectorAll('.photo-thumbnail').forEach(t => t.classList.remove('active'));
+                            thumb.classList.add('active');
 
-function updateModalLanguage(lang, participant) {
-    // Language translations for labels
-    const labels = {
-        chinese: {
-            gender: '性别:',
-            region: '地区:',
-            generation: '出生年代:',
-            themes: '主题:'
-        },
-        english: {
-            gender: 'Gender:',
-            region: 'Region:',
-            generation: 'Generation:',
-            themes: 'Themes:'
-        },
-        german: {
-            gender: 'Geschlecht:',
-            region: 'Region:',
-            generation: 'Generation:',
-            themes: 'Themen:'
+                            // Show large photo on right side
+                            overlayPhoto.src = `images/${photo}`;
+                            photoOverlay.style.display = 'flex';
+                        };
+                        gallery.appendChild(thumb);
+                    });
+                }
+            } else {
+                photoElement.style.display = 'none';
+                document.getElementById('photoGallery').style.display = 'none';
+            }
+
+            // Close overlay button handler
+            document.querySelector('.close-overlay').onclick = function () {
+                photoOverlay.style.display = 'none';
+            };
+
+            // Click overlay background to close
+            photoOverlay.onclick = function (e) {
+                if (e.target === photoOverlay) {
+                    photoOverlay.style.display = 'none';
+                }
+            };
+
+            // Set participant ID
+            document.getElementById('modalId').textContent = participant.id;
+
+            // Reset dropdowns to default (Chinese) - MOVED UP so we can read the value
+            document.getElementById('modalLanguage').value = 'chinese';
+            document.getElementById('modalContent').value = 'biography';
+
+            // Get current selected language from dropdown
+            const currentLang = document.getElementById('modalLanguage').value;
+            const langMap = { 'chinese': 'zh', 'english': 'en', 'german': 'de' };
+            const langCode = langMap[currentLang];
+
+            // Set region with current language
+            const regionText = participant.region?.[langCode] || participant.region?.en || participant.region || 'Not specified';
+            document.getElementById('modalRegion').textContent = regionText;
+
+            // Format generation as range (e.g., "1980s" → "1980-1989")
+            let generationDisplay = participant.generation;
+            if (participant.generation && participant.generation.endsWith('s')) {
+                const startYear = participant.generation.replace('s', '');
+                const endYear = parseInt(startYear) + 9;
+                generationDisplay = `${startYear}-${endYear}`;
+            }
+            document.getElementById('modalGeneration').textContent = generationDisplay;
+
+            // Set themes with current language
+            const themesText = participant.themes?.[langCode]?.join(langCode === 'zh' ? '、' : ', ') || participant.themes?.en?.join(', ') || '';
+            document.getElementById('modalThemes').textContent = themesText;
+
+            // Set current participant for language switching
+            if (window.setCurrentModalParticipant) {
+                window.setCurrentModalParticipant(participant);
+            }
+
+            // Initialize with Chinese language
+            updateModalLanguage('chinese', participant);
+
+            // Show modal
+            modal.style.display = 'block';
         }
-    };
-    
-    // Gender translations
-    const genderTranslations = {
-        chinese: {
-            'Male': '男',
-            'Female': '女'
-        },
-        english: {
-            'Male': 'Male',
-            'Female': 'Female'
-        },
-        german: {
-            'Male': 'Männlich',
-            'Female': 'Weiblich'
+
+        // ============================================
+        // DROPDOWN FUNCTIONALITY FIX
+        // ============================================
+
+        function updateModalLanguage(lang, participant) {
+            // Language translations for labels
+            const labels = {
+                chinese: {
+                    gender: '性别:',
+                    region: '地区:',
+                    generation: '出生年代:',
+                    themes: '主题:'
+                },
+                english: {
+                    gender: 'Gender:',
+                    region: 'Region:',
+                    generation: 'Generation:',
+                    themes: 'Themes:'
+                },
+                german: {
+                    gender: 'Geschlecht:',
+                    region: 'Region:',
+                    generation: 'Generation:',
+                    themes: 'Themen:'
+                }
+            };
+
+            // Gender translations
+            const genderTranslations = {
+                chinese: {
+                    'Male': '男',
+                    'Female': '女'
+                },
+                english: {
+                    'Male': 'Male',
+                    'Female': 'Female'
+                },
+                german: {
+                    'Male': 'Männlich',
+                    'Female': 'Weiblich'
+                }
+            };
+
+            // Map language codes
+            const langMap = {
+                'chinese': 'zh',
+                'english': 'en',
+                'german': 'de'
+            };
+            const langCode = langMap[lang];
+
+            // Update labels
+            document.querySelector('.label-gender').textContent = labels[lang].gender;
+            document.querySelector('.label-region').textContent = labels[lang].region;
+            document.querySelector('.label-generation').textContent = labels[lang].generation;
+            document.querySelector('.label-themes').textContent = labels[lang].themes;
+
+            // Update gender value
+            const genderValue = genderTranslations[lang][participant.gender] || participant.gender;
+            document.getElementById('modalGender').textContent = genderValue;
+
+            // Update region value - use translated region
+            const regionValue = participant.region?.[langCode] || participant.region?.en || participant.region || 'Not specified';
+            document.getElementById('modalRegion').textContent = regionValue;
+
+            // Update themes values - use translated themes
+            let themesText = '';
+            if (participant.themes?.[langCode]) {
+                themesText = participant.themes[langCode].join(langCode === 'zh' ? '、' : ', ');
+            } else if (participant.themes?.en) {
+                themesText = participant.themes.en.join(', ');
+            } else if (Array.isArray(participant.themes)) {
+                themesText = participant.themes.join(', ');
+            } else {
+                themesText = 'Not specified';
+            }
+            document.getElementById('modalThemes').textContent = themesText;
+
+            // Generation stays as year range (no translation needed)
         }
-    };
-
-    // Map language codes
-    const langMap = {
-        'chinese': 'zh',
-        'english': 'en',
-        'german': 'de'
-    };
-    const langCode = langMap[lang];
-
-    // Update labels
-    document.querySelector('.label-gender').textContent = labels[lang].gender;
-    document.querySelector('.label-region').textContent = labels[lang].region;
-    document.querySelector('.label-generation').textContent = labels[lang].generation;
-    document.querySelector('.label-themes').textContent = labels[lang].themes;
-    
-    // Update gender value
-    const genderValue = genderTranslations[lang][participant.gender] || participant.gender;
-    document.getElementById('modalGender').textContent = genderValue;
-    
-    // Update region value - use translated region
-    const regionValue = participant.region?.[langCode] || participant.region?.en || participant.region || 'Not specified';
-    document.getElementById('modalRegion').textContent = regionValue;
-    
-    // Update themes values - use translated themes
-    let themesText = '';
-    if (participant.themes?.[langCode]) {
-        themesText = participant.themes[langCode].join(langCode === 'zh' ? '、' : ', ');
-    } else if (participant.themes?.en) {
-        themesText = participant.themes.en.join(', ');
-    } else if (Array.isArray(participant.themes)) {
-        themesText = participant.themes.join(', ');
-    } else {
-        themesText = 'Not specified';
-    }
-    document.getElementById('modalThemes').textContent = themesText;
-    
-    // Generation stays as year range (no translation needed)
-}
 
         function filterParticipants() {
             const genderFilter = document.getElementById('gender').value;
@@ -1317,6 +1480,17 @@ function updateModalLanguage(lang, participant) {
             const generationFilter = document.getElementById('generation').value;
             const languageFilter = document.getElementById('language').value;
             const themesFilter = document.getElementById('themes').value;
+
+            // NEW: Check if any filter is active
+            const hasActiveFilters = genderFilter || regionFilter || generationFilter || languageFilter || themesFilter;
+            const grid = document.getElementById('participants');
+
+            // NEW: Add or remove 'filtered' class based on whether filters are active
+            if (hasActiveFilters) {
+                grid.classList.add('filtered');
+            } else {
+                grid.classList.remove('filtered');
+            }
 
             const cards = document.querySelectorAll('.outer');
 
@@ -1344,7 +1518,7 @@ function updateModalLanguage(lang, participant) {
 
             updateStats();
 
-        // Update map if visible
+            // Update map if visible
             if (map && document.getElementById('map-container').style.display === 'block') {
                 updateMapMarkers();
             }
@@ -1368,7 +1542,7 @@ function updateModalLanguage(lang, participant) {
 
         function setupEventListeners() {
             // View selector
-            document.getElementById('viewSelect').addEventListener('change', function(e) {
+            document.getElementById('viewSelect').addEventListener('change', function (e) {
                 if (e.target.value === 'map') {
                     showMapView();
                 } else {
@@ -1378,55 +1552,73 @@ function updateModalLanguage(lang, participant) {
 
         }
 
-function setupModalDropdowns() {
-    const languageSelect = document.getElementById('modalLanguage');
-    const contentSelect = document.getElementById('modalContent');
-    const photoOverlay = document.getElementById('photoOverlay');
-    
-    // Store current participant for language updates
-    let currentParticipant = null;
-    
-    function updateContent() {
-        const lang = languageSelect.value;
-        const content = contentSelect.value;
-        
-        // Update language for metadata if we have a participant
-        if (currentParticipant) {
-            updateModalLanguage(lang, currentParticipant);
+        function setupModalDropdowns() {
+            const languageSelect = document.getElementById('modalLanguage');
+            const contentSelect = document.getElementById('modalContent');
+            const photoOverlay = document.getElementById('photoOverlay');
+
+            // Store current participant for language updates
+            let currentParticipant = null;
+
+            function updateContent() {
+                const lang = languageSelect.value;
+                const content = contentSelect.value;
+
+                // Update language for metadata if we have a participant
+                if (currentParticipant) {
+                    updateModalLanguage(lang, currentParticipant);
+                }
+
+                // Hide photo overlay when changing content
+                if (photoOverlay) {
+                    photoOverlay.style.display = 'none';
+                }
+            }
+
+            languageSelect.addEventListener('change', updateContent);
+            contentSelect.addEventListener('change', updateContent);
+
+            // Expose function to update current participant
+            window.setCurrentModalParticipant = function (participant) {
+                currentParticipant = participant;
+            };
         }
-        
-        // Hide photo overlay when changing content
-        if (photoOverlay) {
-            photoOverlay.style.display = 'none';
-        }
-    }
-    
-    languageSelect.addEventListener('change', updateContent);
-    contentSelect.addEventListener('change', updateContent);
-    
-    // Expose function to update current participant
-    window.setCurrentModalParticipant = function(participant) {
-        currentParticipant = participant;
-    };
-}
 
         function populateFilterDropdowns() {
-            // Get unique regions
-            const regions = [...new Set(participants.map(p => p.region))].sort();
-    
+            // Get unique regions in trilingual format (skip East Asia)
+            const regionSet = new Set();
+            participants.forEach(p => {
+                if (p.region && p.region.zh && p.region.en && p.region.de && p.region.en !== 'East Asia') {
+                    regionSet.add(`${p.region.zh} / ${p.region.en} / ${p.region.de}`);
+                }
+            });
+
+            const regions = [...regionSet].sort((a, b) => {
+                // Sort by Chinese characters (first part before /)
+                const aZh = a.split(' / ')[0];
+                const bZh = b.split(' / ')[0];
+                return aZh.localeCompare(bZh, 'zh-CN');
+            });
+
             // Get unique themes - flatten all theme arrays and get unique values
-            const allThemes = participants.flatMap(p => p.themes);
+            const allThemes = participants.flatMap(p => {
+                if (Array.isArray(p.themes)) {
+                    return p.themes;
+                } else if (p.themes && typeof p.themes === 'object' && p.themes.en) {
+                    return p.themes.en;
+                }
+                return [];
+            });
             const themes = [...new Set(allThemes)].sort();
 
-            // Get unique generations, filter out invalid ones, and sort in reverse chronological order (newest first)
+            // Get unique generations
             const generations = [...new Set(participants.map(p => p.generation))]
                 .filter(g => g && g !== 's' && !isNaN(parseInt(g.replace('s', ''))))
                 .sort()
                 .reverse();
-    
-            // Populate region dropdown
+
             const regionSelect = document.getElementById('region');
-            const currentRegionValue = regionSelect.value; // Preserve current selection
+            const currentRegionValue = regionSelect.value;
             regionSelect.innerHTML = '<option value="">地区 / Region / Region</option>';
             regions.forEach(region => {
                 const option = document.createElement('option');
@@ -1434,31 +1626,27 @@ function setupModalDropdowns() {
                 option.textContent = region;
                 regionSelect.appendChild(option);
             });
-            regionSelect.value = currentRegionValue; // Restore selection
+            regionSelect.value = currentRegionValue;
 
             // Populate generation dropdown
-        const generationSelect = document.getElementById('generation');
-        const currentGenerationValue = generationSelect.value;
-        generationSelect.innerHTML = '<option value="">出生年代 / Generation / Generation</option>';
-        generations.forEach(generation => {
-            const option = document.createElement('option');
-            option.value = generation;
-    
-            // Format as decade range (e.g., "2000s" becomes "2000-2009")
-            const startYear = parseInt(generation.replace('s', ''));
-    
-            // Only add if it's a valid year
-            if (!isNaN(startYear)) {
-                const endYear = startYear + 9;
-                option.textContent = `${startYear}-${endYear}`;
-                generationSelect.appendChild(option);
-            }
-        });
-        generationSelect.value = currentGenerationValue;  // MOVED outside the loop
+            const generationSelect = document.getElementById('generation');
+            const currentGenerationValue = generationSelect.value;
+            generationSelect.innerHTML = '<option value="">出生年代 / Generation / Generation</option>';
+            generations.forEach(generation => {
+                const option = document.createElement('option');
+                option.value = generation;
+                const startYear = parseInt(generation.replace('s', ''));
+                if (!isNaN(startYear)) {
+                    const endYear = startYear + 9;
+                    option.textContent = `${startYear}-${endYear}`;
+                    generationSelect.appendChild(option);
+                }
+            });
+            generationSelect.value = currentGenerationValue;
 
             // Populate themes dropdown
             const themesSelect = document.getElementById('themes');
-            const currentThemesValue = themesSelect.value; // Preserve current selection
+            const currentThemesValue = themesSelect.value;
             themesSelect.innerHTML = '<option value="">主题 / Themes / Themen</option>';
             themes.forEach(theme => {
                 const option = document.createElement('option');
@@ -1466,19 +1654,17 @@ function setupModalDropdowns() {
                 option.textContent = theme;
                 themesSelect.appendChild(option);
             });
-            themesSelect.value = currentThemesValue; // Restore selection
-        
-    
-            // Filter dropdowns
+            themesSelect.value = currentThemesValue;
+
+            // Event listeners
             document.getElementById('language').addEventListener('change', filterParticipants);
             document.getElementById('gender').addEventListener('change', filterParticipants);
             document.getElementById('region').addEventListener('change', filterParticipants);
             document.getElementById('generation').addEventListener('change', filterParticipants);
             document.getElementById('themes').addEventListener('change', filterParticipants);
-    
-            // Reset button
-            document.getElementById('resetFilters').addEventListener('click', function(e) {
-            e.preventDefault();
+
+            document.getElementById('resetFilters').addEventListener('click', function (e) {
+                e.preventDefault();
                 resetFilters();
             });
         }
@@ -1529,11 +1715,11 @@ function setupModalDropdowns() {
         function showMapView() {
             document.getElementById('participants').style.display = 'none';
             document.getElementById('map-container').style.display = 'block';
-            
+
             if (!map) {
                 initMap();
             }
-            
+
             updateMapMarkers();
         }
 
@@ -1546,7 +1732,7 @@ function setupModalDropdowns() {
             map = L.map('map', {
                 zoomControl: false  // Disable Leaflet's default zoom controls
             }).setView([35.0, 105.0], 5);
-            
+
             L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
                 attribution: '© OpenStreetMap contributors',
                 maxZoom: 18
@@ -1554,55 +1740,79 @@ function setupModalDropdowns() {
         }
 
         function updateMapMarkers() {
+            // Clear existing markers
             markers.forEach(marker => map.removeLayer(marker));
             markers = [];
-            
+
+            // Configuration: scatter radius in degrees
+            const SCATTER_RADIUS = 0.3;
+
+            // Get all active (visible) participants from the grid
             const activeCards = document.querySelectorAll('.outer.active');
-            
+
             activeCards.forEach(card => {
                 const participantId = card.dataset.id;
                 const participant = participants.find(p => p.id === participantId);
-                
-                if (participant && participant.region && provinceCoordinates[participant.region]) {
-                    const coords = provinceCoordinates[participant.region];
-                    
-                    const lat = coords[0] + (Math.random() - 0.5) * 0.5;
-                    const lng = coords[1] + (Math.random() - 0.5) * 0.5;
-                    
-                    const marker = L.circleMarker([lat, lng], {
-                        radius: 8,
-                        fillColor: '#000',
-                        color: '#fff',
-                        weight: 2,
-                        opacity: 1,
-                        fillOpacity: 1
-                    }).addTo(map);
-                    
-                   const popupContent = `
+
+                if (participant) {
+                    // Get region name - handle both string and object formats
+                    let regionName = participant.region;
+                    if (typeof participant.region === 'object' && participant.region.en) {
+                        regionName = participant.region.en;
+                    }
+
+                    // Check if we have coordinates for this region
+                    if (regionName && provinceCoordinates[regionName]) {
+                        const coords = provinceCoordinates[regionName];
+
+                        // Random scatter with even distribution
+                        const angle = Math.random() * 2 * Math.PI;
+                        const distance = Math.sqrt(Math.random()) * SCATTER_RADIUS;
+                        const latOffset = distance * Math.cos(angle);
+                        const lngOffset = distance * Math.sin(angle);
+
+                        const lat = coords[0] + latOffset;
+                        const lng = coords[1] + lngOffset;
+
+                        // Create marker
+                        const marker = L.circleMarker([lat, lng], {
+                            radius: 8,
+                            fillColor: '#000',
+                            color: '#fff',
+                            weight: 2,
+                            opacity: 1,
+                            fillOpacity: 1
+                        }).addTo(map);
+
+                        // Create popup
+                        const popupContent = `
                     <img src="${participant.photos && participant.photos.length > 0 ? 'images/' + participant.photos[0] : 'data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22%3E%3Crect fill=%22%23ddd%22 width=%22100%22 height=%22100%22/%3E%3Ctext x=%2250%22 y=%2255%22 text-anchor=%22middle%22 font-size=%2220%22 fill=%22%23666%22%3E${participant.id}%3C/text%3E%3C/svg%3E'}" 
                     class="map-popup-photo" 
                     data-id="${participant.id}"
                     alt="Participant ${participant.id}">
-                    `;
-                    
-                    marker.bindPopup(popupContent);
-                    
-                    marker.on('popupopen', function() {
-                        const img = document.querySelector('.map-popup-photo');
-                        if (img) {
-                            img.addEventListener('click', function() {
-                                const id = this.getAttribute('data-id');
-                                const p = participants.find(x => x.id === id);
-                                if (p) showModal(p);
-                            });
-                        }
-                    });
-                    
-                    markers.push(marker);
+                `;
+
+                        marker.bindPopup(popupContent);
+
+                        // Click handler
+                        marker.on('popupopen', function () {
+                            const img = document.querySelector('.map-popup-photo');
+                            if (img) {
+                                img.addEventListener('click', function () {
+                                    const id = this.getAttribute('data-id');
+                                    const p = participants.find(x => x.id === id);
+                                    if (p) showModal(p);
+                                });
+                            }
+                        });
+
+                        markers.push(marker);
+                    }
                 }
             });
         }
 
     </script>
 </body>
+
 </html>
