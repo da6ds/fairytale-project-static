@@ -1065,11 +1065,12 @@
                         </p>
                     </div>
 
-                    <div class="modal-content-area">
-                        <p class="modal-placeholder">Content not yet available. Biographies and interview materials are
-                            currently being migrated.<br><br>
-                        </p>
-                    </div>
+<div class="modal-content-area">
+    <h2 id="modalContentTitle" class="modal-content-title">Biography</h2>
+    <p class="modal-placeholder">Content not yet available. Biographies and interview materials are
+        currently being migrated.
+    </p>
+</div>
                 </div>
             </div>
         </div>
@@ -1559,37 +1560,77 @@
 
         }
 
-        function setupModalDropdowns() {
-            const languageSelect = document.getElementById('modalLanguage');
-            const contentSelect = document.getElementById('modalContent');
-            const photoOverlay = document.getElementById('photoOverlay');
+function setupModalDropdowns() {
+    const languageSelect = document.getElementById('modalLanguage');
+    const contentSelect = document.getElementById('modalContent');
+    const photoOverlay = document.getElementById('photoOverlay');
+    const contentTitle = document.getElementById('modalContentTitle');
+    const metadata = document.querySelector('.modal-metadata'); // Add this line
 
-            // Store current participant for language updates
-            let currentParticipant = null;
+    // Store current participant for language updates
+    let currentParticipant = null;
 
-            function updateContent() {
-                const lang = languageSelect.value;
-                const content = contentSelect.value;
-
-                // Update language for metadata if we have a participant
-                if (currentParticipant) {
-                    updateModalLanguage(lang, currentParticipant);
-                }
-
-                // Hide photo overlay when changing content
-                if (photoOverlay) {
-                    photoOverlay.style.display = 'none';
-                }
-            }
-
-            languageSelect.addEventListener('change', updateContent);
-            contentSelect.addEventListener('change', updateContent);
-
-            // Expose function to update current participant
-            window.setCurrentModalParticipant = function (participant) {
-                currentParticipant = participant;
-            };
+    // Content type titles in all three languages
+    const contentTitles = {
+        biography: {
+            chinese: '简介',
+            english: 'Biography',
+            german: 'Biografie'
+        },
+        application: {
+            chinese: '申请问卷',
+            english: 'Application',
+            german: 'Application'
+        },
+        interview: {
+            chinese: '访谈',
+            english: 'Interview',
+            german: 'Gespräch'
+        },
+        followup: {
+            chinese: '后续访谈',
+            english: 'Follow-up Interview',
+            german: 'Nach gespräch'
         }
+    };
+
+    function updateContent() {
+        const lang = languageSelect.value;
+        const content = contentSelect.value;
+
+        // Update the title based on selected language and content type
+        if (contentTitle && contentTitles[content]) {
+            contentTitle.textContent = contentTitles[content][lang];
+        }
+
+        // Show/hide metadata based on content type
+        if (metadata) {
+            if (content === 'biography') {
+                metadata.style.display = 'block';
+            } else {
+                metadata.style.display = 'none';
+            }
+        }
+
+        // Update language for metadata if we have a participant
+        if (currentParticipant) {
+            updateModalLanguage(lang, currentParticipant);
+        }
+
+        // Hide photo overlay when changing content
+        if (photoOverlay) {
+            photoOverlay.style.display = 'none';
+        }
+    }
+
+    languageSelect.addEventListener('change', updateContent);
+    contentSelect.addEventListener('change', updateContent);
+
+    // Expose function to update current participant
+    window.setCurrentModalParticipant = function (participant) {
+        currentParticipant = participant;
+    };
+}
 
         function populateFilterDropdowns() {
             // Get unique regions in trilingual format (skip East Asia)
