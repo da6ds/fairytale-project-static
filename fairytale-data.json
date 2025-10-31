@@ -57,7 +57,6 @@
                 "Documenta",
                 "Work",
                 "Change",
-                "Documenta",
                 "The West",
                 "Travel",
                 "Fairytale",
@@ -68,7 +67,6 @@
                 "卡塞尔文献展",
                 "工作",
                 "改变",
-                "卡塞尔文献展",
                 "西方",
                 "旅行",
                 "童话",
@@ -79,7 +77,6 @@
                 "Documenta",
                 "Arbeit",
                 "Umkehr",
-                "Documenta",
                 "der Westen",
                 "Reise",
                 "Märchen",
@@ -676,8 +673,7 @@
                 "Travel",
                 "Belief",
                 "Childhood",
-                "Multi-culturalism",
-                "Travel"
+                "Multi-culturalism"
             ],
             "zh": [
                 "艺术",
@@ -686,8 +682,7 @@
                 "旅行",
                 "信仰",
                 "童年",
-                "多元文化主义",
-                "旅行"
+                "多元文化主义"
             ],
             "de": [
                 "Kunst",
@@ -696,8 +691,7 @@
                 "Reise",
                 "Glauben",
                 "Kindheit",
-                "Multikulturalismus",
-                "Reise"
+                "Multikulturalismus"
             ]
         },
         "photos": [
@@ -852,7 +846,6 @@
                 "Fairytale",
                 "Belief",
                 "Education",
-                "Documenta",
                 "Multi-culturalism"
             ],
             "zh": [
@@ -861,7 +854,6 @@
                 "童话",
                 "信仰",
                 "教育",
-                "卡塞尔文献展",
                 "多元文化主义"
             ],
             "de": [
@@ -870,7 +862,6 @@
                 "Märchen",
                 "Glauben",
                 "Erziehung",
-                "Documenta",
                 "Multikulturalismus"
             ]
         },
@@ -1882,7 +1873,6 @@
                 "Dreams",
                 "Fairytale",
                 "Belief",
-                "Fairytale",
                 "Food",
                 "China",
                 "Communism"
@@ -1891,7 +1881,6 @@
                 "梦想",
                 "童话",
                 "信仰",
-                "童话",
                 "食物",
                 "中国",
                 "共产主义"
@@ -1900,7 +1889,6 @@
                 "Traüme",
                 "Märchen",
                 "Glauben",
-                "Märchen",
                 "Essen",
                 "China",
                 "Kommunismus"
@@ -2082,7 +2070,6 @@
                 "Music",
                 "Fairytale",
                 "Literature",
-                "Travel",
                 "Love",
                 "Childhood"
             ],
@@ -2094,7 +2081,6 @@
                 "音乐",
                 "童话",
                 "文学",
-                "旅行",
                 "爱",
                 "童年"
             ],
@@ -2106,7 +2092,6 @@
                 "Musik",
                 "Märchen",
                 "Literatur",
-                "Reise",
                 "Liebe",
                 "Kindheit"
             ]
@@ -2674,7 +2659,6 @@
                 "Documenta",
                 "Germany",
                 "Change",
-                "Documenta",
                 "Dreams",
                 "Fairytale"
             ],
@@ -2685,7 +2669,6 @@
                 "卡塞尔文献展",
                 "德国",
                 "改变",
-                "卡塞尔文献展",
                 "梦想",
                 "童话"
             ],
@@ -2696,7 +2679,6 @@
                 "Documenta",
                 "Deutschland",
                 "Umkehr",
-                "Documenta",
                 "Traüme",
                 "Märchen"
             ]
@@ -3221,7 +3203,6 @@
                 "Belief",
                 "Childhood",
                 "Peace",
-                "Fairytale",
                 "Home"
             ],
             "zh": [
@@ -3233,7 +3214,6 @@
                 "信仰",
                 "童年",
                 "和平",
-                "童话",
                 "家"
             ],
             "de": [
@@ -3245,7 +3225,6 @@
                 "Glauben",
                 "Kindheit",
                 "Frieden",
-                "Märchen",
                 "Zuhause"
             ]
         },
@@ -3402,8 +3381,7 @@
                 "Dreams",
                 "Travel",
                 "Change",
-                "China",
-                "Germany"
+                "China"
             ],
             "zh": [
                 "德国",
@@ -3412,8 +3390,7 @@
                 "梦想",
                 "旅行",
                 "改变",
-                "中国",
-                "德国"
+                "中国"
             ],
             "de": [
                 "Deutschland",
@@ -3422,8 +3399,7 @@
                 "Traüme",
                 "Reise",
                 "Umkehr",
-                "China",
-                "Deutschland"
+                "China"
             ]
         },
         "photos": [
@@ -3853,7 +3829,6 @@
                 "Dreams",
                 "Education",
                 "Money",
-                "Dreams",
                 "Childhood"
             ],
             "zh": [
@@ -3866,7 +3841,6 @@
                 "梦想",
                 "教育",
                 "金钱",
-                "梦想",
                 "童年"
             ],
             "de": [
@@ -3879,7 +3853,6 @@
                 "Traüme",
                 "Erziehung",
                 "Geld",
-                "Traüme",
                 "Kindheit"
             ]
         },
@@ -4358,21 +4331,18 @@
                 "Art",
                 "Germany",
                 "China",
-                "Art",
                 "Dreams"
             ],
             "zh": [
                 "艺术",
                 "德国",
                 "中国",
-                "艺术",
                 "梦想"
             ],
             "de": [
                 "Kunst",
                 "Deutschland",
                 "China",
-                "Kunst",
                 "Traüme"
             ]
         },
@@ -14825,7 +14795,6 @@
                 "Dreams",
                 "Germany",
                 "Literature",
-                "Diaspora",
                 "Belief",
                 "Documenta",
                 "Education",
@@ -14840,7 +14809,6 @@
                 "梦想",
                 "德国",
                 "文学",
-                "华裔",
                 "信仰",
                 "卡塞尔文献展",
                 "教育",
@@ -14855,7 +14823,6 @@
                 "Traüme",
                 "Deutschland",
                 "Literatur",
-                "Diaspora",
                 "Glauben",
                 "Documenta",
                 "Erziehung",
@@ -15174,7 +15141,6 @@
                 "Love",
                 "Literature",
                 "The West",
-                "Change",
                 "Change"
             ],
             "zh": [
@@ -15186,7 +15152,6 @@
                 "爱",
                 "文学",
                 "西方",
-                "改变",
                 "改变"
             ],
             "de": [
@@ -15198,7 +15163,6 @@
                 "Liebe",
                 "Literatur",
                 "der Westen",
-                "Umkehr",
                 "Umkehr"
             ]
         },
@@ -25314,7 +25278,6 @@
                 "Art",
                 "Germany",
                 "Education",
-                "Art",
                 "Change",
                 "Travel"
             ],
@@ -25322,7 +25285,6 @@
                 "艺术",
                 "德国",
                 "教育",
-                "艺术",
                 "改变",
                 "旅行"
             ],
@@ -25330,7 +25292,6 @@
                 "Kunst",
                 "Deutschland",
                 "Erziehung",
-                "Kunst",
                 "Umkehr",
                 "Reise"
             ]
@@ -26571,20 +26532,17 @@
             "en": [
                 "Travel",
                 "Food",
-                "Germany",
-                "Travel"
+                "Germany"
             ],
             "zh": [
                 "旅行",
                 "食物",
-                "德国",
-                "旅行"
+                "德国"
             ],
             "de": [
                 "Reise",
                 "Essen",
-                "Deutschland",
-                "Reise"
+                "Deutschland"
             ]
         },
         "photos": [
@@ -36093,8 +36051,7 @@
                 "Documenta",
                 "China",
                 "Art",
-                "Dreams",
-                "Travel"
+                "Dreams"
             ],
             "zh": [
                 "德国",
@@ -36103,8 +36060,7 @@
                 "卡塞尔文献展",
                 "中国",
                 "艺术",
-                "梦想",
-                "旅行"
+                "梦想"
             ],
             "de": [
                 "Deutschland",
@@ -36113,8 +36069,7 @@
                 "Documenta",
                 "China",
                 "Kunst",
-                "Traüme",
-                "Reise"
+                "Traüme"
             ]
         },
         "photos": [
@@ -40424,22 +40379,19 @@
                 "Dreams",
                 "Art",
                 "Money",
-                "Fairytale",
-                "Dreams"
+                "Fairytale"
             ],
             "zh": [
                 "梦想",
                 "艺术",
                 "金钱",
-                "童话",
-                "梦想"
+                "童话"
             ],
             "de": [
                 "Traüme",
                 "Kunst",
                 "Geld",
-                "Märchen",
-                "Traüme"
+                "Märchen"
             ]
         },
         "photos": [
@@ -40822,7 +40774,6 @@
                 "China",
                 "The West",
                 "Germany",
-                "China",
                 "Travel",
                 "Dreams"
             ],
@@ -40831,7 +40782,6 @@
                 "中国",
                 "西方",
                 "德国",
-                "中国",
                 "旅行",
                 "梦想"
             ],
@@ -40840,7 +40790,6 @@
                 "China",
                 "der Westen",
                 "Deutschland",
-                "China",
                 "Reise",
                 "Traüme"
             ]
@@ -41706,7 +41655,6 @@
                 "China",
                 "Love",
                 "Art",
-                "Fairytale",
                 "Dreams"
             ],
             "zh": [
@@ -41714,7 +41662,6 @@
                 "中国",
                 "爱",
                 "艺术",
-                "童话",
                 "梦想"
             ],
             "de": [
@@ -41722,7 +41669,6 @@
                 "China",
                 "Liebe",
                 "Kunst",
-                "Märchen",
                 "Traüme"
             ]
         },

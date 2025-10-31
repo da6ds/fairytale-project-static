@@ -94,6 +94,10 @@ try {
 
         // NEW: Process themes with translations
         $themeIds = array_filter(explode(',', $row['themes']));
+        $themeIds = array_map('trim', $themeIds);      // ← ADD THIS LINE (trims whitespace)
+        $themeIds = array_unique($themeIds);           // ← ADD THIS LINE (removes duplicates)
+        $themeIds = array_values($themeIds);           // ← ADD THIS LINE (re-indexes array)
+
         $themes = [
             'en' => [],
             'zh' => [],

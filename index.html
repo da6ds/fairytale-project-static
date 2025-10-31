@@ -1263,12 +1263,14 @@
                     regionName = p.region.en;
                 }
 
-                // Get themes - handle both array and object formats
+                // Get themes in trilingual format
                 let themesString = '';
-                if (Array.isArray(p.themes)) {
-                    themesString = p.themes.join(',');
-                } else if (p.themes && typeof p.themes === 'object' && p.themes.en) {
-                    themesString = p.themes.en.join(',');
+                if (p.themes && p.themes.zh && p.themes.en && p.themes.de) {
+                    const trilingualThemes = [];
+                    for (let i = 0; i < p.themes.en.length; i++) {
+                        trilingualThemes.push(`${p.themes.zh[i]} / ${p.themes.en[i]} / ${p.themes.de[i]}`);
+                    }
+                    themesString = trilingualThemes.join('|||'); // Use ||| as separator to avoid conflicts with /
                 }
 
                 return `<div class="outer active" 
@@ -1499,7 +1501,7 @@
                 const region = card.dataset.region;
                 const generation = card.dataset.generation;
                 const languages = card.dataset.language.split(',');
-                const themes = card.dataset.themes.split(',');
+                const themes = card.dataset.themes.split('|||');
 
                 const matchesGender = !genderFilter || gender === genderFilter;
                 const matchesRegion = !regionFilter || region === regionFilter;
@@ -1601,15 +1603,22 @@
             });
 
             // Get unique themes - flatten all theme arrays and get unique values
-            const allThemes = participants.flatMap(p => {
-                if (Array.isArray(p.themes)) {
-                    return p.themes;
-                } else if (p.themes && typeof p.themes === 'object' && p.themes.en) {
-                    return p.themes.en;
+            const themeSet = new Set();
+            participants.forEach(p => {
+                if (p.themes && p.themes.zh && p.themes.en && p.themes.de) {
+                    // Iterate through all three language arrays together
+                    for (let i = 0; i < p.themes.en.length; i++) {
+                        const themeTrilingual = `${p.themes.zh[i]} / ${p.themes.en[i]} / ${p.themes.de[i]}`;
+                        themeSet.add(themeTrilingual);
+                    }
                 }
-                return [];
             });
-            const themes = [...new Set(allThemes)].sort();
+const themes = [...themeSet].sort((a, b) => {
+    // Sort by English (middle part)
+    const aEn = a.split(' / ')[1];
+    const bEn = b.split(' / ')[1];
+    return aEn.localeCompare(bEn, 'en');
+});
 
             // Get unique generations
             const generations = [...new Set(participants.map(p => p.generation))]
