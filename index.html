@@ -654,25 +654,34 @@
         }
 
         .close {
-            color: #000;
+            color: white;
+            background-color: #000;
+            border-radius: 50%;
+            box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.2), 0 2px 8px rgba(0, 0, 0, 0.3);
             position: absolute;
-            right: 10px;
-            top: 5px;
-            font-size: 36px;
-            font-weight: bold;
+            right: -15px;
+            top: -15px;
+            font-size: 22px;
+            font-weight: 400;
             cursor: pointer;
             z-index: 10001;
-            line-height: 1;
-            width: 40px;
-            height: 40px;
+            line-height: 0;
+            width: 25px;
+            height: 25px;
             display: flex;
             align-items: center;
             justify-content: center;
+            border: 2px solid white;
+            padding: 0;
+            margin: 0;
+            font-family: Arial, sans-serif;
         }
+
 
         .close:hover,
         .close:focus {
-            color: #666;
+            background-color: #f5f5f5;
+            color: #000;
         }
 
         .modal-body {
@@ -812,14 +821,14 @@
         }
 
         .modal-privacy-notice {
+            font: helvetica;
             color: rgb(255, 0, 0);
             font-size: 9px;
             margin: 0;
-            line-height: 1.1;
         }
 
         .modal-selectors {
-            padding: 0 0 15px 0;
+            padding: 0 0 5px 0;
             flex: 0;
             margin-bottom: 15px;
             border-bottom: 1px dashed #000;
@@ -830,6 +839,12 @@
             margin: 0 0 4px 0;
             font-weight: bold;
             line-height: 1.2;
+        }
+
+        .modal-selectors h3:nth-of-type(2) {
+            border-top: 1px dashed #000;
+            padding-top: 15px;
+            margin-top: 5px;
         }
 
         .modal-select {
@@ -1038,7 +1053,6 @@
 
                     <div id="photoOverlay" class="photo-overlay" style="display: none;">
                         <img id="overlayPhoto" src="" alt="" class="overlay-photo">
-                        <button class="close-overlay">&times;</button>
                     </div>
 
                     <div class="modal-metadata">
@@ -1052,13 +1066,9 @@
                     </div>
 
                     <div class="modal-content-area">
-                        <p class="modal-placeholder">Content not yet available in static version.<br><br>
-                            In the full dynamic site, this area would display:<br>
-                            • Biography (简介)<br>
-                            • Application questionnaire (申请问卷)<br>
-                            • Interview transcripts (访谈)<br>
-                            • Follow-up interviews (后续访谈)<br><br>
-                            Content exists in database and can be integrated.</p>
+                        <p class="modal-placeholder">Content not yet available. Biographies and interview materials are
+                            currently being migrated.<br><br>
+                        </p>
                     </div>
                 </div>
             </div>
@@ -1342,11 +1352,6 @@
                 document.getElementById('photoGallery').style.display = 'none';
             }
 
-            // Close overlay button handler
-            document.querySelector('.close-overlay').onclick = function () {
-                photoOverlay.style.display = 'none';
-            };
-
             // Click overlay background to close
             photoOverlay.onclick = function (e) {
                 if (e.target === photoOverlay) {
@@ -1613,12 +1618,12 @@
                     }
                 }
             });
-const themes = [...themeSet].sort((a, b) => {
-    // Sort by English (middle part)
-    const aEn = a.split(' / ')[1];
-    const bEn = b.split(' / ')[1];
-    return aEn.localeCompare(bEn, 'en');
-});
+            const themes = [...themeSet].sort((a, b) => {
+                // Sort by English (middle part)
+                const aEn = a.split(' / ')[1];
+                const bEn = b.split(' / ')[1];
+                return aEn.localeCompare(bEn, 'en');
+            });
 
             // Get unique generations
             const generations = [...new Set(participants.map(p => p.generation))]
